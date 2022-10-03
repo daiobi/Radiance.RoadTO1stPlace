@@ -6,27 +6,45 @@ namespace Rover
     {
         [Header("Wheels")]
         [SerializeField]
-        private WheelCollider _forwardLeft;
-        [SerializeField]
-        private WheelCollider _forwardRight;
-        [SerializeField]
-        private WheelCollider _centerLeft;
-        [SerializeField]
-        private WheelCollider _centerRight;
-        [SerializeField]
-        private WheelCollider _backwardLeft;
-        [SerializeField]
-        private WheelCollider _backwardRight;
+        private AxleInfo[] _axles;
         [Header("Settings")]
         [SerializeField]
-        private float maxSteer = 45f;
+        private float _maxSteering = 45f;
+        [SerializeField]
+        private float _maxTorgue = 25f;
+        [SerializeField]
+        private float _maxBrake = 50f;
+
+        private Vector3 _lastPosition;
+        private float _currentSpeed;
+
+        private void FixedUpdate()
+        {
+            _currentSpeed = (transform.position - _lastPosition).magnitude / Time.fixedDeltaTime;
+            _lastPosition = transform.position;
+
+            Debug.Log(_currentSpeed);
+
+        }
 
         public void Move(float acceleration, float steering)
         {
-            _forwardRight.steerAngle = steering * maxSteer;
-            _forwardLeft.steerAngle = steering * maxSteer;
-            _backwardRight.steerAngle = -steering * maxSteer;
-            _backwardLeft.steerAngle = -steering * maxSteer;
+            foreach (AxleInfo axleInfo in _axles)
+            {
+                if (axleInfo.steering)
+                {
+                    axleInfo.leftWheel.steerAngle = _maxSteering * (axleInfo.invertSteering ? -steering : steering);
+                    axleInfo.rightWheel.steerAngle = _maxSteering * (axleInfo.invertSteering ? -steering : steering);
+                }
+                if (axleInfo.motor)
+                {
+                    axleInfo.leftWheel.brakeTorque = acceleration == 0 ? _maxBrake : 0f;
+                    axleInfo.rightWheel.brakeTorque = acceleration == 0 ? _maxBrake : 0f;
+
+                    axleInfo.leftWheel.motorTorque = acceleration * _maxTorgue;
+                    axleInfo.rightWheel.motorTorque = acceleration * _maxTorgue;
+                }
+            }
         }
     }
 }

@@ -8,18 +8,23 @@ namespace Rover
     public class KeyboardMovementTest : MonoBehaviour
     {
         private RoverMovement _rover;
+        private float _acceleration;
+        private float _steer;
 
         private void Awake()
         {
             _rover = GetComponent<RoverMovement>();
         }
 
+        private void Update()
+        {
+            _acceleration = Input.GetAxis("Vertical");
+            _steer = Input.GetAxis("Horizontal");
+        }
+
         private void FixedUpdate()
         {
-            float acceleration = Input.GetAxis("Vertical");
-            float steer = Input.GetAxis("Horizontal");
-
-            _rover.Move(acceleration, steer);
+            _rover.Move(_acceleration, _steer);
         }
     }
 }
