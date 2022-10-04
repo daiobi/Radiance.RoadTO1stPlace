@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Rover
 {
@@ -48,7 +46,7 @@ namespace Rover
         private Vector3 _centerRightPosition;
         private Vector3 _backwardLeftPosition;
         private Vector3 _backwardRightPosition;
-
+        
         private Quaternion _forwardLeftRotation;
         private Quaternion _forwardRightRotation;
         private Quaternion _centerLeftRotation;
@@ -56,34 +54,52 @@ namespace Rover
         private Quaternion _backwardLeftRotation;
         private Quaternion _backwardRightRotation;
 
+        private Vector3 _ldir23;
+        private Vector3 _rdir23;
+        private Vector3 _ldir123;
+        private Vector3 _rdir123;
+
         private void Update()
         {
-            _forwardLeft.GetWorldPose(out _forwardLeftPosition, out _forwardLeftRotation);
-            _forwardRight.GetWorldPose(out _forwardRightPosition, out _forwardRightRotation);
-            _centerLeft.GetWorldPose(out _centerLeftPosition, out _centerLeftRotation);
-            _centerRight.GetWorldPose(out _centerRightPosition, out _centerRightRotation);
-            _backwardLeft.GetWorldPose(out _backwardLeftPosition, out _backwardLeftRotation);
-            _backwardRight.GetWorldPose(out _backwardRightPosition, out _backwardRightRotation);
+            GetLocalPoses();
+            CalculateWheelRotations();
+            ApplyVisibility();
+        }
 
-
-            Vector3 ldir23 = (_backwardLeftPosition - _centerLeftPosition).normalized;
+        private void CalculateWheelRotations()
+        {
+            _ldir23 = (_backwardLeftPosition - _centerLeftPosition).normalized;
             Vector3 lmid23 = (_centerLeftPosition + _backwardLeftPosition) * 0.5f;
+            _ldir123 = (_forwardLeftPosition - lmid23).normalized;
 
-            //_leftAxle23.position = lmid23;
-            _leftAxle23.rotation = Quaternion.LookRotation(-ldir23);
-
-            Vector3 ldir123 = (_forwardLeftPosition - lmid23).normalized;
-            _leftAxle123.rotation = Quaternion.LookRotation(ldir123);
-
-
-            Vector3 rdir23 = (_backwardRightPosition - _centerRightPosition).normalized;
+            _rdir23 = (_backwardRightPosition - _centerRightPosition).normalized;
             Vector3 rmid23 = (_centerRightPosition + _backwardRightPosition) * 0.5f;
+            _rdir123 = (_forwardRightPosition - rmid23).normalized;
+        }
 
-            //_rightAxle23.position = rmid23;
-            _rightAxle23.rotation = Quaternion.LookRotation(-rdir23);
+        private void GetLocalPoses()
+        {
+            _forwardLeft.GetWorldPose(out _forwardLeftPosition, out _forwardLeftRotation);
+            _forwardLeftPosition = transform.InverseTransformPoint(_forwardLeftPosition);
+            _forwardRight.GetWorldPose(out _forwardRightPosition, out _forwardRightRotation);
+            _forwardRightPosition = transform.InverseTransformPoint(_forwardRightPosition);
+            _centerLeft.GetWorldPose(out _centerLeftPosition, out _centerLeftRotation);
+            _centerLeftPosition = transform.InverseTransformPoint(_centerLeftPosition);
+            _centerRight.GetWorldPose(out _centerRightPosition, out _centerRightRotation);
+            _centerRightPosition = transform.InverseTransformPoint(_centerRightPosition);
+            _backwardLeft.GetWorldPose(out _backwardLeftPosition, out _backwardLeftRotation);
+            _backwardLeftPosition = transform.InverseTransformPoint(_backwardLeftPosition);
+            _backwardRight.GetWorldPose(out _backwardRightPosition, out _backwardRightRotation);
+            _backwardRightPosition = transform.InverseTransformPoint(_backwardRightPosition);
+        }
 
-            Vector3 rdir123 = (_forwardRightPosition - rmid23).normalized;
-            _rightAxle123.rotation = Quaternion.LookRotation(rdir123);
+        private void ApplyVisibility()
+        {
+            _leftAxle23.localRotation = Quaternion.LookRotation(-_ldir23);
+            _leftAxle123.localRotation = Quaternion.LookRotation(_ldir123);
+
+            _rightAxle23.localRotation = Quaternion.LookRotation(-_rdir23);
+            _rightAxle123.localRotation = Quaternion.LookRotation(_rdir123);
 
             _forwardLeftVisual.rotation = _forwardLeftRotation;
             _forwardRightVisual.rotation = _forwardRightRotation;
