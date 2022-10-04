@@ -623,6 +623,15 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1939573640, guid: 6d9ac37aadba8f24593d83eaabb6b67e, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 1939573641, guid: 6d9ac37aadba8f24593d83eaabb6b67e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149258527646, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
         type: 3}
       propertyPath: m_Enabled
@@ -692,6 +701,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: rover2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793710146407900990, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
+        type: 3}
+      propertyPath: _ySpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793710146407900990, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
+        type: 3}
+      propertyPath: _zSpeed
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d9ac37aadba8f24593d83eaabb6b67e, type: 3}

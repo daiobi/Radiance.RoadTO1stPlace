@@ -23,29 +23,29 @@ namespace Rover
             _acceleration = Input.GetAxis("Vertical");
             _steer = Input.GetAxis("Horizontal");
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKey(KeyCode.F))
             {
                 _roverArm.Move(-1, 0, 0);
             }
-            else if (Input.GetKeyDown(KeyCode.H))
+            else if (Input.GetKey(KeyCode.H))
             {
                 _roverArm.Move(1, 0, 0);
             }
 
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKey(KeyCode.T))
             {
                 _roverArm.Move(0, 0, 1);
             }
-            else if (Input.GetKeyDown(KeyCode.G))
+            else if (Input.GetKey(KeyCode.G))
             {
                 _roverArm.Move(0, 0, -1);
             }
 
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetKey(KeyCode.U))
             {
                 _roverArm.Move(0, 1, 0);
             }
-            else if (Input.GetKeyDown(KeyCode.J))
+            else if (Input.GetKey(KeyCode.J))
             {
                 _roverArm.Move(0, -1, 0);
             }

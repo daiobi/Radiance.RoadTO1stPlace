@@ -12,8 +12,8 @@ namespace Rover
 
         public void Move(float x, float y, float z)
         {
-            _axis.Rotate(0, x * _ySpeed * Time.deltaTime, 0);
-            _target.Translate(0, y * _xSpeed * Time.deltaTime, z * _zSpeed * Time.deltaTime, Space.Self);
+            _axis.Rotate(0, x * _xSpeed * Time.deltaTime, 0);
+            _target.Translate(0, y * _ySpeed * Time.deltaTime, -z * _zSpeed * Time.deltaTime, Space.Self);
         }
     }
 }
