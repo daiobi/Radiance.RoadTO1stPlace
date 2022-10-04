@@ -69,7 +69,7 @@ namespace Rover
             Vector3 ldir23 = (_backwardLeftPosition - _centerLeftPosition).normalized;
             Vector3 lmid23 = (_centerLeftPosition + _backwardLeftPosition) * 0.5f;
 
-            _leftAxle23.position = lmid23;
+            //_leftAxle23.position = lmid23;
             _leftAxle23.rotation = Quaternion.LookRotation(-ldir23);
 
             Vector3 ldir123 = (_forwardLeftPosition - lmid23).normalized;
@@ -79,7 +79,7 @@ namespace Rover
             Vector3 rdir23 = (_backwardRightPosition - _centerRightPosition).normalized;
             Vector3 rmid23 = (_centerRightPosition + _backwardRightPosition) * 0.5f;
 
-            _rightAxle23.position = rmid23;
+            //_rightAxle23.position = rmid23;
             _rightAxle23.rotation = Quaternion.LookRotation(-rdir23);
 
             Vector3 rdir123 = (_forwardRightPosition - rmid23).normalized;
