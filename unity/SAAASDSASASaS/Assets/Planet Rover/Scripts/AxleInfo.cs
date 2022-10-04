@@ -5,8 +5,8 @@ namespace Rover
     [System.Serializable]
     public struct AxleInfo
     {
-        public WheelCollider leftWheel;
-        public WheelCollider rightWheel;
+        public Wheel leftWheel;
+        public Wheel rightWheel;
         public bool motor;
         public bool steering;
         public bool invertSteering;

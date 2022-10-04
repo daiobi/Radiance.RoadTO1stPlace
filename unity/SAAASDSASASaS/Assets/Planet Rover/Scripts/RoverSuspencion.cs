@@ -7,28 +7,28 @@ namespace Rover
         [SerializeField]
         private WheelCollider _forwardLeft;
         [SerializeField]
-        private Transform _forwardLeftVisual;
+        private WheelVisual _forwardLeftVisual;
         [SerializeField]
         private WheelCollider _centerLeft;
         [SerializeField]
-        private Transform _centerLeftVisual;
+        private WheelVisual _centerLeftVisual;
         [SerializeField]
         private WheelCollider _backwardLeft;
         [SerializeField]
-        private Transform _backwardLeftVisual;
+        private WheelVisual _backwardLeftVisual;
 
         [SerializeField]
         private WheelCollider _forwardRight;
         [SerializeField]
-        private Transform _forwardRightVisual;
+        private WheelVisual _forwardRightVisual;
         [SerializeField]
         private WheelCollider _centerRight;
         [SerializeField]
-        private Transform _centerRightVisual;
+        private WheelVisual _centerRightVisual;
         [SerializeField]
         private WheelCollider _backwardRight;
         [SerializeField]
-        private Transform _backwardRightVisual;
+        private WheelVisual _backwardRightVisual;
 
         [SerializeField]
         private Transform _leftAxle23;
@@ -101,12 +101,12 @@ namespace Rover
             _rightAxle23.localRotation = Quaternion.LookRotation(-_rdir23);
             _rightAxle123.localRotation = Quaternion.LookRotation(_rdir123);
 
-            _forwardLeftVisual.rotation = _forwardLeftRotation;
-            _forwardRightVisual.rotation = _forwardRightRotation;
-            _centerLeftVisual.rotation = _centerLeftRotation;
-            _centerRightVisual.rotation = _centerRightRotation;
-            _backwardLeftVisual.rotation = _backwardLeftRotation;
-            _backwardRightVisual.rotation = _backwardRightRotation;
+            _forwardLeftVisual.SetRotation(_forwardLeftRotation);
+            _forwardRightVisual.SetRotation(_forwardRightRotation);
+            _centerLeftVisual.SetRotation(_centerLeftRotation);
+            _centerRightVisual.SetRotation(_centerRightRotation);
+            _backwardLeftVisual.SetRotation(_backwardLeftRotation);
+            _backwardRightVisual.SetRotation(_backwardRightRotation);
         }
     }
 }
