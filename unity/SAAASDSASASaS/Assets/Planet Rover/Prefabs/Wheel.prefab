@@ -41,7 +41,7 @@ WheelCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4234766928585796876}
   m_Center: {x: 0, y: 0.014, z: 0}
-  m_Radius: 0.1
+  m_Radius: 0.12
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -125,8 +125,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.12, z: 0.2}
-  m_Center: {x: -0.06, y: 0.03, z: 0}
+  m_Size: {x: 0.25, y: 0.12, z: 0.28}
+  m_Center: {x: -0.1, y: 0.03, z: 0}
 --- !u!114 &6800592135701959571
 MonoBehaviour:
   m_ObjectHideFlags: 0

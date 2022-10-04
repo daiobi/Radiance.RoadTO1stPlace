@@ -39,6 +39,10 @@ namespace Rover
         [SerializeField]
         private Transform _rightAxle123;
 
+        [SerializeField]
+        [Range(0f, 1f)]
+        private float _midAxle23 = 0.5f;
+
 
         private Vector3 _forwardLeftPosition;
         private Vector3 _forwardRightPosition;
@@ -69,11 +73,11 @@ namespace Rover
         private void CalculateWheelRotations()
         {
             _ldir23 = (_backwardLeftPosition - _centerLeftPosition).normalized;
-            Vector3 lmid23 = (_centerLeftPosition + _backwardLeftPosition) * 0.5f;
+            Vector3 lmid23 = Vector3.Lerp(_centerLeftPosition, _backwardLeftPosition, _midAxle23);
             _ldir123 = (_forwardLeftPosition - lmid23).normalized;
 
             _rdir23 = (_backwardRightPosition - _centerRightPosition).normalized;
-            Vector3 rmid23 = (_centerRightPosition + _backwardRightPosition) * 0.5f;
+            Vector3 rmid23 = Vector3.Lerp(_centerRightPosition, _backwardRightPosition, _midAxle23);
             _rdir123 = (_forwardRightPosition - rmid23).normalized;
         }
 
@@ -95,11 +99,11 @@ namespace Rover
 
         private void ApplyVisibility()
         {
-            _leftAxle23.localRotation = Quaternion.LookRotation(-_ldir23);
             _leftAxle123.localRotation = Quaternion.LookRotation(_ldir123);
+            _leftAxle23.localRotation = Quaternion.LookRotation(-_ldir23);
 
-            _rightAxle23.localRotation = Quaternion.LookRotation(-_rdir23);
             _rightAxle123.localRotation = Quaternion.LookRotation(_rdir123);
+            _rightAxle23.localRotation = Quaternion.LookRotation(-_rdir23);
 
             _forwardLeftVisual.SetRotation(_forwardLeftRotation);
             _forwardRightVisual.SetRotation(_forwardRightRotation);
