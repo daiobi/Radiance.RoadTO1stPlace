@@ -16,8 +16,27 @@ public class Spec : MonoBehaviour
     }
     private void Update()
     {
-        
-        _WheelDest.text = $"Повреждено: {name}";
+        var tel = _rover.GetTelemetry();
+        List<string> a = new List<string>();
+        if (tel.LFBroken)
+            a.Add("LeftForward broken\n");
+        if (tel.RFBroken)
+            a.Add("RightForward broken\n");
+        if (tel.LCBroken)
+            a.Add("LeftCenter broken\n");
+        if (tel.RCBroken)
+            a.Add("RightCenter broken\n");
+        if (tel.LBBroken)
+            a.Add("LeftBackward broken\n");
+        if (tel.RBBroken)
+            a.Add("RightBackward broken\n");
+
+
+
+
+
+
+        _WheelDest.text = string.Join("", a);
     }
 
 

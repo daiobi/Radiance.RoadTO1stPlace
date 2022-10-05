@@ -91,4 +91,9 @@ public class Torch : MonoBehaviour
         _rover.OpenBlueBox();
     }
 
+
+    public void Repair(int n)
+    {
+        _rover.RepairWheel(n);
+    }
 }
