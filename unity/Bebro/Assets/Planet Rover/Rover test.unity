@@ -615,14 +615,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1532038771, guid: 6d9ac37aadba8f24593d83eaabb6b67e, type: 3}
-      propertyPath: m_Limits.max
-      value: 170
-      objectReference: {fileID: 0}
-    - target: {fileID: 1532038771, guid: 6d9ac37aadba8f24593d83eaabb6b67e, type: 3}
-      propertyPath: m_Limits.min
-      value: -170
-      objectReference: {fileID: 0}
     - target: {fileID: 4686543030640062552, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
         type: 3}
       propertyPath: m_RootOrder
