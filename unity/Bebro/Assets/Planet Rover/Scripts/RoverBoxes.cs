@@ -32,5 +32,12 @@ namespace Rover
             _yellow.Close();
             _blue.Open();
         }
+
+        public void CloseAll()
+        {
+            _green.Close();
+            _yellow.Close();
+            _blue.Close();
+        }
     }
 }
