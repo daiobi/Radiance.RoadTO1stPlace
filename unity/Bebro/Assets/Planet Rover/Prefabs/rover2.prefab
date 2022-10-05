@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939573640}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.064, z: -0.552}
+  m_LocalPosition: {x: 0, y: 0.057, z: -0.689}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3193002911384140709}
@@ -294,7 +294,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627797378745686365}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.03708321
   m_Height: 0.62260294
@@ -337,8 +337,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -65
-    max: 65
+    min: -170
+    max: 170
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -2834,6 +2834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215dce01b2eed6489075d0a92a27ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxDistance: 1.2
   _axis: {fileID: 1171380666}
   _armPosition: {fileID: 3744730783242886066}
   _target: {fileID: 1939573641}
@@ -3203,8 +3204,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.001807515, y: 0.002, z: 0.001895119}
-  m_Center: {x: 0.00001474074, y: 0.0000020009463, z: 0.000042210395}
+  m_Size: {x: 0.0018075121, y: 0.002, z: 0.001168215}
+  m_Center: {x: 0.000014740755, y: 0.000002000945, z: -0.0003212417}
 --- !u!114 &1541292222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3693,7 +3694,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6183847710478173326}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.03708321
   m_Height: 0.62260294
@@ -3749,8 +3750,8 @@ HingeJoint:
     freeSpin: 0
   m_UseLimits: 1
   m_Limits:
-    min: -135
-    max: 135
+    min: -170
+    max: 170
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -4693,7 +4694,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9058013746478105174}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.05
   m_Height: 0.29397416
