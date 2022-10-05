@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Rover;
 
 public class Btn : MonoBehaviour
 {
     public GameObject button;
     public UnityEvent onPress;
     public UnityEvent onRealese;
+    public bool _set = false;
     GameObject presser;
+    [SerializeField] private Rover.Rover _Rover;
+    public bool _state = false;
     bool isPressed;
     AudioSource sound;
     // Start is called before the first frame update
@@ -42,8 +46,10 @@ public class Btn : MonoBehaviour
         }
     }
 
-    public void WwqWwwEeeEewQwe()
-    {
 
+    public void Repair(int n)
+    {
+       
     }
+
 }

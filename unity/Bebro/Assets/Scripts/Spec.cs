@@ -1,14 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Rover;
 
 public class Spec : MonoBehaviour
 {
+    [SerializeField] private Rover.Wheel _wheel;
+    [SerializeField] private Rover.Rover _rover;
     public GameObject leveler;
-    private void FixedUpdate()
+    public Text _WheelDest;
+    private void Start()
     {
-        //print("pos leveler: " + leveler.transform.position);
-        //print("rot leveler: " + leveler.transform.rotation);
-        //print("______________________________________________");
+        
     }
+    private void Update()
+    {
+        
+        _WheelDest.text = $"Повреждено: {name}";
+    }
+
+
+    //using Rover;
+    //[SerializeField] private Rover.Rover _rover;
+    //_rover.RepairWheel(n);
 }

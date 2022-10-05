@@ -11,7 +11,7 @@ namespace Rover
         [SerializeField] private DamageTrigger _damageTrigger;
         [SerializeField] private float _brakeForce;
         [SerializeField] private float _steeringAngle;
-        [SerializeField] private float _motorForce;
+        [SerializeField] private float _motorForce; 
 
         public UnityEvent OnBroken;
 
@@ -62,6 +62,8 @@ namespace Rover
                 IsBroken = true;
                 OnBroken?.Invoke();
                 Debug.Log($"{name} broken");
+                
+
             }
         }
     }
