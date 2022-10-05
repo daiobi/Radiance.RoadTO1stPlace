@@ -6,22 +6,21 @@ namespace Rover
 {
     public class IKSolver : MonoBehaviour
     {
-        public Transform pivot, upper, lower, effector, tip;
+        public Transform effector, tip;
+        public PhysicalRotator pivot, upper, lower;
         public Transform target;
-        public Vector3 normal = Vector3.up;
 
-
-        float upperLength, lowerLength, effectorLength, pivotLength;
-        Vector3 effectorTarget, tipTarget;
+        float upperLength, lowerLength;
+        Vector3 effectorTarget;
 
         void Reset()
         {
-            pivot = transform;
+            pivot = GetComponent<PhysicalRotator>();
             try
             {
-                upper = pivot.GetChild(0);
-                lower = upper.GetChild(0);
-                effector = lower.GetChild(0);
+                upper = pivot.transform.GetChild(0).GetComponent<PhysicalRotator>();
+                lower = upper.transform.GetChild(0).GetComponent<PhysicalRotator>();
+                effector = lower.transform.GetChild(0);
                 tip = effector.GetChild(0);
             }
             catch (UnityException)
@@ -32,43 +31,32 @@ namespace Rover
 
         void Awake()
         {
-            upperLength = (lower.position - upper.position).magnitude;
-            lowerLength = (effector.position - lower.position).magnitude;
-            effectorLength = (tip.position - effector.position).magnitude;
-            pivotLength = (upper.position - pivot.position).magnitude;
+            upperLength = (lower.transform.position - upper.transform.position).magnitude;
+            lowerLength = (effector.position - lower.transform.position).magnitude;
         }
 
         void Update()
         {
-            tipTarget = target.position;
-            effectorTarget = target.position + normal * effectorLength;
+            effectorTarget = target.position;
             Solve();
         }
 
         void Solve()
         {
-            var pivotDir = pivot.position - effectorTarget;
-            pivotDir.y = 0;
-            pivot.rotation = Quaternion.LookRotation(pivotDir);
-
-            var upperToTarget = (effectorTarget - upper.position);
+            var upperToTarget = (effectorTarget - upper.transform.position);
             var a = upperLength;
             var b = lowerLength;
             var c = upperToTarget.magnitude;
 
             var B = Mathf.Acos((c * c + a * a - b * b) / (2 * c * a)) * Mathf.Rad2Deg;
             var C = Mathf.Acos((a * a + b * b - c * c) / (2 * a * b)) * Mathf.Rad2Deg;
-            var phi = Mathf.Atan2(effectorTarget.y - upper.position.y, Vector2.Distance(new Vector2(effectorTarget.x, effectorTarget.z), new Vector2(upper.position.x, upper.position.z))) * Mathf.Rad2Deg;
+            var phi = Mathf.Atan2(effectorTarget.y - upper.transform.position.y, Vector2.Distance(new Vector2(effectorTarget.x, effectorTarget.z), new Vector2(upper.transform.position.x, upper.transform.position.z))) * Mathf.Rad2Deg;
 
             if (!float.IsNaN(C))
             {
-                var upperRotation = Quaternion.AngleAxis(B + phi, Vector3.right);
-                upper.localRotation = upperRotation;
-                var lowerRotation = Quaternion.AngleAxis(C - 180, Vector3.right);
-                lower.localRotation = lowerRotation;
+                upper.SetTargetAngle(B + phi);
+                lower.SetTargetAngle(C - 180);
             }
-            var effectorRotation = Quaternion.LookRotation(tipTarget - effector.position);
-            effector.rotation = effectorRotation;
         }
     }
 }

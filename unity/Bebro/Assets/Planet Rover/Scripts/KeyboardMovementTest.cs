@@ -4,18 +4,16 @@ using UnityEngine;
 
 namespace Rover
 {
-    [RequireComponent(typeof(RoverMovement))]
+    [RequireComponent(typeof(Rover))]
     public class KeyboardMovementTest : MonoBehaviour
     {
-        private RoverMovement _roverMovement;
-        private RoverArm _roverArm;
+        private Rover _rover;
         private float _acceleration;
         private float _steer;
 
         private void Awake()
         {
-            _roverMovement = GetComponent<RoverMovement>();
-            _roverArm = GetComponent<RoverArm>();
+            _rover = GetComponent<Rover>();
         }
 
         private void Update()
@@ -23,37 +21,53 @@ namespace Rover
             _acceleration = Input.GetAxis("Vertical");
             _steer = Input.GetAxis("Horizontal");
 
+            if (Input.GetKeyDown(KeyCode.Z)) _rover.TurnOn();
+            if (Input.GetKeyDown(KeyCode.X)) _rover.TurnOff();
+
             if (Input.GetKey(KeyCode.F))
             {
-                _roverArm.Move(-1, 0, 0);
+                _rover.MoveArm(-1, 0, 0);
             }
             else if (Input.GetKey(KeyCode.H))
             {
-                _roverArm.Move(1, 0, 0);
+                _rover.MoveArm(1, 0, 0);
             }
 
             if (Input.GetKey(KeyCode.T))
             {
-                _roverArm.Move(0, 0, 1);
+                _rover.MoveArm(0, 0, 1);
             }
             else if (Input.GetKey(KeyCode.G))
             {
-                _roverArm.Move(0, 0, -1);
+                _rover.MoveArm(0, 0, -1);
             }
 
             if (Input.GetKey(KeyCode.U))
             {
-                _roverArm.Move(0, 1, 0);
+                _rover.MoveArm(0, 1, 0);
             }
             else if (Input.GetKey(KeyCode.J))
             {
-                _roverArm.Move(0, -1, 0);
+                _rover.MoveArm(0, -1, 0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                _rover.OpenGreenBox();
+            }
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                _rover.OpenYellowBox();
+            }
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                _rover.OpenBlueBox();
             }
         }
 
         private void FixedUpdate()
         {
-            _roverMovement.Move(_acceleration, _steer);
+            _rover.Move(_acceleration, _steer);
         }
     }
 }

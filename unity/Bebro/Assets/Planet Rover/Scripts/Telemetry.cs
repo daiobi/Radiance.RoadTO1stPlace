@@ -18,5 +18,9 @@ namespace Rover
         public bool RCBroken;
         public bool LBBroken;
         public bool RBBroken;
+
+        public BoxState greenBoxState;
+        public BoxState yellowBoxState;
+        public BoxState blueBoxState;
     }
 }
