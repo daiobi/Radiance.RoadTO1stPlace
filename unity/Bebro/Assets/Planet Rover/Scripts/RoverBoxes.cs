@@ -16,7 +16,7 @@ namespace Rover
         {
             _green.Open();
             _yellow.Close();
-            _blue.Close();
+            _blue.Close(); 
         }
 
         public void OpenYellow()
