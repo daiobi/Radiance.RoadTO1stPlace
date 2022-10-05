@@ -54,7 +54,11 @@ public class Torch : MonoBehaviour
                 //...
                 _rover.MoveArm(x, 0, y);
             }
-        } 
+        }
+        else
+        {
+            _rover.TurnOff();
+        }
     }
 
     public void StartSelect()

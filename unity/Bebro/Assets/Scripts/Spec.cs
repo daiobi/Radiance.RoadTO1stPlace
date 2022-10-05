@@ -18,6 +18,9 @@ public class Spec : MonoBehaviour
     {
         var tel = _rover.GetTelemetry();
         List<string> a = new List<string>();
+        a.Add($"Оставшийся заряд: {(int)tel.Battery}\n");
+        a.Add($"Поломок: {tel.HitCount}\n");
+        a.Add($"Скорость: {(int)tel.Speed} км/ч\n");
         if (tel.LFBroken)
             a.Add("LeftForward broken\n");
         if (tel.RFBroken)
