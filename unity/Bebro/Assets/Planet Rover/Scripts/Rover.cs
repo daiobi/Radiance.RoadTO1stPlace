@@ -56,11 +56,15 @@ namespace Rover
             }
             else if (_roverBoxes.GreenState == BoxState.FilledInvalid ||
                 _roverBoxes.YellowState == BoxState.FilledInvalid ||
-                _roverBoxes.BlueState == BoxState.FilledInvalid)
+                _roverBoxes.RedState == BoxState.FilledInvalid)
             {
                 _isBroken = true;
                 OnBroken?.Invoke(BreakDownCause.BoxInvalid);
             }
+
+            if (_roverBoxes.GreenState == BoxState.Filled) Tasks.SetGreenCollected();
+            if (_roverBoxes.YellowState == BoxState.Filled) Tasks.SetYellowCollected();
+            if (_roverBoxes.RedState == BoxState.Filled) Tasks.SetRedCollected();
 
             if (_isBroken)
             {
@@ -139,7 +143,7 @@ namespace Rover
         {
             if (IsActivated)
             {
-                _roverBoxes.OpenBlue();
+                _roverBoxes.OpenRed();
             }
         }
         public void CloseBoxes()
@@ -167,7 +171,7 @@ namespace Rover
 
                 greenBoxState = _roverBoxes.GreenState,
                 yellowBoxState = _roverBoxes.YellowState,
-                blueBoxState = _roverBoxes.BlueState,
+                blueBoxState = _roverBoxes.RedState,
             };
         }
     }
