@@ -5,30 +5,30 @@ using Rover;
 
 public class Torch : MonoBehaviour
 {
+    [SerializeField] private GameObject[] _screens;
     [SerializeField] private float _deathzone = 10;
     [SerializeField] private float _maxAngle = 30;
     [SerializeField] private Rover.Rover _rover;
     [SerializeField] private float _resetSpeed;
     [SerializeField] private bool set_;
-    [SerializeField] private bool state_;
     [SerializeField] private Btn _Btn;
     private bool _isSelected;
+    
 
     public void Start()
     {
-        set_ = GetComponent<Btn>();
-        state_ = GetComponent<Btn>();
         _rover.TurnOff();
-        
     }
 
     private void Update()
     {
+        foreach (var s in _screens) s.SetActive(_rover.IsActivated);
+
         if (!_isSelected)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * _resetSpeed);
         }
-        if (state_ == true)
+        if (_rover.IsActivated == true)
         {
             _rover.TurnOn();
 
@@ -42,10 +42,12 @@ public class Torch : MonoBehaviour
 
             x /= _maxAngle;
             y /= -_maxAngle;
+            
+
 
             if (set_ == false)
             {
-                Debug.Log($"{x}x, {y}y");
+                //Debug.Log($"{x}x, {y}y");
                 _rover.Move(y, x);
 
             }
@@ -59,6 +61,7 @@ public class Torch : MonoBehaviour
         {
             _rover.TurnOff();
         }
+
     }
 
     public void StartSelect()
@@ -78,7 +81,13 @@ public class Torch : MonoBehaviour
 
     public void RoverState_()
     {
-        state_ = !state_;   //False --> True 
+        if (_rover.IsActivated)
+        {
+            _rover.TurnOff();
+        } else
+        {
+            _rover.TurnOn();
+        }
     }
 
     public void OpenGreen()

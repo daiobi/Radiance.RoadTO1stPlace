@@ -1,27 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Rover
 {
     public class IKSolver : MonoBehaviour
     {
-        public Transform effector, tip;
-        public PhysicalRotator pivot, upper, lower;
-        public Transform target;
+        [SerializeField] private Transform _effector;
+        [SerializeField] private PhysicalRotator _pivot;
+        [SerializeField] private PhysicalRotator _upper;
+        [SerializeField] private PhysicalRotator _lower;
+        [SerializeField] private Transform _target;
 
-        float upperLength, lowerLength;
-        Vector3 effectorTarget;
+        private float _upperLength;
+        private float _lowerLength;
+        private Vector3 _effectorTarget;
 
         void Reset()
         {
-            pivot = GetComponent<PhysicalRotator>();
+            _pivot = GetComponent<PhysicalRotator>();
             try
             {
-                upper = pivot.transform.GetChild(0).GetComponent<PhysicalRotator>();
-                lower = upper.transform.GetChild(0).GetComponent<PhysicalRotator>();
-                effector = lower.transform.GetChild(0);
-                tip = effector.GetChild(0);
+                _upper = _pivot.transform.GetChild(0).GetComponent<PhysicalRotator>();
+                _lower = _upper.transform.GetChild(0).GetComponent<PhysicalRotator>();
+                _effector = _lower.transform.GetChild(0);
             }
             catch (UnityException)
             {
@@ -29,33 +29,29 @@ namespace Rover
             }
         }
 
-        void Awake()
+        private void Awake()
         {
-            upperLength = (lower.transform.position - upper.transform.position).magnitude;
-            lowerLength = (effector.position - lower.transform.position).magnitude;
+            _upperLength = (_lower.transform.position - _upper.transform.position).magnitude;
+            _lowerLength = (_effector.position - _lower.transform.position).magnitude;
         }
 
-        void Update()
+        public void Solve()
         {
-            effectorTarget = target.position;
-            Solve();
-        }
+            _effectorTarget = _target.position;
 
-        void Solve()
-        {
-            var upperToTarget = (effectorTarget - upper.transform.position);
-            var a = upperLength;
-            var b = lowerLength;
+            var upperToTarget = (_effectorTarget - _upper.transform.position);
+            var a = _upperLength;
+            var b = _lowerLength;
             var c = upperToTarget.magnitude;
 
             var B = Mathf.Acos((c * c + a * a - b * b) / (2 * c * a)) * Mathf.Rad2Deg;
             var C = Mathf.Acos((a * a + b * b - c * c) / (2 * a * b)) * Mathf.Rad2Deg;
-            var phi = Mathf.Atan2(effectorTarget.y - upper.transform.position.y, Vector2.Distance(new Vector2(effectorTarget.x, effectorTarget.z), new Vector2(upper.transform.position.x, upper.transform.position.z))) * Mathf.Rad2Deg;
+            var phi = Mathf.Atan2(_effectorTarget.y - _upper.transform.position.y, Vector2.Distance(new Vector2(_effectorTarget.x, _effectorTarget.z), new Vector2(_upper.transform.position.x, _upper.transform.position.z))) * Mathf.Rad2Deg;
 
             if (!float.IsNaN(C))
             {
-                upper.SetTargetAngle(B + phi);
-                lower.SetTargetAngle(C - 180);
+                _upper.SetTargetAngle(B + phi);
+                _lower.SetTargetAngle(C - 180);
             }
         }
     }

@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Rover
 {
@@ -13,8 +12,19 @@ namespace Rover
         private RoverBattery _roverBattery;
         private RoverBoxes _roverBoxes;
         private RoverArm _roverArm;
+        public bool IsActivated { get; private set; } = false;
 
-        private bool _isActivated = false;
+        public enum BreakDownCause
+        {
+            BatteryLow,
+            Flip,
+            Health,
+            BoxInvalid,
+        }
+        public class RoverEvent : UnityEvent<BreakDownCause> { }
+        public RoverEvent OnBroken;
+        private bool _isBroken;
+
 
         private void Awake()
         {
@@ -25,74 +35,121 @@ namespace Rover
             _roverArm = GetComponent<RoverArm>();
         }
 
-        public void TurnOn()
+        private void Update()
         {
+            if (_isBroken) return;
+
+            if (_roverBattery.Value == 0)
+            {
+                _isBroken = true;
+                OnBroken?.Invoke(BreakDownCause.BatteryLow);
+            }
+            else if (Vector3.Angle(transform.up, Vector3.up) > 90)
+            {
+                _isBroken = true;
+                OnBroken?.Invoke(BreakDownCause.Flip);
+            }
+            else if (_roverHealth.HitCount > 6)
+            {
+                _isBroken = true;
+                OnBroken?.Invoke(BreakDownCause.Health);
+            }
+            else if (_roverBoxes.GreenState == BoxState.FilledInvalid ||
+                _roverBoxes.YellowState == BoxState.FilledInvalid ||
+                _roverBoxes.RedState == BoxState.FilledInvalid)
+            {
+                _isBroken = true;
+                OnBroken?.Invoke(BreakDownCause.BoxInvalid);
+            }
+
+            if (_roverBoxes.GreenState == BoxState.Filled) Tasks.SetGreenCollected();
+            if (_roverBoxes.YellowState == BoxState.Filled) Tasks.SetYellowCollected();
+            if (_roverBoxes.RedState == BoxState.Filled) Tasks.SetRedCollected();
+
+            if (_isBroken)
+            {
+                TurnOff();
+                Debug.Log("Broken");
+            }
+        }
+
+        public void RepairWheel(int n)
+        {
+            if (IsActivated)
+            {
+                _roverHealth.RepairWheel(n);
+            }
+        }
+        public bool TurnOn()
+        {
+            if (_isBroken) return false;
+
             _roverMovement.enabled = true;
-            _roverMovement.enabled = true;
+            _roverHealth.enabled = true;
             _roverBattery.enabled = true;
             _roverBoxes.enabled = true;
             _roverArm.enabled = true;
-            _isActivated = true;
-        }
+            IsActivated = true;
 
+            return true;
+        }
         public void TurnOff()
         {
             _roverMovement.Move(0, 0);
+            _roverArm.Move(0, 0, 0);
             _roverMovement.enabled = false;
             _roverHealth.enabled = false;
             _roverBattery.enabled = false;
             _roverBoxes.enabled = false;
             _roverArm.enabled = false;
-            _isActivated = false;
+            IsActivated = false;
         }
-
         public void Move(float acceleration, float steering)
         {
-            if (_isActivated)
+            if (IsActivated)
             {
                 _roverMovement.Move(acceleration, steering);
             }
         }
-
         public void MoveArm(float x, float y, float z)
         {
-            if (_isActivated)
+            if (IsActivated)
             {
                 _roverArm.Move(x, y, z);
             }
         }
-
+        public void SetArmGrab(float a)
+        {
+            if (IsActivated)
+            {
+                _roverArm.SetGrab(a);
+            }
+        }
         public void OpenGreenBox()
         {
-            if (_isActivated)
+            if (IsActivated)
             {
                 _roverBoxes.OpenGreen();
             }
         }
-
         public void OpenYellowBox()
         {
-            if (_isActivated)
+            if (IsActivated)
             {
                 _roverBoxes.OpenYellow();
             }
         }
-
         public void OpenBlueBox()
         {
-            if (_isActivated)
+            if (IsActivated)
             {
-                _roverBoxes.OpenBlue();
+                _roverBoxes.OpenRed();
             }
         }
-        public void RepairWheel(int n)
+        public void CloseBoxes()
         {
-            if (_isActivated)
-            {
-                _roverHealth.RepairWheel(n);
-            }
+            _roverBoxes.CloseAll();
         }
-
         public Telemetry GetTelemetry()
         {
             return new Telemetry()
@@ -114,7 +171,7 @@ namespace Rover
 
                 greenBoxState = _roverBoxes.GreenState,
                 yellowBoxState = _roverBoxes.YellowState,
-                blueBoxState = _roverBoxes.BlueState,
+                blueBoxState = _roverBoxes.RedState,
             };
         }
     }
