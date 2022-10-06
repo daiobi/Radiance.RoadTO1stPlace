@@ -10,7 +10,7 @@ namespace Rover
 
         public BoxState GreenState => _green.BoxState;
         public BoxState YellowState => _yellow.BoxState;
-        public BoxState BlueState => _blue.BoxState;
+        public BoxState RedState => _blue.BoxState;
 
         public void OpenGreen()
         {
@@ -26,7 +26,7 @@ namespace Rover
             _blue.Close();
         }
 
-        public void OpenBlue()
+        public void OpenRed()
         {
             _green.Close();
             _yellow.Close();
