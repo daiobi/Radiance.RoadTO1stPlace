@@ -3,21 +3,13 @@ using UnityEngine;
 
 namespace Rover
 {
-    [RequireComponent(typeof(HingeJoint))]
     public class PhysicalRotator : MonoBehaviour
     {
-        [SerializeField] private float _torque;
-
-        private HingeJoint _joint;
-
-        private void Awake()
-        {
-            _joint = GetComponent<HingeJoint>();
-        }
+        [SerializeField] private Vector3 _axis;
 
         public void SetTargetAngle(float angle)
         {
-            _joint.spring = new JointSpring() { spring = _joint.spring.spring, damper = _joint.spring.damper, targetPosition = angle };
+            transform.localRotation = Quaternion.AngleAxis(angle, _axis);
         }
     }
 }
