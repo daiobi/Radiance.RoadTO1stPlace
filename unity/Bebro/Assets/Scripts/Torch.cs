@@ -47,7 +47,7 @@ public class Torch : MonoBehaviour
 
             if (set_ == false)
             {
-                Debug.Log($"{x}x, {y}y");
+                //Debug.Log($"{x}x, {y}y");
                 _rover.Move(y, x);
 
             }
