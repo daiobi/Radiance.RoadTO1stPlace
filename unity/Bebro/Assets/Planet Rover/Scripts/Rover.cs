@@ -92,6 +92,7 @@ namespace Rover
         public void TurnOff()
         {
             _roverMovement.Move(0, 0);
+            _roverArm.Move(0, 0, 0);
             _roverMovement.enabled = false;
             _roverHealth.enabled = false;
             _roverBattery.enabled = false;

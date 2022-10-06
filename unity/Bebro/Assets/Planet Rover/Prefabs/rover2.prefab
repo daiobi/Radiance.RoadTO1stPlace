@@ -661,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e72e13179bef9409312f695c8a231a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _torque: 1
+  _axis: {x: 1, y: 0, z: 0}
 --- !u!59 &1532038771
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -3215,7 +3215,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5350877389927901922}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df729471cb20da741be36e13b650dd4d, type: 3}
   m_Name: 
@@ -3302,6 +3302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f215dce01b2eed6489075d0a92a27ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _solver: {fileID: 511409582}
   _maxDistance: 1.2
   _axis: {fileID: 1171380666}
   _armPosition: {fileID: 3744730783242886066}
@@ -4241,7 +4242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e72e13179bef9409312f695c8a231a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _torque: 1
+  _axis: {x: 1, y: 0, z: 0}
 --- !u!59 &642170313
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -5245,12 +5246,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc1606e443f17a142982941158bcff23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effector: {fileID: 3744730783242886066}
-  tip: {fileID: 8615025637771064012}
-  pivot: {fileID: 1171380666}
-  upper: {fileID: 1532038773}
-  lower: {fileID: 642170316}
-  target: {fileID: 1939573641}
+  _effector: {fileID: 3744730783242886066}
+  _pivot: {fileID: 1171380666}
+  _upper: {fileID: 1532038773}
+  _lower: {fileID: 642170316}
+  _target: {fileID: 1939573641}
 --- !u!54 &1171380663
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5293,7 +5293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e72e13179bef9409312f695c8a231a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _torque: 1
+  _axis: {x: 0, y: 1, z: 0}
 --- !u!59 &1171380664
 HingeJoint:
   m_ObjectHideFlags: 0
