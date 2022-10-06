@@ -16,7 +16,7 @@ public class RadarMinigame : MonoBehaviour
     private void Update()
     {
         if (_isWon)
-            _radarRotation.rotation = Quaternion.Slerp(_radarRotation.rotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * 0.1f);
+            _radarRotation.rotation = Quaternion.Slerp(_radarRotation.rotation, Quaternion.Euler(0, -90, 0), Time.deltaTime * 0.5f);
     }
 
     private void HandleWin()
