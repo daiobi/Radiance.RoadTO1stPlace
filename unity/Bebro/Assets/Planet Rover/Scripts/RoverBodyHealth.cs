@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Rover
@@ -6,7 +7,7 @@ namespace Rover
     public class RoverBodyHealth : MonoBehaviour
     {
         [SerializeField] private DamageTrigger _damageTrigger;
-        public UnityEvent OnBroken;
+        public event Action OnBroken;
 
         public bool IsBroken { get; private set; } = false;
 
@@ -24,6 +25,7 @@ namespace Rover
         {
             if (!IsBroken)
             {
+                Debug.Log("Body broken");
                 IsBroken = true;
                 OnBroken?.Invoke();
             }

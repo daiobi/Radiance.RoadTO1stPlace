@@ -11,6 +11,8 @@ namespace Rover
         private float _acceleration;
         private float _steer;
 
+        private float _a;
+
         private void Awake()
         {
             _rover = GetComponent<Rover>();
@@ -32,8 +34,7 @@ namespace Rover
             {
                 _rover.MoveArm(1, 0, 0);
             }
-
-            if (Input.GetKey(KeyCode.T))
+            else if (Input.GetKey(KeyCode.T))
             {
                 _rover.MoveArm(0, 0, 1);
             }
@@ -41,14 +42,17 @@ namespace Rover
             {
                 _rover.MoveArm(0, 0, -1);
             }
-
-            if (Input.GetKey(KeyCode.U))
+            else if (Input.GetKey(KeyCode.U))
             {
                 _rover.MoveArm(0, 1, 0);
             }
             else if (Input.GetKey(KeyCode.J))
             {
                 _rover.MoveArm(0, -1, 0);
+            }
+            else
+            {
+                _rover.MoveArm(0, 0, 0);
             }
 
             if (Input.GetKeyDown(KeyCode.I))
@@ -63,6 +67,17 @@ namespace Rover
             {
                 _rover.OpenBlueBox();
             }
+
+            if (Input.GetKey(KeyCode.V))
+            {
+                _a = Mathf.MoveTowards(_a, 0, Time.deltaTime);
+            }
+            else if (Input.GetKey(KeyCode.B))
+            {
+                _a = Mathf.MoveTowards(_a, 1, Time.deltaTime);
+            }
+
+            _rover.SetArmGrab(_a);
         }
 
         private void FixedUpdate()

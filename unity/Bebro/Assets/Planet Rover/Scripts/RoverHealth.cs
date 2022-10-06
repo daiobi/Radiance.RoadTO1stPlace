@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Rover
 {
@@ -12,7 +13,12 @@ namespace Rover
         [SerializeField] private Wheel _LBWheel;
         [SerializeField] private Wheel _RBWheel;
 
-        public int HitCount { get; private set; }
+        public class WheelEvent : UnityEvent<int> { }
+        public WheelEvent OnWheelBroken;
+        public UnityEvent OnBodyBroken;
+
+
+        public int HitCount { get; private set; } = 0;
 
         public bool IsBodyBroken { get => _bodyHealth.IsBroken; }
         public bool IsLFWheelBroken { get => _LFWheel.IsBroken; }
@@ -51,29 +57,36 @@ namespace Rover
 
         private void OnEnable()
         {
-            _bodyHealth.OnBroken.AddListener(CountHit);
-            _LFWheel.OnBroken.AddListener(CountHit);
-            _RFWheel.OnBroken.AddListener(CountHit);
-            _LCWheel.OnBroken.AddListener(CountHit);
-            _RCWheel.OnBroken.AddListener(CountHit);
-            _LBWheel.OnBroken.AddListener(CountHit);
-            _RBWheel.OnBroken.AddListener(CountHit);
+            _bodyHealth.OnBroken += HandleBodyBroken;
+            _LFWheel.OnBroken += HandleWheelBroken;
+            _RFWheel.OnBroken += HandleWheelBroken;
+            _LCWheel.OnBroken += HandleWheelBroken;
+            _RCWheel.OnBroken += HandleWheelBroken;
+            _LBWheel.OnBroken += HandleWheelBroken;
+            _RBWheel.OnBroken += HandleWheelBroken;
         }
 
         private void OnDisable()
         {
-            _bodyHealth.OnBroken.RemoveListener(CountHit);
-            _LFWheel.OnBroken.RemoveListener(CountHit);
-            _RFWheel.OnBroken.RemoveListener(CountHit);
-            _LCWheel.OnBroken.RemoveListener(CountHit);
-            _RCWheel.OnBroken.RemoveListener(CountHit);
-            _LBWheel.OnBroken.RemoveListener(CountHit);
-            _RBWheel.OnBroken.RemoveListener(CountHit);
+            _bodyHealth.OnBroken -= HandleBodyBroken;
+            _LFWheel.OnBroken -= HandleWheelBroken;
+            _RFWheel.OnBroken -= HandleWheelBroken;
+            _LCWheel.OnBroken -= HandleWheelBroken;
+            _RCWheel.OnBroken -= HandleWheelBroken;
+            _LBWheel.OnBroken -= HandleWheelBroken;
+            _RBWheel.OnBroken -= HandleWheelBroken;
         }
 
-        private void CountHit()
+        private void HandleBodyBroken()
         {
             HitCount++;
+            OnBodyBroken?.Invoke();
+        }
+
+        private void HandleWheelBroken(int n)
+        {
+            HitCount++;
+            OnWheelBroken?.Invoke(n);
         }
     }
 }

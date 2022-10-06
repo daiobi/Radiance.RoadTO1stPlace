@@ -7,9 +7,26 @@ namespace Rover
     public class WheelVisual : MonoBehaviour
     {
         [SerializeField] private Transform _wheelJoint;
-        public void SetRotation(Quaternion rotation)
+        private float _rpm;
+        private float _steering;
+
+        private void Update()
         {
-            transform.rotation = rotation;
+            transform.Rotate(_rpm / 60 * 360 * Time.deltaTime, 0, 0, Space.Self);
+
+            if (!_wheelJoint)
+            {
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, _steering, 0);
+            } else
+            {
+                _wheelJoint.localEulerAngles = new Vector3(0, _steering, 0);
+            }
+        }
+
+        public void SetValues(float rpm, float steering)
+        {
+            _rpm = rpm;
+            _steering = steering;
         }
     }
 }

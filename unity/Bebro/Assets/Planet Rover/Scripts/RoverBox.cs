@@ -9,10 +9,42 @@ namespace Rover
         [SerializeField] private Transform _topPlate;
         [SerializeField] private float _closedPos;
         [SerializeField] private float _openedPos;
+        [SerializeField] private SampleKind _sampleKind;
+
+        public enum SampleKind {
+            Green,
+            Yellow,
+            Red
+        }
 
         private bool _isClosed = true;
 
         public BoxState BoxState { get; private set; }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            var grabable = other.GetComponent<Grabable>();
+            if (grabable)
+            {
+                _isClosed = true;
+                if (_sampleKind == grabable.SampleKind)
+                {
+                    BoxState = BoxState.Filled;
+                }
+                else
+                {
+                    BoxState = BoxState.FilledInvalid;
+                    Debug.Log("Invalid fill");
+                }
+                StartCoroutine(DisableGrabable(grabable));
+            } 
+        }
+
+        private IEnumerator DisableGrabable(Grabable grabable)
+        {
+            yield return new WaitForSeconds(1f);
+            grabable.gameObject.SetActive(false);
+        }
 
         private void Start()
         {
@@ -27,17 +59,20 @@ namespace Rover
 
         public void Open()
         {
-            _isClosed = false;
             if (BoxState == BoxState.Closed)
             {
+                _isClosed = false;
                 BoxState = BoxState.Opened;
             }
         }
 
         public void Close()
         {
-            _isClosed = true;
-            BoxState = BoxState.Closed;
+            if (BoxState == BoxState.Opened)
+            {
+                _isClosed = true;
+                BoxState = BoxState.Closed;
+            }
         }
     }
 }

@@ -2,83 +2,110 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rover;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
 
 public class Torch : MonoBehaviour
 {
+    [SerializeField] private GameObject[] _screens;
     [SerializeField] private float _deathzone = 10;
     [SerializeField] private float _maxAngle = 30;
     [SerializeField] private Rover.Rover _rover;
     [SerializeField] private float _resetSpeed;
-    [SerializeField] private bool set_;
-    [SerializeField] private bool state_;
+    [SerializeField] private bool _isControllingArm;
     [SerializeField] private Btn _Btn;
+    private ActionBasedController _currentController;
     private bool _isSelected;
+
+    private bool _isControllingMinigame;
+
+    private float _joystickX;
+    private float _joystickY;
+    private float _joystickButtonAxis;
+    private float _joystickActivate;
+
+    private InputAction _buttonAxis;
 
     public void Start()
     {
-        set_ = GetComponent<Btn>();
-        state_ = GetComponent<Btn>();
         _rover.TurnOff();
-        
+        var controls = new XRIDefaultInputActions();
+        _buttonAxis = controls.XRIButtons.ButtonAxis;
+        controls.Enable();
     }
 
     private void Update()
     {
-        if (!_isSelected)
+        foreach (var s in _screens) s.SetActive(_rover.IsActivated);
+
+        GetJoystickValues();
+
+        if (!_currentController)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * _resetSpeed);
         }
-        if (state_ == true)
+        if (_rover.IsActivated == true)
         {
-            _rover.TurnOn();
-
-            float y = transform.rotation.eulerAngles.x;
-            if (y > 180) y = y - 360;
-            if (-_deathzone < y && y < _deathzone) y = 0;
-
-            float x = transform.rotation.eulerAngles.z;
-            if (x > 180) x = x - 360;
-            if (-_deathzone < x && x < _deathzone) x = 0;
-
-            x /= _maxAngle;
-            y /= -_maxAngle;
-
-            if (set_ == false)
+            if (_isControllingArm)
             {
-                Debug.Log($"{x}x, {y}y");
-                _rover.Move(y, x);
-
+                _rover.MoveArm(_joystickX, _joystickButtonAxis, _joystickY);
+                _rover.SetArmGrab(_joystickActivate);
             }
             else
             {
-                //...
-                _rover.MoveArm(x, 0, y);
+                _rover.Move(_joystickY, _joystickX);
             }
         }
-        else
-        {
-            _rover.TurnOff();
-        }
+
     }
 
-    public void StartSelect()
+    private void GetJoystickValues()
     {
-        _isSelected = true;
+        _joystickY = transform.rotation.eulerAngles.x;
+        if (_joystickY > 180) _joystickY = _joystickY - 360;
+        if (-_deathzone < _joystickY && _joystickY < _deathzone) _joystickY = 0;
+
+        _joystickX = transform.rotation.eulerAngles.z;
+        if (_joystickX > 180) _joystickX = _joystickX - 360;
+        if (-_deathzone < _joystickX && _joystickX < _deathzone) _joystickX = 0;
+
+        _joystickX /= _maxAngle;
+        _joystickY /= -_maxAngle;
+
+        Debug.Log(_buttonAxis.ReadValue<float>());
+        _joystickActivate = _currentController ? _currentController.activateActionValue.action.ReadValue<float>() : 0f;
+        _joystickButtonAxis = _currentController ? _buttonAxis.ReadValue<float>() : 0f;
+    }
+
+    private void ControlRover()
+    {
+
+    }
+
+    public void StartSelect(SelectEnterEventArgs args)
+    {
+        _currentController = args.interactorObject.transform.GetComponent<ActionBasedController>();
     }
 
     public void EndSelect()
     {
-        _isSelected = false;
+        _currentController = null;
     }
 
     public void WwqWwwEeeEewQwe()
     {
-        set_ = !set_; //False --> True
+        _isControllingArm = !_isControllingArm; //False --> True
     }
 
     public void RoverState_()
     {
-        state_ = !state_;   //False --> True 
+        if (_rover.IsActivated)
+        {
+            _rover.TurnOff();
+        } else
+        {
+            _rover.TurnOn();
+        }
     }
 
     public void OpenGreen()

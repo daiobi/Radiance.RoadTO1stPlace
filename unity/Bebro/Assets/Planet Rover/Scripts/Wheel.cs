@@ -11,13 +11,16 @@ namespace Rover
         [SerializeField] private DamageTrigger _damageTrigger;
         [SerializeField] private float _brakeForce;
         [SerializeField] private float _steeringAngle;
-        [SerializeField] private float _motorForce; 
+        [SerializeField] private float _motorForce;
+        [SerializeField] private int _n;
+        [SerializeField] private bool _isBroken;
 
-        public UnityEvent OnBroken;
+        public delegate void WheelEvent(int n);
+        public event WheelEvent OnBroken;
 
         private WheelCollider _wheelCollider;
 
-        public bool IsBroken { get; private set; }
+        public bool IsBroken => _isBroken;
 
         private void Awake()
         {
@@ -37,7 +40,7 @@ namespace Rover
 
         public void Repair()
         {
-            IsBroken = false;
+            _isBroken = false;
         }
 
         public void SetTorque(float torque)
@@ -59,11 +62,9 @@ namespace Rover
         private void TakeDamage()
         {
             if (!IsBroken) {
-                IsBroken = true;
-                OnBroken?.Invoke();
+                _isBroken = true;
+                OnBroken?.Invoke(_n);
                 Debug.Log($"{name} broken");
-                
-
             }
         }
     }
