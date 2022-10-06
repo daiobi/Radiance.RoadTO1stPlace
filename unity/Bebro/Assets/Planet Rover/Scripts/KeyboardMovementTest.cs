@@ -11,6 +11,8 @@ namespace Rover
         private float _acceleration;
         private float _steer;
 
+        private float _a;
+
         private void Awake()
         {
             _rover = GetComponent<Rover>();
@@ -65,6 +67,17 @@ namespace Rover
             {
                 _rover.OpenBlueBox();
             }
+
+            if (Input.GetKey(KeyCode.V))
+            {
+                _a = Mathf.MoveTowards(_a, 0, Time.deltaTime);
+            }
+            else if (Input.GetKey(KeyCode.B))
+            {
+                _a = Mathf.MoveTowards(_a, 1, Time.deltaTime);
+            }
+
+            _rover.SetArmGrab(_a);
         }
 
         private void FixedUpdate()
