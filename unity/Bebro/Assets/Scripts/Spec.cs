@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Rover;
+using UnityEngine.SceneManagement;
 
 public class Spec : MonoBehaviour
 {
     [SerializeField] private Rover.Wheel _wheel;
     [SerializeField] private Rover.Rover _rover;
-    public GameObject leveler;
+    [SerializeField] private int _dst;
     public Text _WheelDest;
-    private void Start()
-    {
-        
-    }
+    public GameObject _gmobj;
+    public GameObject _rov;
     private void Update()
     {
         var tel = _rover.GetTelemetry();
@@ -21,24 +20,26 @@ public class Spec : MonoBehaviour
         a.Add($"Оставшийся заряд: {(int)tel.Battery}\n");
         a.Add($"Поломок: {tel.HitCount}\n");
         a.Add($"Скорость: {(int)tel.Speed} км/ч\n");
+        a.Add($"До ровера: {(int)Vector3.Distance(_gmobj.transform.position, _rov.transform.position)} м\n");
         if (tel.LFBroken)
-            a.Add("LeftForward broken\n");
+            a.Add("1 левое колесо сломано\n");
         if (tel.RFBroken)
-            a.Add("RightForward broken\n");
+            a.Add("1 правое колесо сломано\n");
         if (tel.LCBroken)
-            a.Add("LeftCenter broken\n");
+            a.Add("2 левое колесо сломано\n");
         if (tel.RCBroken)
-            a.Add("RightCenter broken\n");
+            a.Add("2 правое колесо сломано\n");
         if (tel.LBBroken)
-            a.Add("LeftBackward broken\n");
+            a.Add("3 левое колесо сломано\n");
         if (tel.RBBroken)
-            a.Add("RightBackward broken\n");
+            a.Add("3 правое колесо сломано\n");
+        if (tel.LBBroken && tel.RFBroken && tel.LCBroken && tel.RCBroken && tel.LBBroken && tel.RBBroken)
+        { 
+            _rover.TurnOff();
+            Debug.Log("Игра окончена");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
-
-
-
-
-
+        }
         _WheelDest.text = string.Join("", a);
     }
 

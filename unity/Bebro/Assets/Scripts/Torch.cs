@@ -13,6 +13,7 @@ public class Torch : MonoBehaviour
     [SerializeField] private bool state_;
     [SerializeField] private Btn _Btn;
     private bool _isSelected;
+    
 
     public void Start()
     {
@@ -42,6 +43,8 @@ public class Torch : MonoBehaviour
 
             x /= _maxAngle;
             y /= -_maxAngle;
+            
+
 
             if (set_ == false)
             {
@@ -59,6 +62,7 @@ public class Torch : MonoBehaviour
         {
             _rover.TurnOff();
         }
+
     }
 
     public void StartSelect()
