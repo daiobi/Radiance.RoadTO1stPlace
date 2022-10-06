@@ -9230,6 +9230,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4866906219533435427, guid: 52d09b1e5ac48c14aad73f4dcd5affde,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866906219533435427, guid: 52d09b1e5ac48c14aad73f4dcd5affde,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866906219533435427, guid: 52d09b1e5ac48c14aad73f4dcd5affde,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866906219533435427, guid: 52d09b1e5ac48c14aad73f4dcd5affde,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.4524908
       objectReference: {fileID: 0}
@@ -12795,7 +12810,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4424396828275768066}
         m_MethodName: StartSelect
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12935,7 +12950,7 @@ MonoBehaviour:
   _maxAngle: 30
   _rover: {fileID: 543779529}
   _resetSpeed: 5
-  set_: 0
+  _isControllingArm: 0
   _Btn: {fileID: 1543768064}
 --- !u!1 &4424396828911192270
 GameObject:

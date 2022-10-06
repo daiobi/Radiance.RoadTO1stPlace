@@ -52,6 +52,7 @@ namespace Rover
             {
                 if (_grabValue > _grabTrigger.Grabable.MaxForce)
                 {
+                    _grabTrigger.Detach();
                     _grabTrigger.Grabable.BreakDown();
                     Debug.Log("Game over");
                 }
