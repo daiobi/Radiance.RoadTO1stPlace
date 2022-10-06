@@ -21,6 +21,8 @@ public class Spec : MonoBehaviour
         a.Add($"Поломок: {tel.HitCount}\n");
         a.Add($"Скорость: {(int)tel.Speed} км/ч\n");
         a.Add($"До ровера: {(int)Vector3.Distance(_gmobj.transform.position, _rov.transform.position)} м\n");
+        if (tel.BodyBroken)
+            a.Add("Корпус сломан\n");
         if (tel.LFBroken)
             a.Add("1 левое колесо сломано\n");
         if (tel.RFBroken)

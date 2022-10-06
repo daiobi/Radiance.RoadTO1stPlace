@@ -81,7 +81,7 @@ namespace Rover
             if (_isBroken) return false;
 
             _roverMovement.enabled = true;
-            _roverMovement.enabled = true;
+            _roverHealth.enabled = true;
             _roverBattery.enabled = true;
             _roverBoxes.enabled = true;
             _roverArm.enabled = true;
