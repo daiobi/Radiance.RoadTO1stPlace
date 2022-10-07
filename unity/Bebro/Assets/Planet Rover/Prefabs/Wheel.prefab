@@ -4842,7 +4842,7 @@ MonoBehaviour:
   _damageTrigger: {fileID: 6800592135701959571}
   _brakeForce: 50
   _steeringAngle: 25
-  _motorForce: 25
+  _motorForce: 40
   _n: 0
   _isBroken: 0
 --- !u!114 &3544286814578560562
