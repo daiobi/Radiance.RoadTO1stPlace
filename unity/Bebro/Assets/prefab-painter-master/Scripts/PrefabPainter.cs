@@ -39,7 +39,7 @@ namespace PrefabPainter
         Vector3 currentMousePosition = Vector3.zero;
         Vector3 previousMousePosition = Vector3.zero;
         RaycastHit mouseHitPoint;
-        string MouseLocationName = "Mouse Location";
+        string MouseLocationName = "Mouse Location"; 
         Transform MouseLocation;
 
         // Brush Settings
