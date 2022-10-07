@@ -8,10 +8,11 @@ namespace Rover
     [RequireComponent(typeof(WheelCollider))]
     public class Wheel : MonoBehaviour
     {
+        [SerializeField] private AnimationCurve _torqueCurve;
         [SerializeField] private DamageTrigger _damageTrigger;
         [SerializeField] private float _brakeForce;
         [SerializeField] private float _steeringAngle;
-        [SerializeField] private float _motorForce;
+        [SerializeField] private float _maxRpm;
         [SerializeField] private int _n;
         [SerializeField] private bool _isBroken;
 
@@ -19,6 +20,7 @@ namespace Rover
         public event WheelEvent OnBroken;
 
         private WheelCollider _wheelCollider;
+        private float _torque;
 
         public bool IsBroken => _isBroken;
 
@@ -37,6 +39,11 @@ namespace Rover
             _damageTrigger.OnDamage.RemoveListener(TakeDamage);
         }
 
+        private void Update()
+        {
+            _wheelCollider.motorTorque = _torqueCurve.Evaluate(_wheelCollider.rpm) * _torque;
+        }
+
 
         public void Repair()
         {
@@ -51,8 +58,9 @@ namespace Rover
             } else
             {
                 _wheelCollider.brakeTorque = 0;
-                _wheelCollider.motorTorque = torque * _motorForce;
             }
+
+            _torque = torque;
         }
 
         public void SetSteering(float steering)
