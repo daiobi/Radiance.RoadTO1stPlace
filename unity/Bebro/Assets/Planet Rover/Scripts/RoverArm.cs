@@ -80,15 +80,16 @@ namespace Rover
             if (_axisAngle < -180) _axisAngle = 360 + _axisAngle;
 
             Vector3 offset = new Vector3(0, _input.y * _ySpeed * Time.deltaTime, -_input.z * _zSpeed * Time.deltaTime);
-            float distance = Vector3.Distance(_target.position + offset, _axis.transform.position);
-            if (distance <= _maxDistance)
-            {
-                _target.Translate(offset, Space.Self);
-            }
+            _target.Translate(offset, Space.Self);
 
             _axis.SetTargetAngle(_axisAngle);
-
             _solver.Solve();
+
+            if (Vector3.Distance(_target.position, _armPosition.transform.position) > 0.01f)
+            {
+                _target.position = _armPosition.position;
+                _target.localPosition = new Vector3(0, _target.localPosition.y, _target.localPosition.z);
+            }
         }
 
         private void Triggered()
