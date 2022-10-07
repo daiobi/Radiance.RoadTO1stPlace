@@ -72,7 +72,6 @@ public class Torch : MonoBehaviour
         _joystickX /= _maxAngle;
         _joystickY /= -_maxAngle;
 
-        Debug.Log(_buttonAxis.ReadValue<float>());
         _joystickActivate = _currentController ? _currentController.activateActionValue.action.ReadValue<float>() : 0f;
         _joystickButtonAxis = _currentController ? _buttonAxis.ReadValue<float>() : 0f;
     }

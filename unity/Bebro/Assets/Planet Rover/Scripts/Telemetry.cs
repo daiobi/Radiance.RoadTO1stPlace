@@ -8,9 +8,9 @@ namespace Rover
         public float Direction;
         public float HorizontalAngle;
         public float Speed;
-        public float Battery;
+        public float BatteryPercents;
 
-        public int HitCount;
+        public int Health;
         public bool BodyBroken;
         public bool LFBroken;
         public bool RFBroken;
