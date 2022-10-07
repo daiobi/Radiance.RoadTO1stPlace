@@ -40,6 +40,9 @@ TagManager:
   - 
   - Teleport
   m_SortingLayers:
+  - name: UI
+    uniqueID: 2100701129
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

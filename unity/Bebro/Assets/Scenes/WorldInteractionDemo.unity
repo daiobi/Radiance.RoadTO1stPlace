@@ -3713,7 +3713,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2100701129
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &709515216
@@ -4730,7 +4730,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843013317}
   m_LocalRotation: {x: 0.00000007392562, y: 0.0016002951, z: -0.000000010280217, w: 0.9999988}
-  m_LocalPosition: {x: 0, y: 0, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2836209, y: 0.49536252, z: 0.19853857}
   m_Children: []
   m_Father: {fileID: 1214886378}
@@ -5060,7 +5060,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2100701129
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!4 &940954309 stripped
@@ -5165,7 +5165,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2100701129
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!4 &988560117 stripped
@@ -6013,7 +6013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 8.701294, y: 450.55234}
+  m_AnchoredPosition: {x: 0.03, y: 450.55234}
   m_SizeDelta: {x: 966, y: 595}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1135416997
@@ -6073,7 +6073,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2100701129
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!1 &1214886377
@@ -6102,7 +6102,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214886377}
   m_LocalRotation: {x: -0.0000000851578, y: 0.7059386, z: 0.00000017881392, w: 0.7082731}
-  m_LocalPosition: {x: 0, y: 0, z: -7.012}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0054817763, y: 0.0019503619, z: 0.013297932}
   m_Children:
   - {fileID: 843013318}
@@ -10928,7 +10928,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000007066055, y: -0.00027152905, z: -0.018237997}
+  m_ConnectedAnchor: {x: -0.00000007066055, y: -0.00027153277, z: -0.018237997}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -11122,7 +11122,7 @@ MonoBehaviour:
   m_ThrowVelocityScale: 1.5
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
-  m_RetainTransformParent: 1
+  m_RetainTransformParent: 0
   m_AttachPointCompatibilityMode: 0
 --- !u!54 &4424396828275768065
 Rigidbody:
