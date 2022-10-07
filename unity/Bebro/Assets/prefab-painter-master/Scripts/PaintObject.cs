@@ -6,7 +6,7 @@ namespace PrefabPainter
     [System.Serializable]
     public class PaintObject
     {
-        private GameObject go;
+        [SerializeField] private GameObject go;
         private Vector2 size = Vector2.one;
         private bool randomRotationX = false;
         private bool randomRotationY = false;
