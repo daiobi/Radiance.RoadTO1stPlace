@@ -45,9 +45,14 @@ namespace Rover
         }
 
 
-        public void Repair()
+        public bool Repair()
         {
-            _isBroken = false;
+            if (_isBroken)
+            {
+                _isBroken = false;
+                return true;
+            }
+            return false;
         }
 
         public void SetTorque(float torque)

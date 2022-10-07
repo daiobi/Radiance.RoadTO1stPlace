@@ -4,6 +4,7 @@ using UnityEngine;
 using Rover;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class Torch : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class Torch : MonoBehaviour
     [SerializeField] private float _resetSpeed;
     [SerializeField] private bool _isControllingArm;
     [SerializeField] private Btn _Btn;
+    [SerializeField] private Spec _ui;
+    //public GameObject _lightArm;
+    //public GameObject _lightFront;
+
     private ActionBasedController _currentController;
     private bool _isSelected;
 
@@ -93,7 +98,9 @@ public class Torch : MonoBehaviour
 
     public void WwqWwwEeeEewQwe()
     {
-        _isControllingArm = !_isControllingArm; //False --> True
+        _isControllingArm = !_isControllingArm;
+        //False --> True
+        //_lightArm.SetActive(true);
     }
 
     public void RoverState_()
@@ -124,6 +131,9 @@ public class Torch : MonoBehaviour
 
     public void Repair(int n)
     {
-        _rover.RepairWheel(n);
+        if (_rover.RepairWheel(n))
+        {
+            _ui.OnWheelRepaired(n);
+        }
     }
 }

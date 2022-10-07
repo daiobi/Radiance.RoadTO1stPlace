@@ -7,6 +7,7 @@ public class RadarMinigame : MonoBehaviour
     [SerializeField] private Transform _radarRotation;
     [SerializeField] private Move _minigame;
     private bool _isWon;
+    private bool _isOpened;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class RadarMinigame : MonoBehaviour
 
     public void CloseMinigame()
     {
+        _isOpened = true;
         _minigamePanel.SetActive(false);
     }
 
@@ -35,7 +37,16 @@ public class RadarMinigame : MonoBehaviour
     {
         if (!_isWon)
         {
+            _isOpened = true;
             _minigamePanel.SetActive(true);
+        }
+    }
+
+    public void HandleButtonClick()
+    {
+        if (_isOpened)
+        {
+            _minigame.btn();
         }
     }
 }
