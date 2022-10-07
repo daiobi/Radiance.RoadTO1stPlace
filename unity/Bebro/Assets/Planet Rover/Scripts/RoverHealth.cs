@@ -28,28 +28,22 @@ namespace Rover
         public bool IsLBWheelBroken { get => _LBWheel.IsBroken; }
         public bool IsRBWheelBroken { get => _RBWheel.IsBroken; }
 
-        public void RepairWheel(int n)
+        public bool RepairWheel(int n)
         {
             switch(n)
             {
                 case 1:
-                    _LFWheel.Repair();
-                    break;
+                    return _LFWheel.Repair();
                 case 2:
-                    _LCWheel.Repair();
-                    break;
+                    return _LCWheel.Repair();
                 case 3:
-                    _LBWheel.Repair();
-                    break;
+                    return _LBWheel.Repair();
                 case 4:
-                    _RFWheel.Repair();
-                    break;
+                    return _RFWheel.Repair();
                 case 5:
-                    _RCWheel.Repair();
-                    break;
+                    return _RCWheel.Repair();
                 case 6:
-                    _RBWheel.Repair();
-                    break;
+                    return _RBWheel.Repair();
                 default:
                     throw new System.InvalidOperationException();
             }

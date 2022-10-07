@@ -14,6 +14,7 @@ public class Torch : MonoBehaviour
     [SerializeField] private float _resetSpeed;
     [SerializeField] private bool _isControllingArm;
     [SerializeField] private Btn _Btn;
+    [SerializeField] private Spec _spec;
     private ActionBasedController _currentController;
     private bool _isSelected;
 
@@ -76,11 +77,6 @@ public class Torch : MonoBehaviour
         _joystickButtonAxis = _currentController ? _buttonAxis.ReadValue<float>() : 0f;
     }
 
-    private void ControlRover()
-    {
-
-    }
-
     public void StartSelect(SelectEnterEventArgs args)
     {
         _currentController = args.interactorObject.transform.GetComponent<ActionBasedController>();
@@ -124,6 +120,10 @@ public class Torch : MonoBehaviour
 
     public void Repair(int n)
     {
-        _rover.RepairWheel(n);
+        if (_rover.RepairWheel(n))
+        {
+            _spec.HandleWheelFix(n);
+        }
+        
     }
 }
