@@ -75,14 +75,12 @@ namespace Rover
             }
         }
 
-        public bool RepairWheel(int n)
+        public void RepairWheel(int n)
         {
             if (IsActivated)
             {
-                return _roverHealth.RepairWheel(n);
+                _roverHealth.RepairWheel(n);
             }
-
-            return false;
         }
         public bool TurnOn()
         {
