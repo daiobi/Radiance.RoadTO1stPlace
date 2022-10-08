@@ -8,6 +8,9 @@ public class Spec : MonoBehaviour
     [SerializeField] private Rover.Wheel _wheel;
     [SerializeField] private Rover.Rover _rover;
     [SerializeField] private int _dst;
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioClip _fixClip;
+    [SerializeField] private AudioClip _breakClip;
     public Image[] _Image;
     public Sprite[] _BrokenSprite;
     public Image _ImageSignal;
@@ -44,6 +47,8 @@ public class Spec : MonoBehaviour
 
     private void Update()
     {
+        if (!_rover.IsActivated) return;
+
         var _Dist = (int)Vector3.Distance(_gmobj.transform.position, _rover.transform.position);
         if (_Dist >= 80)
             _ImageSignal.sprite = _SpritesSignal[3];
@@ -81,36 +86,43 @@ public class Spec : MonoBehaviour
         {
             _lastStatuses[0] = tel.BodyBroken;
             _log.Add($"> Сломан корпус");
+            _source.PlayOneShot(_breakClip);
         }
         if (_lastStatuses[1] != tel.LFBroken)
         {
             _lastStatuses[1] = tel.LFBroken;
             _log.Add($"> Сломано 1 колесо");
+            _source.PlayOneShot(_breakClip);
         }
         if (_lastStatuses[2] != tel.LCBroken)
         {
             _lastStatuses[2] = tel.LCBroken;
             _log.Add($"> Сломано 2 колесо");
+            _source.PlayOneShot(_breakClip);
         }
         if (_lastStatuses[3] != tel.LBBroken)
         {
             _lastStatuses[3] = tel.LBBroken;
             _log.Add($"> Сломано 3 колесо");
+            _source.PlayOneShot(_breakClip);
         }
         if (_lastStatuses[4] != tel.RFBroken)
         {
             _lastStatuses[4] = tel.RFBroken;
             _log.Add($"> Сломано 4 колесо");
+            _source.PlayOneShot(_breakClip);
         }
         if (_lastStatuses[5] != tel.RCBroken)
         {
             _lastStatuses[5] = tel.RCBroken;
             _log.Add($"> Сломано 5 колесо");
+            _source.PlayOneShot(_breakClip);
         }
         if (_lastStatuses[6] != tel.RBBroken)
         {
             _lastStatuses[6] = tel.RBBroken;
             _log.Add($"> Сломано 6 колесо");
+            _source.PlayOneShot(_breakClip);
         }
     }
 
@@ -118,6 +130,7 @@ public class Spec : MonoBehaviour
     {
         _lastStatuses[n] = false;
         _log.Add($"> Колесо {n} починено");
+        _source.PlayOneShot(_fixClip);
     }
     
     
