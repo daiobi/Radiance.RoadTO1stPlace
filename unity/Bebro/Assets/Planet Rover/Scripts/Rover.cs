@@ -22,6 +22,7 @@ namespace Rover
             Flip,
             Health,
             BoxInvalid,
+            Distance,
         }
         [System.Serializable]
         public class RoverEvent : UnityEvent<BreakDownCause> { }
