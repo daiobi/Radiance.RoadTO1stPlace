@@ -7,6 +7,8 @@ namespace Rover
     [RequireComponent(typeof(RoverBoxes), typeof(RoverArm))]
     public class Rover : MonoBehaviour
     {
+        [SerializeField] private int _maxHealth;
+
         private RoverMovement _roverMovement;
         private RoverHealth _roverHealth;
         private RoverBattery _roverBattery;
@@ -49,7 +51,7 @@ namespace Rover
                 _isBroken = true;
                 OnBroken?.Invoke(BreakDownCause.Flip);
             }
-            else if (_roverHealth.HitCount > 6)
+            else if (_roverHealth.HitCount > _maxHealth)
             {
                 _isBroken = true;
                 OnBroken?.Invoke(BreakDownCause.Health);
@@ -73,12 +75,14 @@ namespace Rover
             }
         }
 
-        public void RepairWheel(int n)
+        public bool RepairWheel(int n)
         {
             if (IsActivated)
             {
-                _roverHealth.RepairWheel(n);
+                return _roverHealth.RepairWheel(n);
             }
+
+            return false;
         }
         public bool TurnOn()
         {
@@ -125,6 +129,12 @@ namespace Rover
                 _roverArm.SetGrab(a);
             }
         }
+
+        public void SetArmActive(bool state)
+        {
+            _roverArm.SetActive(state);
+        }
+
         public void OpenGreenBox()
         {
             if (IsActivated)
@@ -157,10 +167,10 @@ namespace Rover
                 Position = transform.position,
                 Direction = transform.rotation.eulerAngles.y,
                 HorizontalAngle = Vector3.Angle(transform.up, Vector3.up),
-                Battery = _roverBattery.Value,
+                BatteryPercents = _roverBattery.ValuePercents,
                 Speed = _roverMovement.SpeedKmPH,
 
-                HitCount = _roverHealth.HitCount,
+                Health = _maxHealth - _roverHealth.HitCount,
                 BodyBroken = _roverHealth.IsBodyBroken,
                 LFBroken = _roverHealth.IsLFWheelBroken,
                 RFBroken = _roverHealth.IsRFWheelBroken,

@@ -6,7 +6,9 @@ namespace Rover
     {
         [SerializeField] private float _maxValue;
 
+        public float MaxValue => _maxValue;
         public float Value { get; private set; }
+        public float ValuePercents => Value / MaxValue;
 
         private void Start()
         {

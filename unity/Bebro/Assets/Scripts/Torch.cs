@@ -14,6 +14,7 @@ public class Torch : MonoBehaviour
     [SerializeField] private float _resetSpeed;
     [SerializeField] private bool _isControllingArm;
     [SerializeField] private Btn _Btn;
+    [SerializeField] private Spec _spec;
     private ActionBasedController _currentController;
     private bool _isSelected;
 
@@ -42,10 +43,11 @@ public class Torch : MonoBehaviour
 
         if (!_currentController)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * _resetSpeed);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * _resetSpeed);
         }
         if (_rover.IsActivated == true)
         {
+            _rover.SetArmActive(_isControllingArm);
             if (_isControllingArm)
             {
                 _rover.MoveArm(_joystickX, _joystickButtonAxis, _joystickY);
@@ -61,25 +63,19 @@ public class Torch : MonoBehaviour
 
     private void GetJoystickValues()
     {
-        _joystickY = transform.rotation.eulerAngles.x;
+        _joystickY = transform.localEulerAngles.x;
         if (_joystickY > 180) _joystickY = _joystickY - 360;
         if (-_deathzone < _joystickY && _joystickY < _deathzone) _joystickY = 0;
 
-        _joystickX = transform.rotation.eulerAngles.z;
+        _joystickX = transform.localEulerAngles.z;
         if (_joystickX > 180) _joystickX = _joystickX - 360;
         if (-_deathzone < _joystickX && _joystickX < _deathzone) _joystickX = 0;
 
         _joystickX /= _maxAngle;
         _joystickY /= -_maxAngle;
 
-        Debug.Log(_buttonAxis.ReadValue<float>());
         _joystickActivate = _currentController ? _currentController.activateActionValue.action.ReadValue<float>() : 0f;
         _joystickButtonAxis = _currentController ? _buttonAxis.ReadValue<float>() : 0f;
-    }
-
-    private void ControlRover()
-    {
-
     }
 
     public void StartSelect(SelectEnterEventArgs args)
@@ -125,6 +121,10 @@ public class Torch : MonoBehaviour
 
     public void Repair(int n)
     {
-        _rover.RepairWheel(n);
+        if (_rover.RepairWheel(n))
+        {
+            _spec.HandleWheelFix(n);
+        }
+        
     }
 }
