@@ -4815,9 +4815,9 @@ WheelCollider:
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
-    m_ExtremumValue: 3
-    m_AsymptoteSlip: 8
-    m_AsymptoteValue: 2
+    m_ExtremumValue: 6
+    m_AsymptoteSlip: 0.5
+    m_AsymptoteValue: 5
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.2
@@ -4843,16 +4843,16 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 15
-      inSlope: 0.05469362
-      outSlope: 0.05469362
+      value: 45
+      inSlope: 0.014285714
+      outSlope: 0.014285714
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 450
-      value: 39.61213
+      time: 350
+      value: 50
       inSlope: -0.02006661
       outSlope: -0.02006661
       tangentMode: 0
@@ -4860,7 +4860,7 @@ MonoBehaviour:
       inWeight: 0.09689659
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 500
+      time: 400
       value: 10
       inSlope: -0.004176137
       outSlope: -0.004176137
@@ -4874,7 +4874,7 @@ MonoBehaviour:
   _damageTrigger: {fileID: 0}
   _brakeForce: 30
   _steeringAngle: 25
-  _maxRpm: 500
+  _maxRpm: 400
   _n: 0
   _isBroken: 0
 --- !u!114 &3544286814578560562
