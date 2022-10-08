@@ -129,6 +129,12 @@ namespace Rover
                 _roverArm.SetGrab(a);
             }
         }
+
+        public void SetArmActive(bool state)
+        {
+            _roverArm.SetActive(state);
+        }
+
         public void OpenGreenBox()
         {
             if (IsActivated)

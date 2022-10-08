@@ -36,6 +36,8 @@ namespace Rover
             _lastAxisAngle2 = _axisAngle;
             _lastPosition = _target.localPosition;
             _lastPosition2 = _target.localPosition;
+
+            _target.SetParent(_axis.transform);
         }
 
         private void OnEnable()
@@ -77,24 +79,19 @@ namespace Rover
             _lastPosition2 = _lastPosition;
             _lastPosition = _target.localPosition;
 
-            if (IsActive)
+            _axisAngle += _input.x * _xSpeed * Time.deltaTime;
+            if (_axisAngle > 180) _axisAngle = _axisAngle - 360;
+            if (_axisAngle < -180) _axisAngle = 360 + _axisAngle;
+
+            Vector3 offset = new Vector3(0, _input.y * _ySpeed * Time.deltaTime, -_input.z * _zSpeed * Time.deltaTime);
+            _target.Translate(offset, Space.Self);
+
+            _axis.SetTargetAngle(_axisAngle);
+            _solver.Solve();
+
+            if (_target.localPosition.sqrMagnitude > _maxDistance*_maxDistance)
             {
-                _axisAngle += _input.x * _xSpeed * Time.deltaTime;
-                if (_axisAngle > 180) _axisAngle = _axisAngle - 360;
-                if (_axisAngle < -180) _axisAngle = 360 + _axisAngle;
-
-                Vector3 offset = new Vector3(0, _input.y * _ySpeed * Time.deltaTime, -_input.z * _zSpeed * Time.deltaTime);
-                _target.Translate(offset, Space.Self);
-
-                _axis.SetTargetAngle(_axisAngle);
-                _solver.Solve();
-
-                if (Vector3.Distance(_target.position, _armPosition.transform.position) > 0.01f)
-                {
-                    _target.position = _armPosition.position;
-                    _target.localPosition = new Vector3(0, _target.localPosition.y, _target.localPosition.z);
-                    _target.localRotation = Quaternion.identity;
-                }
+                _target.localPosition = _target.localPosition.normalized * _maxDistance;
             }
         }
 
@@ -109,16 +106,16 @@ namespace Rover
             _solver.Solve();
         }
 
-        public void SetActive(bool state)
-        {
-            IsActive = state;
-        }
-
         public void SetGrab(float value)
         {
             _grabValue = value;
             _rightGrab.localEulerAngles = new Vector3(0, Mathf.Lerp(0, -20, value), 0);
             _leftGrab.localEulerAngles = new Vector3(0, Mathf.Lerp(0, 20, value), 0);
+        }
+
+        public void SetActive(bool state)
+        {
+            IsActive = state;
         }
 
         public void Move(float x, float y, float z)

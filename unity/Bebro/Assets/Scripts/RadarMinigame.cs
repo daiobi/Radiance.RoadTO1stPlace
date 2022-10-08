@@ -31,6 +31,14 @@ public class RadarMinigame : MonoBehaviour
         _minigamePanel.SetActive(false);
     }
 
+    public void HandleButton()
+    {
+        if (_minigamePanel.activeInHierarchy)
+        {
+            _minigame.btn();
+        }
+    }
+
     public void OpenMinigame()
     {
         if (!_isWon)
