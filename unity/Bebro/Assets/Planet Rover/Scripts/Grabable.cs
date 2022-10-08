@@ -23,6 +23,7 @@ namespace Rover
 
         public void BreakDown()
         {
+            Tasks.FailGame(new SampleBroken());
             Destroy(gameObject);
         }
     }

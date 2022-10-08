@@ -41,27 +41,28 @@ namespace Rover
         {
             if (_isBroken) return;
 
+            BreakDownCause cause = BreakDownCause.BatteryLow;
             if (_roverBattery.Value == 0)
             {
                 _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.BatteryLow);
+                cause = BreakDownCause.BatteryLow;
             }
             else if (Vector3.Angle(transform.up, Vector3.up) > 90)
             {
                 _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.Flip);
+                cause = BreakDownCause.Flip;
             }
             else if (_roverHealth.HitCount > _maxHealth)
             {
                 _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.Health);
+                cause = BreakDownCause.Health;
             }
             else if (_roverBoxes.GreenState == BoxState.FilledInvalid ||
                 _roverBoxes.YellowState == BoxState.FilledInvalid ||
                 _roverBoxes.RedState == BoxState.FilledInvalid)
             {
                 _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.BoxInvalid);
+                cause = BreakDownCause.BoxInvalid;
             }
 
             if (_roverBoxes.GreenState == BoxState.Filled) Tasks.SetGreenCollected();
@@ -70,6 +71,8 @@ namespace Rover
 
             if (_isBroken)
             {
+                OnBroken?.Invoke(cause);
+                Tasks.FailGame(new RoverBrokenDown(cause));
                 TurnOff();
                 Debug.Log("Broken");
             }
@@ -95,6 +98,8 @@ namespace Rover
             _roverArm.enabled = true;
             IsActivated = true;
 
+            Tasks.HandleRoverTurnedOn();
+
             return true;
         }
         public void TurnOff()
@@ -107,6 +112,8 @@ namespace Rover
             _roverBoxes.enabled = false;
             _roverArm.enabled = false;
             IsActivated = false;
+
+            Tasks.HandleRoverTurnedOff();
         }
         public void Move(float acceleration, float steering)
         {

@@ -5,12 +5,13 @@ using UnityEngine;
 public class TubesEat : MonoBehaviour
 {
     public GameObject _Tubes;
-    public Mesh _NoEat;
+    public MeshFilter _NoEat;
+    public AudioSource _eatingSound;
     public Mesh _Eat;
+    private int _max = 0;
     // Start is called before the first frame update
     void Start()
-    {
-        
+    {  
     }
 
     // Update is called once per frame
@@ -20,10 +21,11 @@ public class TubesEat : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && _max == 0)
         {
-            print("1234535");
-            //_NoEat. = _Eat;
+            _NoEat.mesh = _Eat;
+            _eatingSound.Play();
+            _max += 1;
         }
             
     }

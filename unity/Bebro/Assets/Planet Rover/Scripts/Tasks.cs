@@ -1,48 +1,141 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Rover
 {
     public class Tasks : MonoBehaviour
     {
+        [SerializeField] private RoverTrigger _baseTrigger;
+        [SerializeField] private GameObject _roverActivatedCheck;
+        [SerializeField] private GameObject _radarFixedCheck;
+        [SerializeField] private GameObject _greenSampleCollectedCheck;
+        [SerializeField] private GameObject _yellowSampleCollectedCheck;
+        [SerializeField] private GameObject _redSampleCollectedCheck;
+        [SerializeField] private GameObject _roverDeactivatedCheck;
+
         public bool RadarFixed { get; private set; }
         public bool GreenCollected { get; private set; }
 
         public bool YellowCollected { get; private set; }
         public bool RedCollected { get; private set; }
 
-        public static bool AllTasksCompleted => _instance.RadarFixed &&
-            _instance.GreenCollected && _instance.YellowCollected && _instance.RedCollected;
+        [System.Serializable]
+        public class FailGameEvent : UnityEvent<GameFailReason> {}
+        public FailGameEvent OnGameFail;
+        public UnityEvent OnGameSuccess;
 
-        private static Tasks _instance;
+        public bool AllTasksCompleted => RadarFixed &&
+            GreenCollected && YellowCollected && RedCollected;
+
+        public GamePhase GamePhase { get; private set; }
+
+        public static Tasks Instance { get; private set; }
 
         private void Start()
         {
-            if (_instance)
+            if (Instance)
                 throw new System.InvalidOperationException("Singleton Tasks error");
 
-            _instance = this;
+            Instance = this;
+
+            _roverActivatedCheck.SetActive(false);
+            _radarFixedCheck.SetActive(false);
+            _greenSampleCollectedCheck.SetActive(false);
+            _yellowSampleCollectedCheck.SetActive(false);
+            _redSampleCollectedCheck.SetActive(false);
+            _roverDeactivatedCheck.SetActive(false);
+        }
+
+        public static void FailGame(GameFailReason reason)
+        {
+            Instance.OnGameFail?.Invoke(reason);
         }
 
         public static void SetRadarFixed()
         {
-            _instance.RadarFixed = true;
+            if (Instance.GamePhase == GamePhase.RoverTurnedOn)
+            {
+                Instance._radarFixedCheck.SetActive(true);
+                Instance.RadarFixed = true;
+                Instance.GamePhase = GamePhase.RadarFixed;
+            }
+            else
+            {
+                FailGame(new InvalidAction());
+            }
         }
 
         public static void SetGreenCollected()
         {
-            _instance.GreenCollected = true;
+            if (Instance.GamePhase == GamePhase.RadarFixed)
+            {
+                Instance._greenSampleCollectedCheck.SetActive(true);
+                Instance.GreenCollected = true;
+                
+                if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
+                {
+                    Instance.GamePhase = GamePhase.SamplesCollected;
+                }
+            }
+            else
+            {
+                FailGame(new InvalidAction());
+            }
         }
 
         public static void SetYellowCollected()
         {
-            _instance.YellowCollected = true;
+            if (Instance.GamePhase == GamePhase.RadarFixed)
+            {
+                Instance._yellowSampleCollectedCheck.SetActive(true);
+                Instance.YellowCollected = true;
+
+                if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
+                {
+                    Instance.GamePhase = GamePhase.SamplesCollected;
+                }
+            }
+            else
+            {
+                FailGame(new InvalidAction());
+            }
         }
 
         public static void SetRedCollected()
         {
-            _instance.RedCollected = true;
+            if (Instance.GamePhase == GamePhase.RadarFixed)
+            {
+                Instance._redSampleCollectedCheck.SetActive(true);
+                Instance.RedCollected = true;
+
+                if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
+                {
+                    Instance.GamePhase = GamePhase.SamplesCollected;
+                }
+            }
+            else
+            {
+                FailGame(new InvalidAction());
+            }
+        }
+
+        public static void HandleRoverTurnedOn()
+        {
+            if (Instance.GamePhase == GamePhase.BeforeStart)
+            {
+                Instance._roverActivatedCheck.SetActive(true);
+                Instance.GamePhase = GamePhase.RoverTurnedOn;
+            }
+        }
+
+        public static void HandleRoverTurnedOff()
+        {
+            if (Instance.GamePhase == GamePhase.SamplesCollected)
+            {
+                Instance._roverDeactivatedCheck.SetActive(true);
+                Instance.GamePhase = GamePhase.RoverTurnedOff;
+                Instance.OnGameSuccess?.Invoke();
+            }
         }
     }
 }

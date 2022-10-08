@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 public class Spec : MonoBehaviour
 {
-    [SerializeField] private Rover.Wheel _wheel;
+    [SerializeField] private Material _noiseMaterial;
+    [SerializeField] private AnimationCurve _noiseCurve;
     [SerializeField] private Rover.Rover _rover;
-    [SerializeField] private int _dst;
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _fixClip;
     [SerializeField] private AudioClip _breakClip;
@@ -25,10 +25,9 @@ public class Spec : MonoBehaviour
 
     private bool[] _lastStatuses;
     private List<string> _log;
-    public GameObject[] _Ccheckbox;
     [SerializeField] private Torch _leveler;
     [SerializeField] public RadarMinigame _RadMin;
-
+    [SerializeField] private int m = 2;
     
 
 
@@ -51,25 +50,12 @@ public class Spec : MonoBehaviour
     private void Update()
     {
         var tel = _rover.GetTelemetry();
-        print(tel.greenBoxState == Rover.BoxState.Filled);
-        if (_rover.IsActivated == true)
-                _Ccheckbox[0].SetActive(true);
-        else
-        {
-            _Ccheckbox[0].SetActive(false);
-        }
-        if (_RadMin.IsWon == true)
-            _Ccheckbox[1].SetActive(true);
-        else
-        {
-            _Ccheckbox[1].SetActive(false);
-        }
-
 
 
         if (!_rover.IsActivated) return;
 
         var _Dist = (int)Vector3.Distance(_gmobj.transform.position, _rover.transform.position);
+        _noiseMaterial.SetFloat("_NoiseFactor", _noiseCurve.Evaluate(_Dist));
         if (_Dist >= 80)
             _ImageSignal.sprite = _SpritesSignal[3];
         else if (_Dist >= 60)

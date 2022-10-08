@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NoiseMaterial
+  m_Name: NoiseMat
   m_Shader: {fileID: -6465566751694194690, guid: d7451c82b57c76a498dd0506e5f088aa,
     type: 3}
   m_ShaderKeywords: 
@@ -34,7 +34,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_D9C23DAF:
-        m_Texture: {fileID: 8400000, guid: 82ba1115a2ebd72479f3b86690037822, type: 2}
+        m_Texture: {fileID: 8400000, guid: 1754cf1790e40ec47a3192ba0a6128c0, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -70,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_7F7BDD67: 0.05
+    - Vector1_7F7BDD67: 0.01
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -82,6 +82,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _NoiseFactor: 0.01908903
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
