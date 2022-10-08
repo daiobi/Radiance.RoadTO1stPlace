@@ -62,6 +62,7 @@ public class Spec : MonoBehaviour
 
 
         var tel = _rover.GetTelemetry();
+        _speedText.text = $"{(int)tel.Speed} км/ч";
         _BatteryCharge.text = $"{Mathf.CeilToInt(tel.BatteryPercents * 100f)}%";
         _health.text = $"{tel.Health}";
 
