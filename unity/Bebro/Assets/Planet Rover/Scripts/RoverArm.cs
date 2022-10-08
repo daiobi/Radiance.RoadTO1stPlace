@@ -18,6 +18,8 @@ namespace Rover
         [SerializeField] private float _ySpeed;
         [SerializeField] private float _zSpeed;
 
+        public bool IsActive { get; private set; }
+
         private float _axisAngle = 0;
 
         private float _lastAxisAngle = 0;
@@ -89,6 +91,7 @@ namespace Rover
             {
                 _target.position = _armPosition.position;
                 _target.localPosition = new Vector3(0, _target.localPosition.y, _target.localPosition.z);
+                _target.localRotation = Quaternion.identity;
             }
         }
 
