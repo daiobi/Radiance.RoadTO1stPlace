@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Rover;
+﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
+using System;
 
 public class Torch : MonoBehaviour
 {
     [SerializeField] private GameObject[] _screens;
+    [SerializeField] private GameObject[] _errorImages;
     [SerializeField] private float _deathzone = 10;
     [SerializeField] private float _maxAngle = 30;
     [SerializeField] private Rover.Rover _rover;
@@ -30,9 +29,16 @@ public class Torch : MonoBehaviour
     public void Start()
     {
         _rover.TurnOff();
+        _rover.OnBroken.AddListener(HandleRoverBroken);
+        foreach (var i in _errorImages) i.SetActive(false);
         var controls = new XRIDefaultInputActions();
         _buttonAxis = controls.XRIButtons.ButtonAxis;
         controls.Enable();
+    }
+
+    private void HandleRoverBroken(Rover.Rover.BreakDownCause arg0)
+    {
+        foreach (var i in _errorImages) i.SetActive(true);
     }
 
     private void Update()

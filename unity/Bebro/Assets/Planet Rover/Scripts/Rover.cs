@@ -23,6 +23,7 @@ namespace Rover
             Health,
             BoxInvalid,
         }
+        [System.Serializable]
         public class RoverEvent : UnityEvent<BreakDownCause> { }
         public RoverEvent OnBroken;
         private bool _isBroken;
