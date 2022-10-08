@@ -77,21 +77,24 @@ namespace Rover
             _lastPosition2 = _lastPosition;
             _lastPosition = _target.localPosition;
 
-            _axisAngle += _input.x * _xSpeed * Time.deltaTime;
-            if (_axisAngle > 180) _axisAngle = _axisAngle - 360;
-            if (_axisAngle < -180) _axisAngle = 360 + _axisAngle;
-
-            Vector3 offset = new Vector3(0, _input.y * _ySpeed * Time.deltaTime, -_input.z * _zSpeed * Time.deltaTime);
-            _target.Translate(offset, Space.Self);
-
-            _axis.SetTargetAngle(_axisAngle);
-            _solver.Solve();
-
-            if (Vector3.Distance(_target.position, _armPosition.transform.position) > 0.01f)
+            if (IsActive)
             {
-                _target.position = _armPosition.position;
-                _target.localPosition = new Vector3(0, _target.localPosition.y, _target.localPosition.z);
-                _target.localRotation = Quaternion.identity;
+                _axisAngle += _input.x * _xSpeed * Time.deltaTime;
+                if (_axisAngle > 180) _axisAngle = _axisAngle - 360;
+                if (_axisAngle < -180) _axisAngle = 360 + _axisAngle;
+
+                Vector3 offset = new Vector3(0, _input.y * _ySpeed * Time.deltaTime, -_input.z * _zSpeed * Time.deltaTime);
+                _target.Translate(offset, Space.Self);
+
+                _axis.SetTargetAngle(_axisAngle);
+                _solver.Solve();
+
+                if (Vector3.Distance(_target.position, _armPosition.transform.position) > 0.01f)
+                {
+                    _target.position = _armPosition.position;
+                    _target.localPosition = new Vector3(0, _target.localPosition.y, _target.localPosition.z);
+                    _target.localRotation = Quaternion.identity;
+                }
             }
         }
 
@@ -104,6 +107,11 @@ namespace Rover
             _axis.SetTargetAngle(_axisAngle);
 
             _solver.Solve();
+        }
+
+        public void SetActive(bool state)
+        {
+            IsActive = state;
         }
 
         public void SetGrab(float value)
