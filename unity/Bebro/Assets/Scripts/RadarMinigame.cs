@@ -6,7 +6,7 @@ public class RadarMinigame : MonoBehaviour
     [SerializeField] private GameObject _minigamePanel;
     [SerializeField] private Transform _radarRotation;
     [SerializeField] private Move _minigame;
-    private bool _isWon;
+    public bool IsWon { get; private set; }
 
     private void Start()
     {
@@ -15,13 +15,13 @@ public class RadarMinigame : MonoBehaviour
 
     private void Update()
     {
-        if (_isWon)
+        if (IsWon)
             _radarRotation.rotation = Quaternion.Slerp(_radarRotation.rotation, Quaternion.Euler(0, -90, 0), Time.deltaTime * 0.5f);
     }
 
     private void HandleWin()
     {
-        _isWon = true;
+        IsWon = true;
         Tasks.SetRadarFixed();
         CloseMinigame();
     }
@@ -41,7 +41,7 @@ public class RadarMinigame : MonoBehaviour
 
     public void OpenMinigame()
     {
-        if (!_isWon)
+        if (!IsWon)
         {
             _minigamePanel.SetActive(true);
         }

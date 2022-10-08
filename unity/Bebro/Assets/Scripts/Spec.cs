@@ -25,6 +25,9 @@ public class Spec : MonoBehaviour
 
     private bool[] _lastStatuses;
     private List<string> _log;
+    public GameObject[] _Ccheckbox;
+    [SerializeField] private Torch _leveler;
+    [SerializeField] public RadarMinigame _RadMin;
 
     
 
@@ -47,6 +50,23 @@ public class Spec : MonoBehaviour
 
     private void Update()
     {
+        var tel = _rover.GetTelemetry();
+        print(tel.greenBoxState == Rover.BoxState.Filled);
+        if (_rover.IsActivated == true)
+                _Ccheckbox[0].SetActive(true);
+        else
+        {
+            _Ccheckbox[0].SetActive(false);
+        }
+        if (_RadMin.IsWon == true)
+            _Ccheckbox[1].SetActive(true);
+        else
+        {
+            _Ccheckbox[1].SetActive(false);
+        }
+
+
+
         if (!_rover.IsActivated) return;
 
         var _Dist = (int)Vector3.Distance(_gmobj.transform.position, _rover.transform.position);
@@ -61,7 +81,7 @@ public class Spec : MonoBehaviour
 
 
 
-        var tel = _rover.GetTelemetry();
+        
         _speedText.text = $"{(int)tel.Speed} км/ч";
         _BatteryCharge.text = $"{Mathf.CeilToInt(tel.BatteryPercents * 100f)}%";
         _health.text = $"{tel.Health}";
