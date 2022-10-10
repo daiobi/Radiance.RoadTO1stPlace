@@ -32,6 +32,7 @@ public class Torch : MonoBehaviour
 
     public void Start()
     {
+
         Tasks.Instance.OnGameFail.AddListener(HandleGameFail);
 
         _rover.TurnOff();
