@@ -50,6 +50,10 @@ namespace Rover
             _yellowSampleCollectedCheck.SetActive(false);
             _redSampleCollectedCheck.SetActive(false);
             _roverDeactivatedCheck.SetActive(false);
+
+#if UNITY_EDITOR
+            //GamePhase = GamePhase.RadarFixed;
+#endif
         }
 
         private void Update()
