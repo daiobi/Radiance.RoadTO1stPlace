@@ -7,6 +7,7 @@ namespace Rover
     [RequireComponent(typeof(RoverBoxes), typeof(RoverArm))]
     public class Rover : MonoBehaviour
     {
+        [SerializeField] private Transform _worldCenter;
         [SerializeField] private int _maxHealth;
 
         private RoverMovement _roverMovement;
@@ -65,6 +66,11 @@ namespace Rover
             {
                 _isBroken = true;
                 cause = BreakDownCause.BoxInvalid;
+            }
+            else if (Vector3.Distance(transform.position, _worldCenter.position) > 85)
+            {
+                _isBroken = true;
+                cause = BreakDownCause.Distance;
             }
 
             if (_roverBoxes.GreenState == BoxState.Filled) Tasks.SetGreenCollected();

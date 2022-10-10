@@ -65,11 +65,6 @@ public class Spec : MonoBehaviour
             _ImageSignal.sprite = _SpritesSignal[1];
         else if (_Dist <= 20)
             _ImageSignal.sprite = _SpritesSignal[0];
-
-        if (_Dist >= 85) Tasks.FailGame(new RoverBrokenDown(Rover.Rover.BreakDownCause.Distance));
-
-
-
         
         _speedText.text = $"{(int)tel.Speed} км/ч";
         _BatteryCharge.text = $"{Mathf.CeilToInt(tel.BatteryPercents * 100f)}%";

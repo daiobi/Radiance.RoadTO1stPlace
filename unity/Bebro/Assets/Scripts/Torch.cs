@@ -2,6 +2,8 @@
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
 using System;
+using Rover;
+using UnityEngine.SceneManagement;
 
 public class Torch : MonoBehaviour
 {
@@ -25,19 +27,22 @@ public class Torch : MonoBehaviour
     private float _joystickActivate;
 
     private InputAction _buttonAxis;
+    private bool _gameFailed;
 
     public void Start()
     {
+        Tasks.Instance.OnGameFail.AddListener(HandleGameFail);
+
         _rover.TurnOff();
-        _rover.OnBroken.AddListener(HandleRoverBroken);
         foreach (var i in _errorImages) i.SetActive(false);
         var controls = new XRIDefaultInputActions();
         _buttonAxis = controls.XRIButtons.ButtonAxis;
         controls.Enable();
     }
 
-    private void HandleRoverBroken(Rover.Rover.BreakDownCause arg0)
+    private void HandleGameFail(GameFailReason _)
     {
+        _gameFailed = true;
         foreach (var i in _errorImages) i.SetActive(true);
     }
 
@@ -46,6 +51,11 @@ public class Torch : MonoBehaviour
         foreach (var s in _screens) s.SetActive(_rover.IsActivated);
 
         GetJoystickValues();
+
+        if (_gameFailed && _joystickActivate > 0.2f)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
         if (!_currentController)
         {
