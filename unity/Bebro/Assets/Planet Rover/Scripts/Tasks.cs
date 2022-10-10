@@ -24,7 +24,7 @@ namespace Rover
         public class FailGameEvent : UnityEvent<GameFailReason> {}
         public FailGameEvent OnGameFail;
         public UnityEvent OnGameSuccess;
-        private static bool _gameFailed;
+        private bool _gameFailed;
         private XRIDefaultInputActions _controls;
 
         public bool AllTasksCompleted => RadarFixed &&
@@ -68,7 +68,7 @@ namespace Rover
         public static void FailGame(GameFailReason reason)
         {
             Instance.OnGameFail?.Invoke(reason);
-            _gameFailed = true;
+            Instance._gameFailed = true;
         }
 
         public static void SetRadarFixed()
