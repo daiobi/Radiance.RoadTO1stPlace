@@ -1126,6 +1126,15 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Activate"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb9f34f8-1e7e-40ea-b823-7af949c0a121"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1183,6 +1192,17 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                     ""action"": ""ButtonAxis"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cdc8de6f-e68d-4d13-a111-ff9dcc0b2a46"",
+                    ""path"": ""*/{TriggerButton}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Generic XR Controller"",
+                    ""action"": ""Activate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1303,6 +1323,7 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
         m_XRIButtons_Primary = m_XRIButtons.FindAction("Primary", throwIfNotFound: true);
         m_XRIButtons_SecondaryButton = m_XRIButtons.FindAction("SecondaryButton", throwIfNotFound: true);
         m_XRIButtons_ButtonAxis = m_XRIButtons.FindAction("ButtonAxis", throwIfNotFound: true);
+        m_XRIButtons_Activate = m_XRIButtons.FindAction("Activate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1828,6 +1849,7 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
     private readonly InputAction m_XRIButtons_Primary;
     private readonly InputAction m_XRIButtons_SecondaryButton;
     private readonly InputAction m_XRIButtons_ButtonAxis;
+    private readonly InputAction m_XRIButtons_Activate;
     public struct XRIButtonsActions
     {
         private @XRIDefaultInputActions m_Wrapper;
@@ -1835,6 +1857,7 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
         public InputAction @Primary => m_Wrapper.m_XRIButtons_Primary;
         public InputAction @SecondaryButton => m_Wrapper.m_XRIButtons_SecondaryButton;
         public InputAction @ButtonAxis => m_Wrapper.m_XRIButtons_ButtonAxis;
+        public InputAction @Activate => m_Wrapper.m_XRIButtons_Activate;
         public InputActionMap Get() { return m_Wrapper.m_XRIButtons; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1853,6 +1876,9 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                 @ButtonAxis.started -= m_Wrapper.m_XRIButtonsActionsCallbackInterface.OnButtonAxis;
                 @ButtonAxis.performed -= m_Wrapper.m_XRIButtonsActionsCallbackInterface.OnButtonAxis;
                 @ButtonAxis.canceled -= m_Wrapper.m_XRIButtonsActionsCallbackInterface.OnButtonAxis;
+                @Activate.started -= m_Wrapper.m_XRIButtonsActionsCallbackInterface.OnActivate;
+                @Activate.performed -= m_Wrapper.m_XRIButtonsActionsCallbackInterface.OnActivate;
+                @Activate.canceled -= m_Wrapper.m_XRIButtonsActionsCallbackInterface.OnActivate;
             }
             m_Wrapper.m_XRIButtonsActionsCallbackInterface = instance;
             if (instance != null)
@@ -1866,6 +1892,9 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                 @ButtonAxis.started += instance.OnButtonAxis;
                 @ButtonAxis.performed += instance.OnButtonAxis;
                 @ButtonAxis.canceled += instance.OnButtonAxis;
+                @Activate.started += instance.OnActivate;
+                @Activate.performed += instance.OnActivate;
+                @Activate.canceled += instance.OnActivate;
             }
         }
     }
@@ -1959,5 +1988,6 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
         void OnPrimary(InputAction.CallbackContext context);
         void OnSecondaryButton(InputAction.CallbackContext context);
         void OnButtonAxis(InputAction.CallbackContext context);
+        void OnActivate(InputAction.CallbackContext context);
     }
 }

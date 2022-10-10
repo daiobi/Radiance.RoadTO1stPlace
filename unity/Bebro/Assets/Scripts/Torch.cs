@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class Torch : MonoBehaviour
 {
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioClip _turnOnSound;
     [SerializeField] private GameObject[] _screens;
     [SerializeField] private GameObject[] _errorImages;
     [SerializeField] private float _deathzone = 10;
@@ -27,7 +29,6 @@ public class Torch : MonoBehaviour
     private float _joystickActivate;
 
     private InputAction _buttonAxis;
-    private bool _gameFailed;
 
     public void Start()
     {
@@ -42,7 +43,6 @@ public class Torch : MonoBehaviour
 
     private void HandleGameFail(GameFailReason _)
     {
-        _gameFailed = true;
         foreach (var i in _errorImages) i.SetActive(true);
     }
 
@@ -51,11 +51,6 @@ public class Torch : MonoBehaviour
         foreach (var s in _screens) s.SetActive(_rover.IsActivated);
 
         GetJoystickValues();
-
-        if (_gameFailed && _joystickActivate > 0.2f)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
 
         if (!_currentController)
         {
@@ -116,7 +111,10 @@ public class Torch : MonoBehaviour
             _rover.TurnOff();
         } else
         {
-            _rover.TurnOn();
+            if (_rover.TurnOn())
+            {
+                _source.PlayOneShot(_turnOnSound);
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Rover
 {
@@ -23,6 +24,8 @@ namespace Rover
         public class FailGameEvent : UnityEvent<GameFailReason> {}
         public FailGameEvent OnGameFail;
         public UnityEvent OnGameSuccess;
+        private static bool _gameFailed;
+        private XRIDefaultInputActions _controls;
 
         public bool AllTasksCompleted => RadarFixed &&
             GreenCollected && YellowCollected && RedCollected;
@@ -36,6 +39,9 @@ namespace Rover
             if (Instance)
                 throw new System.InvalidOperationException("Singleton Tasks error");
 
+            _controls = new XRIDefaultInputActions();
+            _controls.Enable();
+
             Instance = this;
 
             _roverActivatedCheck.SetActive(false);
@@ -46,9 +52,23 @@ namespace Rover
             _roverDeactivatedCheck.SetActive(false);
         }
 
+        private void Update()
+        {
+            if (_controls.XRIButtons.Activate.ReadValue<float>() > 0.2f)
+            {
+                HandleActivateClick();
+            }
+        }
+
+        public void HandleActivateClick()
+        {
+            if (_gameFailed) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
         public static void FailGame(GameFailReason reason)
         {
             Instance.OnGameFail?.Invoke(reason);
+            _gameFailed = true;
         }
 
         public static void SetRadarFixed()

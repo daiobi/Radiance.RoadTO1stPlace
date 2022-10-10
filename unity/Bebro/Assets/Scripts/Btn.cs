@@ -6,13 +6,13 @@ using Rover;
 
 public class Btn : MonoBehaviour
 {
+    [SerializeField] private float _yPressed = -0.0525f;
+    [SerializeField] private float _yReleased = -0.0397f;
+
     public GameObject button;
     public UnityEvent onPress;
     public UnityEvent onRealese;
-    public bool _set = false;
     GameObject presser;
-    [SerializeField] private Rover.Rover _Rover;
-    public bool _state = false;
     bool isPressed;
     AudioSource sound;
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class Btn : MonoBehaviour
     {
         if (!isPressed)
         {
-            button.transform.localPosition = new Vector3(button.transform.localPosition.x, -0.0525f, button.transform.localPosition.z)
+            button.transform.localPosition = new Vector3(button.transform.localPosition.x, _yPressed, button.transform.localPosition.z)
 ;
             presser = other.gameObject;
             onPress.Invoke();
@@ -40,7 +40,8 @@ public class Btn : MonoBehaviour
     {
         if (other.gameObject == presser)
         {
-            button.transform.localPosition = new Vector3(button.transform.localPosition.x, -0.0397f, button.transform.localPosition.z);
+            presser = null;
+            button.transform.localPosition = new Vector3(button.transform.localPosition.x, _yReleased, button.transform.localPosition.z);
             onRealese.Invoke();
             isPressed = false;
         }
