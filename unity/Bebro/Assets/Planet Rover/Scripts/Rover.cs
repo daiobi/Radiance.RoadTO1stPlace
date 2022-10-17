@@ -42,7 +42,7 @@ namespace Rover
 
         private void Update()
         {
-            if (_isBroken) return;
+            if (_isBroken || Tasks.Instance.GamePhase == GamePhase.RoverTurnedOff) return;
 
             BreakDownCause cause = BreakDownCause.BatteryLow;
             if (_roverBattery.Value == 0)
@@ -72,10 +72,6 @@ namespace Rover
                 _isBroken = true;
                 cause = BreakDownCause.Distance;
             }
-
-            if (_roverBoxes.GreenState == BoxState.Filled) Tasks.SetGreenCollected();
-            if (_roverBoxes.YellowState == BoxState.Filled) Tasks.SetYellowCollected();
-            if (_roverBoxes.RedState == BoxState.Filled) Tasks.SetRedCollected();
 
             if (_isBroken)
             {

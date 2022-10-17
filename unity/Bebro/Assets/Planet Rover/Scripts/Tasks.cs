@@ -50,6 +50,10 @@ namespace Rover
             _yellowSampleCollectedCheck.SetActive(false);
             _redSampleCollectedCheck.SetActive(false);
             _roverDeactivatedCheck.SetActive(false);
+
+#if UNITY_EDITOR
+            //GamePhase = GamePhase.RadarFixed;
+#endif
         }
 
         private void Update()
@@ -67,6 +71,7 @@ namespace Rover
 
         public static void FailGame(GameFailReason reason)
         {
+            Debug.Log(reason);
             Instance.OnGameFail?.Invoke(reason);
             Instance._gameFailed = true;
         }
@@ -150,7 +155,7 @@ namespace Rover
 
         public static void HandleRoverTurnedOff()
         {
-            if (Instance.GamePhase == GamePhase.SamplesCollected)
+            if (Instance.GamePhase == GamePhase.SamplesCollected && Instance._baseTrigger.IsRoverTriggered)
             {
                 Instance._roverDeactivatedCheck.SetActive(true);
                 Instance.GamePhase = GamePhase.RoverTurnedOff;

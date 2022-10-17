@@ -25,12 +25,13 @@ public class GameScreen : MonoBehaviour
 
     private void HandleGameSuccess()
     {
-        _loseScreen.SetActive(true);
+        _winScreen.SetActive(true);
     }
 
     private void HandleGameFail(GameFailReason arg0)
     {
         _loseScreen.SetActive(true);
+        Debug.Log(arg0.GetType().Name);
 
         if (arg0 is InvalidAction)
         {
