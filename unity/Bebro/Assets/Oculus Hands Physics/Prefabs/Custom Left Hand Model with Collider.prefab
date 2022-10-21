@@ -847,8 +847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerCharacteristics: 320
-  handAnimator: {fileID: 109434733575885780, guid: 6c2509c76b281144cb0099fc45f17a09,
-    type: 3}
+  handAnimator: {fileID: 7543112497688889181}
 --- !u!1 &7637155610755870867
 GameObject:
   m_ObjectHideFlags: 0

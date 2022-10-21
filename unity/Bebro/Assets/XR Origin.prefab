@@ -32,7 +32,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 371935886135918668}
-  m_LocalRotation: {x: -0, y: 0.050842497, z: -0, w: 0.9987067}
+  m_LocalRotation: {x: 0, y: 0.05084567, z: 0, w: 0.9987065}
   m_LocalPosition: {x: 3.2889824, y: -10.088001, z: 6.388235}
   m_LocalScale: {x: 1, y: 1.1618667, z: 1}
   m_Children:
@@ -810,8 +810,7 @@ MonoBehaviour:
   m_UpdateTrackingType: 0
   m_EnableInputTracking: 1
   m_EnableInputActions: 0
-  m_ModelPrefab: {fileID: 3621981467535291324, guid: 6c2509c76b281144cb0099fc45f17a09,
-    type: 3}
+  m_ModelPrefab: {fileID: 0}
   m_ModelParent: {fileID: 0}
   m_Model: {fileID: 0}
   m_AnimateModel: 0
@@ -1306,9 +1305,10 @@ GameObject:
   - component: {fileID: 1368539195534366996}
   - component: {fileID: 1368539195534366994}
   - component: {fileID: 4936279297325482738}
+  - component: {fileID: 2121543198}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1508,6 +1508,19 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   m_HasMigratedActions: 1
+--- !u!135 &2121543198
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368539195534366992}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.10607418
+  m_Center: {x: 0.057496432, y: -0.06, z: 0.018675774}
 --- !u!1 &1368539195649128849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,7 +1835,7 @@ GameObject:
   - component: {fileID: 1368539195726431538}
   m_Layer: 0
   m_Name: CameraOffset
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1893,8 +1906,7 @@ MonoBehaviour:
   m_UpdateTrackingType: 0
   m_EnableInputTracking: 1
   m_EnableInputActions: 0
-  m_ModelPrefab: {fileID: 3621981467535291324, guid: ddc38db09f9124241b4b4e9b2b9831eb,
-    type: 3}
+  m_ModelPrefab: {fileID: 0}
   m_ModelParent: {fileID: 0}
   m_Model: {fileID: 0}
   m_AnimateModel: 0

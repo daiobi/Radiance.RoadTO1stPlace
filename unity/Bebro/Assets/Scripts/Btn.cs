@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Rover;
+using System;
 
 public class Btn : MonoBehaviour
 {
@@ -14,12 +15,21 @@ public class Btn : MonoBehaviour
     public UnityEvent onRealese;
     GameObject presser;
     bool isPressed;
-    AudioSource sound;
+    public AudioSource sound;
+    private int TrackIndex;
+    public AudioClip[] audioTracks;
+    private bool Vpered = false;
+
     // Start is called before the first frame update
     void Start()
     {
         sound = GetComponent<AudioSource>();
         isPressed = false;
+        sound = GetComponent<AudioSource>();
+        TrackIndex = 0;
+        print(audioTracks);
+        print(TrackIndex);
+        sound.clip = audioTracks[TrackIndex];
     }
 
     // Update is called once per frame
@@ -31,7 +41,6 @@ public class Btn : MonoBehaviour
 ;
             presser = other.gameObject;
             onPress.Invoke();
-            sound.Play();
             isPressed = true;
         }
     }
@@ -47,7 +56,39 @@ public class Btn : MonoBehaviour
         }
     }
 
+    public void TrackSwap()
+    {
+        if (Vpered == true)
+        {
+            TrackIndex++;
+            UpdateTrack(TrackIndex);
+            sound.Play();
+        }
+        else
+        {
+            TrackIndex--;
+            UpdateTrack(TrackIndex);
+            sound.Play();
+        }
+    }
 
+    private void Update()
+    {
+        if (TrackIndex == audioTracks.Length)
+        {
+            Vpered = !Vpered;
+            print("122434");
+        }
+    }
 
+    private void UpdateTrack(int Index)
+    {
+        print($"123: {TrackIndex}");
+        sound.clip = audioTracks[Index];
+    }
 
+    public void RadioOn()
+    {
+        sound.Play();
+    }
 }

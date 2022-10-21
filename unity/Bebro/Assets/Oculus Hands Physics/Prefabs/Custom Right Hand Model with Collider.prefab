@@ -915,6 +915,7 @@ GameObject:
   - component: {fileID: 8261036530400639443}
   - component: {fileID: 8350836956578110893}
   - component: {fileID: -5570042211324217736}
+  - component: {fileID: 2423022656075223268}
   m_Layer: 0
   m_Name: Custom Right Hand Model with Collider
   m_TagString: Untagged
@@ -970,8 +971,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerCharacteristics: 576
-  handAnimator: {fileID: 5686134208563048910, guid: ddc38db09f9124241b4b4e9b2b9831eb,
-    type: 3}
+  handAnimator: {fileID: 8350836956578110893}
+--- !u!54 &2423022656075223268
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8265230060884797615}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8265230255705169943
 GameObject:
   m_ObjectHideFlags: 0

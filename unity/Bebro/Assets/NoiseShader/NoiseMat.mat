@@ -82,7 +82,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseFactor: 0.018556412
+    - _NoiseFactor: 0.011722975
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
