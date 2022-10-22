@@ -90,7 +90,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204333475086940408}
   m_LocalRotation: {x: -0.47617307, y: -0.4761696, z: 0.5227459, w: -0.5227413}
-  m_LocalPosition: {x: 0.35, y: 1.1, z: -0.1015}
+  m_LocalPosition: {x: 0.3, y: 0.8779999, z: -0.1015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 204333475874342648}
@@ -121,7 +121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204333475593399503}
   m_LocalRotation: {x: -2.0065727e-10, y: 6.366463e-11, z: 2.2916837e-11, w: 1}
-  m_LocalPosition: {x: -0.00009953976, y: 1.667, z: 0.108}
+  m_LocalPosition: {x: -0.00009953976, y: 1.33, z: 0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 204333476889079840}
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Data:
-    m_ConstrainedObject: {fileID: 0}
+    m_ConstrainedObject: {fileID: 6536367438477210088}
     m_SourceObjects:
       m_Length: 1
       m_Item0:
@@ -227,9 +227,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Data:
-    m_Root: {fileID: 0}
-    m_Mid: {fileID: 0}
-    m_Tip: {fileID: 0}
+    m_Root: {fileID: 3815146008409205707}
+    m_Mid: {fileID: 3882994481630936544}
+    m_Tip: {fileID: 1124856545399445330}
     m_Target: {fileID: 204333475928431304}
     m_Hint: {fileID: 204333475086940415}
     m_TargetPositionWeight: 1
@@ -293,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204333476143908647}
   m_LocalRotation: {x: 0.47602367, y: -0.47602302, z: 0.522879, w: 0.52287775}
-  m_LocalPosition: {x: -0.35, y: 1.1, z: -0.1015}
+  m_LocalPosition: {x: -0.3, y: 0.878, z: -0.1015}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 204333476469140890}
@@ -346,9 +346,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 1
   m_Data:
-    m_Root: {fileID: 0}
-    m_Mid: {fileID: 0}
-    m_Tip: {fileID: 0}
+    m_Root: {fileID: 799368724410320118}
+    m_Mid: {fileID: 7300901510757390555}
+    m_Tip: {fileID: 1709474048937887036}
     m_Target: {fileID: 204333476573139403}
     m_Hint: {fileID: 204333476143908646}
     m_TargetPositionWeight: 1
@@ -782,7 +782,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014605034543414780}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
   m_Name: 
@@ -794,73 +794,84 @@ MonoBehaviour:
   tripodSize: 1
   boneColor: {r: 0, g: 0, b: 1, a: 0.5}
   m_Transforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3667750274370185410}
+  - {fileID: 1636584691533250994}
+  - {fileID: 593205504107703881}
+  - {fileID: 5998865076157003007}
+  - {fileID: 5143702985519810706}
+  - {fileID: 2334947758744608292}
+  - {fileID: 7106038264664277377}
+  - {fileID: 2012025582787405809}
+  - {fileID: 2575599649612157041}
+  - {fileID: 1981032400961379263}
+  - {fileID: 8066038679294968421}
+  - {fileID: 4970362914807163723}
+  - {fileID: 3687254424200934413}
+  - {fileID: 7845399189491957975}
+  - {fileID: 6981310421264847823}
+  - {fileID: 196323174798737400}
+  - {fileID: 6195485433638038015}
+  - {fileID: 799368724410320118}
+  - {fileID: 7300901510757390555}
+  - {fileID: 1709474048937887036}
+  - {fileID: 245679925341297617}
+  - {fileID: 7682691629996286610}
+  - {fileID: 4037108950009335981}
+  - {fileID: 6004507202958104587}
+  - {fileID: 6516917561679567914}
+  - {fileID: 4819516163228733339}
+  - {fileID: 4791853020377073961}
+  - {fileID: 3740810233220952383}
+  - {fileID: 1481650931399763098}
+  - {fileID: 1577082030959941256}
+  - {fileID: 5722132194546820987}
+  - {fileID: 4662369547729846969}
+  - {fileID: 6237751544761664957}
+  - {fileID: 8932333720789023194}
+  - {fileID: 658728195175278530}
+  - {fileID: 3389143440522485557}
+  - {fileID: 7641395785635069229}
+  - {fileID: 8607650984371122577}
+  - {fileID: 208508798760493661}
+  - {fileID: 8109472167993585219}
+  - {fileID: 5541158165248513230}
+  - {fileID: 1592036447452393084}
+  - {fileID: 6549267126943820546}
+  - {fileID: 3433852847567973734}
+  - {fileID: 3588800275295894501}
+  - {fileID: 3196089460893904223}
+  - {fileID: 6536367438477210088}
+  - {fileID: 3028874573527605128}
+  - {fileID: 6393628918237001443}
+  - {fileID: 9203090435194851260}
+  - {fileID: 3815146008409205707}
+  - {fileID: 3882994481630936544}
+  - {fileID: 1124856545399445330}
+  - {fileID: 1665936958953677117}
+  - {fileID: 8854731098151395496}
+  - {fileID: 6255624249310638618}
+  - {fileID: 7635376403235920608}
+  - {fileID: 818723358016266137}
+  - {fileID: 3194888720905236813}
+  - {fileID: 4310980989561940345}
+  - {fileID: 434510655732858284}
+  - {fileID: 7350745210705860041}
+  - {fileID: 5983602926266510316}
+  - {fileID: 3120700233266805680}
+  - {fileID: 5629700527310467439}
+  - {fileID: 3012315801151934256}
+  - {fileID: 1342822197691393346}
+  - {fileID: 6344225007965220226}
+  - {fileID: 3796209220165686096}
+  - {fileID: 8761123712235635548}
+  - {fileID: 2086651901346849014}
+  - {fileID: 6206381721034100685}
+  - {fileID: 5493741654323421634}
+  - {fileID: 1833903809630558927}
+  - {fileID: 4304506345907900486}
+  - {fileID: 2023400334216031269}
+  - {fileID: 6741661562223738913}
+  - {fileID: 3406326436610350862}
 --- !u!114 &204333476512874863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,7 +917,7 @@ MonoBehaviour:
     TrackingRotationOffset: {x: 0, y: 0, z: 0, w: 1}
   _turnSmoothness: 0
   _IKHead: {fileID: 204333475593399502}
-  _headBodyOffset: {x: 0, y: -1.67, z: 0}
+  _headBodyOffset: {x: 0, y: -1.35, z: 0}
 --- !u!1 &1034969530396296899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3577,7 +3588,7 @@ Transform:
   m_GameObject: {fileID: 7165321891197271442}
   m_LocalRotation: {x: 0.000000081460335, y: 6.123234e-17, z: 6.1232336e-17, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 3667750274370185410}
   m_Father: {fileID: 387108682233030470}
