@@ -36,6 +36,7 @@ public class Radio : MonoBehaviour
         if (!TurnedOn) return;
 
         _trackIndex--;
+
         if (_trackIndex >= _clips.Length) _trackIndex = 0;
         else if (_trackIndex < 0) _trackIndex = _clips.Length - 1;
 
