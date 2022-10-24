@@ -7748,7 +7748,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 787f953c1823c734bbb45d581c61b82b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 787f953c1823c734bbb45d581c61b82b,
         type: 3}
@@ -8579,7 +8579,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 787f953c1823c734bbb45d581c61b82b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 787f953c1823c734bbb45d581c61b82b,
         type: 3}
@@ -12240,33 +12240,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2186673073481976250, guid: 2759b6c6086b00e4599974c653d4e7de,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2186673073481976250, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2186673073481976250, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2186673073481976250, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.0565479
       objectReference: {fileID: 0}
     - target: {fileID: 2186673073481976250, guid: 2759b6c6086b00e4599974c653d4e7de,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.78
+      value: -9.68
       objectReference: {fileID: 0}
     - target: {fileID: 2186673073481976250, guid: 2759b6c6086b00e4599974c653d4e7de,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.602442
+      value: 8.47
       objectReference: {fileID: 0}
     - target: {fileID: 2186673073481976250, guid: 2759b6c6086b00e4599974c653d4e7de,
         type: 3}
@@ -12308,6 +12293,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot Kyle
       objectReference: {fileID: 0}
+    - target: {fileID: 6566858887932650232, guid: 2759b6c6086b00e4599974c653d4e7de,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6566858887932650233, guid: 2759b6c6086b00e4599974c653d4e7de,
         type: 3}
       propertyPath: head.vrTarget
@@ -12323,31 +12313,6 @@ PrefabInstance:
       propertyPath: rightHand.vrTarget
       value: 
       objectReference: {fileID: 1368539196101877396}
-    - target: {fileID: 6566858887932650233, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
-      propertyPath: head.trackingPositionOffset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6566858887932650233, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
-      propertyPath: head.trackingPositionOffset.y
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6566858887932650233, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
-      propertyPath: head.trackingPositionOffset.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6566858888776750857, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.753
-      objectReference: {fileID: 0}
-    - target: {fileID: 6566858888776750857, guid: 2759b6c6086b00e4599974c653d4e7de,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.134
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2759b6c6086b00e4599974c653d4e7de, type: 3}
 --- !u!1 &1120615248
@@ -24799,6 +24764,16 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1622115955}
+    - target: {fileID: 1368539195534366998, guid: a0a4ac326169e0648b7d731b09e4b5ed,
+        type: 3}
+      propertyPath: field of view
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1368539195534366998, guid: a0a4ac326169e0648b7d731b09e4b5ed,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 1368539195534366998, guid: a0a4ac326169e0648b7d731b09e4b5ed,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
