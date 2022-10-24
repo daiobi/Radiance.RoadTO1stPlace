@@ -414,7 +414,7 @@ MonoBehaviour:
   m_UpdateTrackingType: 0
   m_EnableInputTracking: 1
   m_EnableInputActions: 1
-  m_ModelPrefab: {fileID: 3621981467535291324, guid: 6c2509c76b281144cb0099fc45f17a09,
+  m_ModelPrefab: {fileID: 7633191943669604095, guid: 77459436eeb3aeb48871d657bcb5fd7f,
     type: 3}
   m_ModelParent: {fileID: 0}
   m_Model: {fileID: 0}
@@ -665,7 +665,7 @@ SphereCollider:
   m_GameObject: {fileID: 1368539195053488494}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.041066885
   m_Center: {x: 0, y: 0, z: 0}
@@ -1571,7 +1571,7 @@ MonoBehaviour:
   m_UpdateTrackingType: 0
   m_EnableInputTracking: 1
   m_EnableInputActions: 1
-  m_ModelPrefab: {fileID: 3621981467535291324, guid: ddc38db09f9124241b4b4e9b2b9831eb,
+  m_ModelPrefab: {fileID: 8261036530400639443, guid: 3c99d0ba506360a43b8cea08ef805d25,
     type: 3}
   m_ModelParent: {fileID: 0}
   m_Model: {fileID: 0}
@@ -1822,7 +1822,7 @@ SphereCollider:
   m_GameObject: {fileID: 1368539195649128849}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.041066885
   m_Center: {x: 0, y: 0, z: 0}
