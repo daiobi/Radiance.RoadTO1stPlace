@@ -28,6 +28,7 @@ public class VRRig : MonoBehaviour
 
 
     public Transform headConstraint;
+    public Transform cameraPosition;
     private Vector3 headBodyOffest;
 
     // Start is called before the first frame update
@@ -41,9 +42,11 @@ public class VRRig : MonoBehaviour
     {
         transform.position = headConstraint.position + headBodyOffest;
         transform.forward = Vector3.Lerp(transform.forward,
-         Vector3.ProjectOnPlane(headConstraint.up,Vector3.up).normalized, turnSmoothness);
+         Vector3.ProjectOnPlane(head.vrTarget.transform.forward,Vector3.up).normalized, turnSmoothness);
 
-        head.Map();
+        head.rigTarget.position = head.vrTarget.TransformPoint(cameraPosition.InverseTransformPoint(headConstraint.position));
+        head.rigTarget.rotation = head.vrTarget.rotation * Quaternion.Euler(head.trackingRotationOffset);
+
         leftHand.Map();
         rightHand.Map();
     }
