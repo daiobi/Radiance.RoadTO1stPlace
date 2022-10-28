@@ -3584,6 +3584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad729a22ce9a36478ea93ebf314e4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxSpeed: 15
   _axles:
   - leftWheel: {fileID: 7250216389609436654}
     rightWheel: {fileID: 7250216389414776662}
@@ -3706,7 +3707,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldCenter: {fileID: 0}
   _maxHealth: 6
-  _maxSpeed: 15
   OnBroken:
     m_PersistentCalls:
       m_Calls: []

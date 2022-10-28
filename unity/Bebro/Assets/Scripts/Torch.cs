@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Torch : MonoBehaviour
 {
+    public bool[] _wheely;
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _turnOnSound;
     [SerializeField] private GameObject[] _screens;
@@ -27,6 +28,7 @@ public class Torch : MonoBehaviour
     private float _joystickY;
     private float _joystickButtonAxis;
     private float _joystickActivate;
+    private RoverHealth _roverHealth;
 
     private InputAction _buttonAxis;
 
@@ -136,10 +138,17 @@ public class Torch : MonoBehaviour
 
     public void Repair(int n)
     {
-        if (_rover.RepairWheel(n))
+        if (_rover.RepairWheel(n) && _wheely[n - 1] == false)
         {
             _spec.HandleWheelFix(n);
+            ValRepair(n);
         }
-        
+
     }
+
+    public void ValRepair(int n )
+    {
+        _wheely[n -1] = true;
+    }
+
 }
