@@ -4843,25 +4843,25 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 45
-      inSlope: 0.014285714
-      outSlope: 0.014285714
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 350
-      value: 50
-      inSlope: -0.02006661
-      outSlope: -0.02006661
+      value: 1
+      inSlope: -0.0027697873
+      outSlope: -0.0027697873
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.09689659
+      inWeight: 0.104761966
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 400
-      value: 10
+      value: 0.02
       inSlope: -0.004176137
       outSlope: -0.004176137
       tangentMode: 0
@@ -4874,9 +4874,9 @@ MonoBehaviour:
   _damageTrigger: {fileID: 0}
   _brakeForce: 30
   _steeringAngle: 25
-  _maxRpm: 400
   _n: 0
   _isBroken: 0
+  _maxSpeed: 15
 --- !u!114 &3544286814578560562
 MonoBehaviour:
   m_ObjectHideFlags: 0

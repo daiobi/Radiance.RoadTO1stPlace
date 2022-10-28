@@ -29,7 +29,7 @@ namespace Rover
         public class RoverEvent : UnityEvent<BreakDownCause> { }
         public RoverEvent OnBroken;
         private bool _isBroken;
-
+        private float _lastHealthSpeedTime;
 
         private void Awake()
         {
@@ -49,11 +49,6 @@ namespace Rover
             {
                 _isBroken = true;
                 cause = BreakDownCause.BatteryLow;
-            }
-            else if (Vector3.Angle(transform.up, Vector3.up) > 90)
-            {
-                _isBroken = true;
-                cause = BreakDownCause.Flip;
             }
             else if (_roverHealth.HitCount > _maxHealth)
             {
@@ -80,6 +75,17 @@ namespace Rover
                 TurnOff();
                 Debug.Log("Broken");
             }
+
+            if (Vector3.Angle(transform.up, Vector3.up) > 90)
+            {
+                _roverHealth.TakeDamage(_maxHealth);
+            }
+
+            if (GameStatistics.Instance.MaxSpeedTime - _lastHealthSpeedTime > 30f)
+            {
+                _roverHealth.TakeDamage(1);
+                _lastHealthSpeedTime = GameStatistics.Instance.MaxSpeedTime;
+            } 
         }
 
         public bool RepairWheel(int n)
@@ -91,6 +97,17 @@ namespace Rover
 
             return false;
         }
+
+        public bool CanRepairWheel(int n)
+        {
+            if (IsActivated)
+            {
+                return _roverHealth.CanRepairWheel(n);
+            }
+
+            return false;
+        }
+
         public bool TurnOn()
         {
             if (_isBroken) return false;
@@ -181,7 +198,7 @@ namespace Rover
                 BatteryPercents = _roverBattery.ValuePercents,
                 Speed = _roverMovement.SpeedKmPH,
 
-                Health = _maxHealth - _roverHealth.HitCount,
+                Health = Mathf.Max(0, _maxHealth - _roverHealth.HitCount),
                 BodyBroken = _roverHealth.IsBodyBroken,
                 LFBroken = _roverHealth.IsLFWheelBroken,
                 RFBroken = _roverHealth.IsRFWheelBroken,

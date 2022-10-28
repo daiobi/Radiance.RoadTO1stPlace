@@ -1,20 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 namespace Rover
 {
     [RequireComponent(typeof(WheelCollider))]
     public class Wheel : MonoBehaviour
     {
+        private const float _speedToTorque = 3f;
+
         [SerializeField] private AnimationCurve _torqueCurve;
         [SerializeField] private DamageTrigger _damageTrigger;
         [SerializeField] private float _brakeForce;
         [SerializeField] private float _steeringAngle;
-        [SerializeField] private float _maxRpm;
         [SerializeField] private int _n;
         [SerializeField] private bool _isBroken;
+        [SerializeField] private float _maxSpeed;
+
+        public int SpeedReduction { get; set; } = 0;
 
         public delegate void WheelEvent(int n);
         public event WheelEvent OnBroken;
@@ -23,6 +24,7 @@ namespace Rover
         private float _torque;
 
         public bool IsBroken => _isBroken;
+        public bool WasRepaired { get; private set; } = false;
 
         private void Awake()
         {
@@ -41,24 +43,30 @@ namespace Rover
 
         private void Update()
         {
-            _wheelCollider.motorTorque = _torqueCurve.Evaluate(_wheelCollider.rpm) * _torque;
+            _wheelCollider.motorTorque = _torqueCurve.Evaluate(_wheelCollider.rpm) * Mathf.Max(0, _maxSpeed - SpeedReduction) * _speedToTorque * _torque;
         }
 
 
         public bool Repair()
         {
-            if (_isBroken)
+            if (CanRepair())
             {
                 _isBroken = false;
+                WasRepaired = true;
                 return true;
             }
 
             return false;
         }
 
+        public bool CanRepair()
+        {
+            return IsBroken && !WasRepaired;
+        }
+
         public void SetTorque(float torque)
         {
-            if (torque == 0 || IsBroken)
+            if (torque == 0 && !IsBroken)
             {
                 _wheelCollider.brakeTorque = _brakeForce;
             } else
@@ -66,7 +74,7 @@ namespace Rover
                 _wheelCollider.brakeTorque = 0;
             }
 
-            _torque = torque;
+            _torque = IsBroken ? 0f : torque;
         }
 
         public void SetSteering(float steering)

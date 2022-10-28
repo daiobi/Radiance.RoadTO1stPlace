@@ -4,9 +4,9 @@ namespace Rover
 {
     public class RoverMovement : MonoBehaviour
     {
+        [SerializeField] private float _maxSpeed;
         [Header("Wheels")]
-        [SerializeField]
-        private AxleInfo[] _axles;
+        [SerializeField] private AxleInfo[] _axles;
 
         private Vector3 _lastPosition;
         private float _currentSpeed;
@@ -17,6 +17,11 @@ namespace Rover
         {
             _currentSpeed = (transform.position - _lastPosition).magnitude / Time.fixedDeltaTime;
             _lastPosition = transform.position;
+
+            if (_currentSpeed > _maxSpeed)
+            {
+                GameStatistics.Instance.MaxSpeedTime += Time.deltaTime;
+            }
         }
 
         public void Move(float acceleration, float steering)

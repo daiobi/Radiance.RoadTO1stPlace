@@ -3706,6 +3706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _worldCenter: {fileID: 0}
   _maxHealth: 6
+  _maxSpeed: 15
   OnBroken:
     m_PersistentCalls:
       m_Calls: []
