@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,15 +8,20 @@ using UnityEngine.UI;
 public class Move : MonoBehaviour
 {
     public Image _moveImage;
+    private int _CalibVal = 0;
     [SerializeField] private Image _target;
     [SerializeField] private float _trueDistance;
     [SerializeField] private Transform _leftBorder;
     [SerializeField] private Transform _rightBorder;
 
+    public int CalibVal => _CalibVal;
+
     public UnityEvent OnWin;
+    public UnityEvent OnFail;
 
     private float _min;
     private float _max;
+    private RadarMinigame _minigame;
 
     private float _targetX = 405;
     private bool _th = false;
@@ -25,7 +31,7 @@ public class Move : MonoBehaviour
         _min = _leftBorder.transform.localPosition.x;
         _max = _rightBorder.transform.localPosition.x;
         _targetX = _max;
-        _target.transform.localPosition = new Vector2(Random.Range(_min, _max), _target.transform.localPosition.y);
+        //_target.transform.localPosition = new Vector2(Random.Range(_min, _max), _target.transform.localPosition.y);
     }
 
     // Update is called once per frame
@@ -47,19 +53,27 @@ public class Move : MonoBehaviour
         
     }
 
+    internal void Restart()
+    {
+        _CalibVal = 0;
+    }
+
     public void btn()
     {
-        if (_th == true)
-            OnWin?.Invoke();
-        else if (_th == false)
+        if (_th)
         {
-            Debug.Log("net");
-            _target.transform.localPosition = new Vector2(Random.Range(_min, _max), _target.transform.localPosition.y);
+            _CalibVal++;
+
+            if (_CalibVal >= 3) OnWin?.Invoke();
+        }
+        else
+        {
+            OnFail?.Invoke(); 
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-            Debug.Log("12332432332");
+        Debug.Log("12332432332");
         if(collision.tag == "TriggerImg")
         {
             _th = true;

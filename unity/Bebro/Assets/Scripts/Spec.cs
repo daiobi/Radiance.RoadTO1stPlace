@@ -19,7 +19,7 @@ public class Spec : MonoBehaviour
     public GameObject _gmobj;
     public GameObject _rov;
     public Text _BatteryCharge;
-    public Text _health;
+    public Image _health;
     public TMPro.TextMeshProUGUI _speedText;
     public TMPro.TextMeshProUGUI _logText;
     private Sprite[] _defaultSprites;
@@ -68,7 +68,7 @@ public class Spec : MonoBehaviour
         
         _speedText.text = $"{(int)tel.Speed} км/ч";
         _BatteryCharge.text = $"{Mathf.CeilToInt(tel.BatteryPercents * 100f)}%";
-        _health.text = $"{tel.Health}";
+        _health.fillAmount = Mathf.Lerp(_health.fillAmount, tel.Health / 6f, Time.deltaTime);
 
         _Image[0].sprite = tel.BodyBroken ? _BrokenSprite[0] : _defaultSprites[0];
 

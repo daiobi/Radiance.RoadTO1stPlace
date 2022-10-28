@@ -1,9 +1,12 @@
 ﻿using Rover;
 using UnityEngine;
+using TMPro;
 
 public class RadarMinigame : MonoBehaviour
 {
+
     [SerializeField] private GameObject _minigamePanel;
+    [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private Transform _radarRotation;
     [SerializeField] private Move _minigame;
     public bool IsWon { get; private set; }
@@ -11,10 +14,13 @@ public class RadarMinigame : MonoBehaviour
     private void Start()
     {
         _minigame.OnWin.AddListener(HandleWin);
+        _minigame.OnFail.AddListener(HandleFail);
     }
 
     private void Update()
     {
+        _text.text = $"{_minigame.CalibVal}/3";
+
         if (IsWon)
             _radarRotation.rotation = Quaternion.Slerp(_radarRotation.rotation, Quaternion.Euler(0, -90, 0), Time.deltaTime * 0.5f);
     }
@@ -23,6 +29,11 @@ public class RadarMinigame : MonoBehaviour
     {
         IsWon = true;
         Tasks.SetRadarFixed();
+        CloseMinigame();
+    }
+
+    private void HandleFail()
+    {
         CloseMinigame();
     }
 
@@ -43,6 +54,7 @@ public class RadarMinigame : MonoBehaviour
     {
         if (!IsWon)
         {
+            _minigame.Restart();
             _minigamePanel.SetActive(true);
         }
     }
