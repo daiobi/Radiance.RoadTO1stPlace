@@ -9725,6 +9725,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.9000001
       objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: 05fb0e83dd53b45459f8975246645824,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4124cb288cf74a1478963cace3093666, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05fb0e83dd53b45459f8975246645824, type: 3}
 --- !u!4 &777566941 stripped
@@ -9947,7 +9952,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0bee3b566bc1d3b478693b97852c33d1, type: 2}
+  - {fileID: 2100000, guid: a4c87dc80c0473b448d7103294edbd1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18588,11 +18593,10 @@ MonoBehaviour:
   _clips:
   - {fileID: 8300000, guid: 402764e928af4484eb4bc3b90052d4b2, type: 3}
   - {fileID: 8300000, guid: 7be5e81346c7a7f41a3878346b87ac93, type: 3}
-  - {fileID: 8300000, guid: d95cd9ce5a9ea2c41850546691515a80, type: 3}
-  - {fileID: 8300000, guid: afd2a55dfc5ec214c9d8cde51df75a71, type: 3}
-  - {fileID: 8300000, guid: 819edaff938239b4ba40d7dc1526e368, type: 3}
-  - {fileID: 8300000, guid: d89f7ddbca7f33147a921ca4f68b0af6, type: 3}
   - {fileID: 8300000, guid: 61e483d502a04f145a884562c2dd2110, type: 3}
+  - {fileID: 8300000, guid: 4875a35cce2cabd4590e0cecf02fd12e, type: 3}
+  - {fileID: 8300000, guid: fc501868a05adf44eaa9fc498491f8f7, type: 3}
+  - {fileID: 8300000, guid: e7ef13b050744d54083d19f18e30b0eb, type: 3}
   _changeSound: {fileID: 8300000, guid: 8e70299eaa5891f42bd7a97dd149872f, type: 3}
 --- !u!82 &1405339806
 AudioSource:
