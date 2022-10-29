@@ -1,21 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PhotoMake : MonoBehaviour
+public class Photomake : MonoBehaviour
 {
-    // Start is called before the first frame update
-    static public Texture2D GetRTPixels(RenderTexture rt)
+    public RawImage _CameraImage;
+    public Texture2D _TextureImage;
+    public void Photo()
     {
-        //_PhotoCamera.GetComponent<Camera>().Render();
-        //_MakedPhoto.texture = _PhotoCamera.activeTexture;
-        RenderTexture currentActiveRT = RenderTexture.active;
-        RenderTexture.active = rt;
-        Texture2D tex = new Texture2D(rt.width, rt.height);
-        tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
+        Camera Cam = GetComponent<Camera>();
 
-        // Restorie previously active render texture
-        RenderTexture.active = currentActiveRT;
-        return tex;
+        RenderTexture currentRT = RenderTexture.active;
+        RenderTexture.active = Cam.targetTexture;
+
+        Cam.Render();
+
+
+        _TextureImage.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
+        _TextureImage.Apply();
+        _CameraImage.texture = _TextureImage;
     }
 }
+
