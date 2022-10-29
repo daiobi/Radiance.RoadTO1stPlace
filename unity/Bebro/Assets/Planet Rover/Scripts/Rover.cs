@@ -29,7 +29,6 @@ namespace Rover
         public class RoverEvent : UnityEvent<BreakDownCause> { }
         public RoverEvent OnBroken;
         private bool _isBroken;
-        private float _lastHealthSpeedTime;
 
         private void Awake()
         {
@@ -81,10 +80,10 @@ namespace Rover
                 _roverHealth.TakeDamage(_maxHealth);
             }
 
-            if (GameStatistics.Instance.MaxSpeedTime - _lastHealthSpeedTime > 30f)
+            if (GameStatistics.Instance.MaxSpeedTime > 30f)
             {
+                GameStatistics.Instance.MaxSpeedTime = 0f;
                 _roverHealth.TakeDamage(1);
-                _lastHealthSpeedTime = GameStatistics.Instance.MaxSpeedTime;
             } 
         }
 

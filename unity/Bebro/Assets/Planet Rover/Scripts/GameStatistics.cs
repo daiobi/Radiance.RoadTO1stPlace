@@ -15,6 +15,7 @@ namespace Rover
         public float SamplesCollectingTime => Tasks.Instance.SamplesCollectEndTime - Tasks.Instance.SamplesCollectStartTime;
         public float SamplesToEndTime => Tasks.Instance.SamplesCollectStartTime - Tasks.Instance.SamplesCollectEndTime;
         public float MaxSpeedTime { get; set; }
+        public float FullMaxSpeedTime { get; set; }
         
         public int CollectedSamples { get; set; }
         public int BrokenSamples { get; set; }

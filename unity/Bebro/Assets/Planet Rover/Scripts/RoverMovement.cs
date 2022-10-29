@@ -18,9 +18,14 @@ namespace Rover
             _currentSpeed = (transform.position - _lastPosition).magnitude / Time.fixedDeltaTime;
             _lastPosition = transform.position;
 
-            if (_currentSpeed > _maxSpeed)
+            if (SpeedKmPH > _maxSpeed)
             {
-                GameStatistics.Instance.MaxSpeedTime += Time.deltaTime;
+                GameStatistics.Instance.FullMaxSpeedTime += Time.fixedDeltaTime;
+                GameStatistics.Instance.MaxSpeedTime += Time.fixedDeltaTime;
+            }
+            else
+            {
+                GameStatistics.Instance.MaxSpeedTime = 0;
             }
         }
 
