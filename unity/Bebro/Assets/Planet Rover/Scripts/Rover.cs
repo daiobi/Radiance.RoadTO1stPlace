@@ -49,7 +49,7 @@ namespace Rover
         {
             if (!IsActivated || _isBroken || Tasks.Instance.GamePhase == GamePhase.RoverTurnedOff) return;
 
-            _roverMovement.MaxSpeed = _maxSpeed - 2 * _roverHealth.HitCount;
+            _roverMovement.MaxSpeed = _maxSpeed + 1 - 2 * _roverHealth.HitCount;
 
             BreakDownCause cause = BreakDownCause.BatteryLow;
             if (_roverBattery.Value == 0)

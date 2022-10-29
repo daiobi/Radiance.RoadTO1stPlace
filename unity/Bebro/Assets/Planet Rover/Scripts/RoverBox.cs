@@ -6,7 +6,7 @@ namespace Rover
 {
     public class RoverBox : MonoBehaviour
     {
-        [SerializeField] private Transform _topPlate;
+        [SerializeField] private Transform _plate;
         [SerializeField] private float _closedPos;
         [SerializeField] private float _openedPos;
         [SerializeField] private SampleKind _sampleKind;
@@ -63,13 +63,13 @@ namespace Rover
 
         private void Start()
         {
-            _topPlate.localPosition = new Vector3(_closedPos, _topPlate.localPosition.y, _topPlate.localPosition.z);
+            _plate.localPosition = new Vector3(_plate.localPosition.y, _plate.localPosition.y, _closedPos);
             BoxState = BoxState.Closed;
         }
 
         private void Update()
         {
-            _topPlate.localPosition = new Vector3(Mathf.MoveTowards(_topPlate.localPosition.x, _isClosed ? _closedPos : _openedPos, Time.deltaTime), _topPlate.localPosition.y, _topPlate.localPosition.z);
+            _plate.localPosition = new Vector3(_plate.localPosition.x, _plate.localPosition.y, Mathf.MoveTowards(_plate.localPosition.z, _isClosed ? _closedPos : _openedPos, Time.deltaTime));
         }
 
         public void Open()

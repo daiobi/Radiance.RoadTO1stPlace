@@ -25,7 +25,6 @@ namespace Rover
         private Vector3 _lastPosition2 = Vector3.zero;
 
         private Vector3 _input = Vector3.zero;
-        private float _grabValue;
 
         private void Start()
         {
