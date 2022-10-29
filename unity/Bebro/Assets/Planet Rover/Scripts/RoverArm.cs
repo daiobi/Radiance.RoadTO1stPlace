@@ -6,9 +6,6 @@ namespace Rover
     public class RoverArm : MonoBehaviour
     {
         [SerializeField] private ArmTrigger[] _triggers;
-        //[SerializeField] private GrabTrigger _grabTrigger;
-        //[SerializeField] private Transform _leftGrab;
-        //[SerializeField] private Transform _rightGrab;
         [SerializeField] private IKSolver _solver;
         [SerializeField] private float _maxDistance;
         [SerializeField] private PhysicalRotator _axis;
@@ -52,28 +49,6 @@ namespace Rover
 
         private void FixedUpdate()
         {
-            /*if (_grabTrigger.Grabable)
-            {
-                if (_grabValue > _grabTrigger.Grabable.MaxForce)
-                {
-                    _grabTrigger.Detach();
-                    _grabTrigger.Grabable.BreakDown();
-                    Debug.Log("Game over");
-                }
-                else
-                {
-
-                    if (_grabValue > _grabTrigger.Grabable.MinForce)
-                    {
-                        _grabTrigger.Attach();
-                    }
-                    else
-                    {
-                        _grabTrigger.Detach();
-                    }
-                }
-            }*/
-
             _lastAxisAngle2 = _lastAxisAngle;
             _lastAxisAngle = _axisAngle;
             _lastPosition2 = _lastPosition;
@@ -106,12 +81,7 @@ namespace Rover
             _solver.Solve();
         }
 
-        /*public void SetGrab(float value)
-        {
-            _grabValue = value;
-            _rightGrab.localEulerAngles = new Vector3(0, Mathf.Lerp(0, -20, value), 0);
-            _leftGrab.localEulerAngles = new Vector3(0, Mathf.Lerp(0, 20, value), 0);
-        }*/
+        
 
         public void SetActive(bool state)
         {

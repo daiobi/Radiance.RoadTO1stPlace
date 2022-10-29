@@ -4,7 +4,7 @@ namespace Rover
 {
     public class IKSolver : MonoBehaviour
     {
-        [SerializeField] private Transform _effector;
+        [SerializeField] private PhysicalRotator _effector;
         [SerializeField] private PhysicalRotator _pivot;
         [SerializeField] private PhysicalRotator _upper;
         [SerializeField] private PhysicalRotator _lower;
@@ -21,7 +21,7 @@ namespace Rover
             {
                 _upper = _pivot.transform.GetChild(0).GetComponent<PhysicalRotator>();
                 _lower = _upper.transform.GetChild(0).GetComponent<PhysicalRotator>();
-                _effector = _lower.transform.GetChild(0);
+                _effector = _lower.transform.GetChild(0).GetComponent<PhysicalRotator>();
             }
             catch (UnityException)
             {
@@ -32,7 +32,7 @@ namespace Rover
         private void Awake()
         {
             _upperLength = (_lower.transform.position - _upper.transform.position).magnitude;
-            _lowerLength = (_effector.position - _lower.transform.position).magnitude;
+            _lowerLength = (_effector.transform.position - _lower.transform.position).magnitude;
         }
 
         public void Solve()
@@ -52,6 +52,7 @@ namespace Rover
             {
                 _upper.SetTargetAngle(B + phi);
                 _lower.SetTargetAngle(C - 180);
+                _effector.SetTargetAngle(90 - (B + phi + C));
             }
         }
     }

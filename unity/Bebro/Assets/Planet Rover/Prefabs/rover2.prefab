@@ -132,13 +132,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192245716}
-  m_LocalRotation: {x: 0.11621141, y: 0, z: 0, w: 0.9932245}
+  m_LocalRotation: {x: -0.0034414886, y: -0, z: -0, w: 0.9999941}
   m_LocalPosition: {x: -0.026636481, y: 0.26330405, z: 0.8329485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4686543030640062552}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 13.347001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.39400002, y: 0, z: 0}
 --- !u!20 &1192245720
 Camera:
   m_ObjectHideFlags: 0
@@ -1000,13 +1000,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855966403142432813}
-  m_LocalRotation: {x: -0.010355576, y: -0.014987883, z: 0.79271966, w: -0.60931414}
+  m_LocalRotation: {x: -0.011363699, y: -0.014238705, z: 0.7488529, w: -0.66248584}
   m_LocalPosition: {x: -0.059929036, y: -0.0123847425, z: -0.06208206}
   m_LocalScale: {x: 53.74183, y: 53.807655, z: 146.78922}
   m_Children: []
   m_Father: {fileID: 1021395203222500612}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 2.085, y: 0.106000006, z: -104.90401}
+  m_LocalEulerAnglesHint: {x: 2.085, y: 0.106000006, z: -97.00201}
 --- !u!33 &8112662081202798455
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2547,13 +2547,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4142053064970197350}
-  m_LocalRotation: {x: -0.010355576, y: -0.014987883, z: 0.79271966, w: -0.60931414}
+  m_LocalRotation: {x: -0.011465565, y: -0.014156842, z: 0.74408066, w: -0.6678414}
   m_LocalPosition: {x: 0.05086539, y: -0.02372107, z: -0.06352163}
   m_LocalScale: {x: 53.74183, y: 53.807655, z: 146.78922}
   m_Children: []
   m_Father: {fileID: 4577501087138451996}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 2.085, y: 0.106000006, z: -104.90401}
+  m_LocalEulerAnglesHint: {x: 2.085, y: 0.106000006, z: -96.18001}
 --- !u!33 &3768260546466809775
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3673,9 +3673,6 @@ MonoBehaviour:
   - {fileID: 1207710939}
   - {fileID: 4392366339563114403}
   - {fileID: 6435750618132025134}
-  _grabTrigger: {fileID: 8637864772597454391}
-  _leftGrab: {fileID: 4577501087138451996}
-  _rightGrab: {fileID: 1021395203222500612}
   _solver: {fileID: 511409582}
   _maxDistance: 1.2
   _axis: {fileID: 1171380666}
@@ -3696,7 +3693,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f079a5f79684f40a5240e8302cd144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bodyHealth: {fileID: 1541292222}
   _LFWheel: {fileID: 7250216389609436654}
   _RFWheel: {fileID: 7250216389414776662}
   _LCWheel: {fileID: 7250216390298705628}
@@ -3718,6 +3714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1efabd8812fe1541a35435a5b22fd0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _grabArm: {fileID: 0}
+  _grabTool: {fileID: 0}
+  _drillArm: {fileID: 0}
   _worldCenter: {fileID: 0}
   _maxSpeed: 15
   _maxHealth: 6

@@ -8,7 +8,10 @@ namespace Rover
     public class Rover : MonoBehaviour
     {
         [SerializeField] private RoverArm _grabArm;
+        [SerializeField] private GrabHandTool _grabTool;
+
         [SerializeField] private RoverArm _drillArm;
+        [SerializeField] private DrillTool _drillTool;
 
         [SerializeField] private SignalController _worldCenter;
         [SerializeField] private float _maxSpeed = 15f;
@@ -159,7 +162,7 @@ namespace Rover
         {
             if (IsActivated)
             {
-                //_roverArm.SetGrab(a);
+                _grabTool.SetGrabValue(a);
             }
         }
 
@@ -167,7 +170,7 @@ namespace Rover
         {
             if (IsActivated)
             {
-                //регулировать скорость вращения бура
+                _drillTool.SetDrillSpeed(a);
             }
         }
 
