@@ -19585,6 +19585,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7250216390298705628, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
+        type: 3}
+      propertyPath: _torqueCurve.m_Curve.Array.data[0].value
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7250216390298705628, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
+        type: 3}
+      propertyPath: _torqueCurve.m_Curve.Array.data[1].value
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 7250216390298705628, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
+        type: 3}
+      propertyPath: _torqueCurve.m_Curve.Array.data[0].inSlope
+      value: 0.028571429
+      objectReference: {fileID: 0}
+    - target: {fileID: 7250216390298705628, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
+        type: 3}
+      propertyPath: _torqueCurve.m_Curve.Array.data[0].outSlope
+      value: 0.028571429
+      objectReference: {fileID: 0}
     - target: {fileID: 8955303846128779715, guid: 6d9ac37aadba8f24593d83eaabb6b67e,
         type: 3}
       propertyPath: m_Layer
