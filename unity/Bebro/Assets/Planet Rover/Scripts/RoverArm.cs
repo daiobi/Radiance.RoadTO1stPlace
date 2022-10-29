@@ -18,6 +18,8 @@ namespace Rover
         [SerializeField] private float _ySpeed;
         [SerializeField] private float _zSpeed;
 
+        public bool IsActive { get; private set; }
+
         private float _axisAngle = 0;
 
         private float _lastAxisAngle = 0;
@@ -34,6 +36,8 @@ namespace Rover
             _lastAxisAngle2 = _axisAngle;
             _lastPosition = _target.localPosition;
             _lastPosition2 = _target.localPosition;
+
+            _target.SetParent(_axis.transform);
         }
 
         private void OnEnable()
@@ -80,15 +84,15 @@ namespace Rover
             if (_axisAngle < -180) _axisAngle = 360 + _axisAngle;
 
             Vector3 offset = new Vector3(0, _input.y * _ySpeed * Time.deltaTime, -_input.z * _zSpeed * Time.deltaTime);
-            float distance = Vector3.Distance(_target.position + offset, _axis.transform.position);
-            if (distance <= _maxDistance)
-            {
-                _target.Translate(offset, Space.Self);
-            }
+            _target.Translate(offset, Space.Self);
 
             _axis.SetTargetAngle(_axisAngle);
-
             _solver.Solve();
+
+            if (_target.localPosition.sqrMagnitude > _maxDistance*_maxDistance)
+            {
+                _target.localPosition = _target.localPosition.normalized * _maxDistance;
+            }
         }
 
         private void Triggered()
@@ -107,6 +111,11 @@ namespace Rover
             _grabValue = value;
             _rightGrab.localEulerAngles = new Vector3(0, Mathf.Lerp(0, -20, value), 0);
             _leftGrab.localEulerAngles = new Vector3(0, Mathf.Lerp(0, 20, value), 0);
+        }
+
+        public void SetActive(bool state)
+        {
+            IsActive = state;
         }
 
         public void Move(float x, float y, float z)

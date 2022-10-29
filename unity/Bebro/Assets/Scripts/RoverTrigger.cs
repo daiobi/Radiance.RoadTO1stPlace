@@ -11,21 +11,20 @@ public class RoverTrigger : MonoBehaviour
     public UnityEvent OnZoneEntered;
     public UnityEvent OnStoppedInZone;
     public UnityEvent OnZoneExited;
-
-    private bool _isTriggered = false;
+    public bool IsRoverTriggered { get; private set; } = false;
     private bool _isStopped = false;
 
     private void Update()
     {
         bool newIsTriggered = Vector3.Distance(_rover.transform.position, transform.position) < _minDistance;
 
-        if (_isTriggered && !_isStopped && _rover.GetTelemetry().Speed < 1)
+        if (IsRoverTriggered && !_isStopped && _rover.GetTelemetry().Speed < 1)
         {
             _isStopped = true;
             OnStoppedInZone?.Invoke();
         }
 
-        if (_isTriggered != newIsTriggered)
+        if (IsRoverTriggered != newIsTriggered)
         {
             if (newIsTriggered)
             {
@@ -39,7 +38,7 @@ public class RoverTrigger : MonoBehaviour
                 _isStopped = false;
             }
 
-            _isTriggered = newIsTriggered;
+            IsRoverTriggered = newIsTriggered;
         }
     }
 

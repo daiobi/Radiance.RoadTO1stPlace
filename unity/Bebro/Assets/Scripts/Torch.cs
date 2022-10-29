@@ -1,19 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Rover;
+﻿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
+using System;
+using Rover;
+using UnityEngine.SceneManagement;
 
 public class Torch : MonoBehaviour
 {
+    public bool[] _wheely;
+    [SerializeField] private AudioSource _source;
+    [SerializeField] private AudioClip _turnOnSound;
     [SerializeField] private GameObject[] _screens;
+    [SerializeField] private GameObject[] _errorImages;
     [SerializeField] private float _deathzone = 10;
     [SerializeField] private float _maxAngle = 30;
     [SerializeField] private Rover.Rover _rover;
     [SerializeField] private float _resetSpeed;
     [SerializeField] private bool _isControllingArm;
     [SerializeField] private Btn _Btn;
+    [SerializeField] private Spec _spec;
     private ActionBasedController _currentController;
     private bool _isSelected;
 
@@ -23,15 +28,25 @@ public class Torch : MonoBehaviour
     private float _joystickY;
     private float _joystickButtonAxis;
     private float _joystickActivate;
+    private RoverHealth _roverHealth;
 
     private InputAction _buttonAxis;
 
     public void Start()
     {
+
+        Tasks.Instance.OnGameFail.AddListener(HandleGameFail);
+
         _rover.TurnOff();
+        foreach (var i in _errorImages) i.SetActive(false);
         var controls = new XRIDefaultInputActions();
         _buttonAxis = controls.XRIButtons.ButtonAxis;
         controls.Enable();
+    }
+
+    private void HandleGameFail(GameFailReason _)
+    {
+        foreach (var i in _errorImages) i.SetActive(true);
     }
 
     private void Update()
@@ -42,10 +57,11 @@ public class Torch : MonoBehaviour
 
         if (!_currentController)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * _resetSpeed);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * _resetSpeed);
         }
         if (_rover.IsActivated == true)
         {
+            _rover.SetArmActive(_isControllingArm);
             if (_isControllingArm)
             {
                 _rover.MoveArm(_joystickX, _joystickButtonAxis, _joystickY);
@@ -61,25 +77,19 @@ public class Torch : MonoBehaviour
 
     private void GetJoystickValues()
     {
-        _joystickY = transform.rotation.eulerAngles.x;
+        _joystickY = transform.localEulerAngles.x;
         if (_joystickY > 180) _joystickY = _joystickY - 360;
         if (-_deathzone < _joystickY && _joystickY < _deathzone) _joystickY = 0;
 
-        _joystickX = transform.rotation.eulerAngles.z;
+        _joystickX = transform.localEulerAngles.z;
         if (_joystickX > 180) _joystickX = _joystickX - 360;
         if (-_deathzone < _joystickX && _joystickX < _deathzone) _joystickX = 0;
 
         _joystickX /= _maxAngle;
         _joystickY /= -_maxAngle;
 
-        Debug.Log(_buttonAxis.ReadValue<float>());
         _joystickActivate = _currentController ? _currentController.activateActionValue.action.ReadValue<float>() : 0f;
         _joystickButtonAxis = _currentController ? _buttonAxis.ReadValue<float>() : 0f;
-    }
-
-    private void ControlRover()
-    {
-
     }
 
     public void StartSelect(SelectEnterEventArgs args)
@@ -104,7 +114,10 @@ public class Torch : MonoBehaviour
             _rover.TurnOff();
         } else
         {
-            _rover.TurnOn();
+            if (_rover.TurnOn())
+            {
+                _source.PlayOneShot(_turnOnSound);
+            }
         }
     }
 
@@ -125,6 +138,17 @@ public class Torch : MonoBehaviour
 
     public void Repair(int n)
     {
-        _rover.RepairWheel(n);
+        if (_rover.RepairWheel(n) && _wheely[n - 1] == false)
+        {
+            _spec.HandleWheelFix(n);
+            ValRepair(n);
+        }
+
     }
+
+    public void ValRepair(int n )
+    {
+        _wheely[n -1] = true;
+    }
+
 }

@@ -7,6 +7,9 @@ namespace Rover
     [RequireComponent(typeof(RoverBoxes), typeof(RoverArm))]
     public class Rover : MonoBehaviour
     {
+        [SerializeField] private Transform _worldCenter;
+        [SerializeField] private int _maxHealth;
+
         private RoverMovement _roverMovement;
         private RoverHealth _roverHealth;
         private RoverBattery _roverBattery;
@@ -20,11 +23,13 @@ namespace Rover
             Flip,
             Health,
             BoxInvalid,
+            Distance,
         }
+        [System.Serializable]
         public class RoverEvent : UnityEvent<BreakDownCause> { }
         public RoverEvent OnBroken;
         private bool _isBroken;
-
+        private float _lastHealthSpeedTime;
 
         private void Awake()
         {
@@ -37,49 +42,72 @@ namespace Rover
 
         private void Update()
         {
-            if (_isBroken) return;
+            if (_isBroken || Tasks.Instance.GamePhase == GamePhase.RoverTurnedOff) return;
 
+            BreakDownCause cause = BreakDownCause.BatteryLow;
             if (_roverBattery.Value == 0)
             {
                 _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.BatteryLow);
+                cause = BreakDownCause.BatteryLow;
             }
-            else if (Vector3.Angle(transform.up, Vector3.up) > 90)
+            else if (_roverHealth.HitCount > _maxHealth)
             {
                 _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.Flip);
-            }
-            else if (_roverHealth.HitCount > 6)
-            {
-                _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.Health);
+                cause = BreakDownCause.Health;
             }
             else if (_roverBoxes.GreenState == BoxState.FilledInvalid ||
                 _roverBoxes.YellowState == BoxState.FilledInvalid ||
                 _roverBoxes.RedState == BoxState.FilledInvalid)
             {
                 _isBroken = true;
-                OnBroken?.Invoke(BreakDownCause.BoxInvalid);
+                cause = BreakDownCause.BoxInvalid;
             }
-
-            if (_roverBoxes.GreenState == BoxState.Filled) Tasks.SetGreenCollected();
-            if (_roverBoxes.YellowState == BoxState.Filled) Tasks.SetYellowCollected();
-            if (_roverBoxes.RedState == BoxState.Filled) Tasks.SetRedCollected();
+            else if (Vector3.Distance(transform.position, _worldCenter.position) > 85)
+            {
+                _isBroken = true;
+                cause = BreakDownCause.Distance;
+            }
 
             if (_isBroken)
             {
+                OnBroken?.Invoke(cause);
+                Tasks.FailGame(new RoverBrokenDown(cause));
                 TurnOff();
                 Debug.Log("Broken");
             }
+
+            if (Vector3.Angle(transform.up, Vector3.up) > 90)
+            {
+                _roverHealth.TakeDamage(_maxHealth);
+            }
+
+            if (GameStatistics.Instance.MaxSpeedTime - _lastHealthSpeedTime > 30f)
+            {
+                _roverHealth.TakeDamage(1);
+                _lastHealthSpeedTime = GameStatistics.Instance.MaxSpeedTime;
+            } 
         }
 
-        public void RepairWheel(int n)
+        public bool RepairWheel(int n)
         {
             if (IsActivated)
             {
-                _roverHealth.RepairWheel(n);
+                return _roverHealth.RepairWheel(n);
             }
+
+            return false;
         }
+
+        public bool CanRepairWheel(int n)
+        {
+            if (IsActivated)
+            {
+                return _roverHealth.CanRepairWheel(n);
+            }
+
+            return false;
+        }
+
         public bool TurnOn()
         {
             if (_isBroken) return false;
@@ -90,6 +118,8 @@ namespace Rover
             _roverBoxes.enabled = true;
             _roverArm.enabled = true;
             IsActivated = true;
+
+            Tasks.HandleRoverTurnedOn();
 
             return true;
         }
@@ -103,6 +133,8 @@ namespace Rover
             _roverBoxes.enabled = false;
             _roverArm.enabled = false;
             IsActivated = false;
+
+            Tasks.HandleRoverTurnedOff();
         }
         public void Move(float acceleration, float steering)
         {
@@ -125,6 +157,12 @@ namespace Rover
                 _roverArm.SetGrab(a);
             }
         }
+
+        public void SetArmActive(bool state)
+        {
+            _roverArm.SetActive(state);
+        }
+
         public void OpenGreenBox()
         {
             if (IsActivated)
@@ -157,10 +195,10 @@ namespace Rover
                 Position = transform.position,
                 Direction = transform.rotation.eulerAngles.y,
                 HorizontalAngle = Vector3.Angle(transform.up, Vector3.up),
-                Battery = _roverBattery.Value,
+                BatteryPercents = _roverBattery.ValuePercents,
                 Speed = _roverMovement.SpeedKmPH,
 
-                HitCount = _roverHealth.HitCount,
+                Health = Mathf.Max(0, _maxHealth - _roverHealth.HitCount),
                 BodyBroken = _roverHealth.IsBodyBroken,
                 LFBroken = _roverHealth.IsLFWheelBroken,
                 RFBroken = _roverHealth.IsRFWheelBroken,

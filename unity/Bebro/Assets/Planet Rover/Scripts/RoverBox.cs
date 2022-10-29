@@ -23,6 +23,8 @@ namespace Rover
 
         private void OnTriggerEnter(Collider other)
         {
+            if (BoxState != BoxState.Opened) return;
+
             var grabable = other.GetComponent<Grabable>();
             if (grabable)
             {
@@ -30,6 +32,19 @@ namespace Rover
                 if (_sampleKind == grabable.SampleKind)
                 {
                     BoxState = BoxState.Filled;
+
+                    switch (_sampleKind)
+                    {
+                        case SampleKind.Green:
+                            Tasks.SetGreenCollected();
+                            break;
+                        case SampleKind.Yellow:
+                            Tasks.SetYellowCollected();
+                            break;
+                        case SampleKind.Red:
+                            Tasks.SetRedCollected();
+                            break;
+                    }
                 }
                 else
                 {

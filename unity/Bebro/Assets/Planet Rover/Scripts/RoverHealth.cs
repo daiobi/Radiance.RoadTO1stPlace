@@ -28,31 +28,66 @@ namespace Rover
         public bool IsLBWheelBroken { get => _LBWheel.IsBroken; }
         public bool IsRBWheelBroken { get => _RBWheel.IsBroken; }
 
-        public void RepairWheel(int n)
+        private void Update()
+        {
+            SetWheelSpeedReduction(HitCount * 2);
+        }
+
+        public bool RepairWheel(int n)
         {
             switch(n)
             {
                 case 1:
-                    _LFWheel.Repair();
-                    break;
+                    return _LFWheel.Repair();
                 case 2:
-                    _LCWheel.Repair();
-                    break;
+                    return _LCWheel.Repair();
                 case 3:
-                    _LBWheel.Repair();
-                    break;
+                    return _LBWheel.Repair();
                 case 4:
-                    _RFWheel.Repair();
-                    break;
+                    return _RFWheel.Repair();
                 case 5:
-                    _RCWheel.Repair();
-                    break;
+                    return _RCWheel.Repair();
                 case 6:
-                    _RBWheel.Repair();
-                    break;
+                    return _RBWheel.Repair();
                 default:
                     throw new System.InvalidOperationException();
             }
+        }
+
+        public bool CanRepairWheel(int n)
+        {
+            switch (n)
+            {
+                case 1:
+                    return _LFWheel.CanRepair();
+                case 2:
+                    return _LCWheel.CanRepair();
+                case 3:
+                    return _LBWheel.CanRepair();
+                case 4:
+                    return _RFWheel.CanRepair();
+                case 5:
+                    return _RCWheel.CanRepair();
+                case 6:
+                    return _RBWheel.CanRepair();
+                default:
+                    throw new System.InvalidOperationException();
+            }
+        }
+
+        public void SetWheelSpeedReduction(int reduction)
+        {
+            _LFWheel.SpeedReduction = reduction;
+            _LCWheel.SpeedReduction = reduction;
+            _LBWheel.SpeedReduction = reduction;
+            _RFWheel.SpeedReduction = reduction;
+            _RCWheel.SpeedReduction = reduction;
+            _RBWheel.SpeedReduction = reduction;
+        }
+
+        public void TakeDamage(int amount)
+        {
+            HitCount += amount;
         }
 
         private void OnEnable()
