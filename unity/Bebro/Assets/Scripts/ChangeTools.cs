@@ -39,16 +39,16 @@ public class ChangeTools : MonoBehaviour
     {
         if (_arm == false && _drill == false)
         {
-            ///
+            /// Управление ровером
         }
         else if (_arm == true)
         {
-            ///
+            /// Управление рукой
         }
 
         else if(_drill == true)
         {
-            ///
+            /// Управление буром
         }
     }
 }

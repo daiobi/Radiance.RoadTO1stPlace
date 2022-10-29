@@ -7,7 +7,7 @@ namespace Rover
     [RequireComponent(typeof(RoverBoxes), typeof(RoverArm))]
     public class Rover : MonoBehaviour
     {
-        [SerializeField] private Transform _worldCenter;
+        [SerializeField] private SignalController _worldCenter;
         [SerializeField] private int _maxHealth;
 
         private RoverMovement _roverMovement;
@@ -29,7 +29,6 @@ namespace Rover
         public class RoverEvent : UnityEvent<BreakDownCause> { }
         public RoverEvent OnBroken;
         private bool _isBroken;
-        private float _lastHealthSpeedTime;
 
         private void Awake()
         {
@@ -42,7 +41,7 @@ namespace Rover
 
         private void Update()
         {
-            if (_isBroken || Tasks.Instance.GamePhase == GamePhase.RoverTurnedOff) return;
+            if (!IsActivated || _isBroken || Tasks.Instance.GamePhase == GamePhase.RoverTurnedOff) return;
 
             BreakDownCause cause = BreakDownCause.BatteryLow;
             if (_roverBattery.Value == 0)
@@ -50,7 +49,7 @@ namespace Rover
                 _isBroken = true;
                 cause = BreakDownCause.BatteryLow;
             }
-            else if (_roverHealth.HitCount > _maxHealth)
+            else if (GetHealth() <= 0)
             {
                 _isBroken = true;
                 cause = BreakDownCause.Health;
@@ -62,7 +61,7 @@ namespace Rover
                 _isBroken = true;
                 cause = BreakDownCause.BoxInvalid;
             }
-            else if (Vector3.Distance(transform.position, _worldCenter.position) > 85)
+            else if (GetSignalLevel() < 0.05f)
             {
                 _isBroken = true;
                 cause = BreakDownCause.Distance;
@@ -81,10 +80,10 @@ namespace Rover
                 _roverHealth.TakeDamage(_maxHealth);
             }
 
-            if (GameStatistics.Instance.MaxSpeedTime - _lastHealthSpeedTime > 30f)
+            if (GameStatistics.Instance.MaxSpeedTime > 30f)
             {
+                GameStatistics.Instance.MaxSpeedTime = 0f;
                 _roverHealth.TakeDamage(1);
-                _lastHealthSpeedTime = GameStatistics.Instance.MaxSpeedTime;
             } 
         }
 
@@ -188,6 +187,7 @@ namespace Rover
         {
             _roverBoxes.CloseAll();
         }
+
         public Telemetry GetTelemetry()
         {
             return new Telemetry()
@@ -197,8 +197,9 @@ namespace Rover
                 HorizontalAngle = Vector3.Angle(transform.up, Vector3.up),
                 BatteryPercents = _roverBattery.ValuePercents,
                 Speed = _roverMovement.SpeedKmPH,
+                Signal = GetSignalLevel(),
 
-                Health = Mathf.Max(0, _maxHealth - _roverHealth.HitCount),
+                Health = GetHealth(),
                 BodyBroken = _roverHealth.IsBodyBroken,
                 LFBroken = _roverHealth.IsLFWheelBroken,
                 RFBroken = _roverHealth.IsRFWheelBroken,
@@ -211,6 +212,19 @@ namespace Rover
                 yellowBoxState = _roverBoxes.YellowState,
                 blueBoxState = _roverBoxes.RedState,
             };
+        }
+
+        private int GetHealth()
+        {
+            return Mathf.Max(0, _maxHealth - _roverHealth.HitCount);
+        }
+
+        private float GetSignalLevel()
+        {
+            return Mathf.Clamp01(_worldCenter.GetSignalValue(
+                    Vector3.Distance(transform.position, _worldCenter.transform.position)
+                    )
+                );
         }
     }
 }
