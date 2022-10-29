@@ -74,7 +74,7 @@ namespace Rover
                 _wheelCollider.brakeTorque = 0;
             }
 
-            _torque = IsBroken ? 0f : torque;
+            _torque = torque;
         }
 
         public void SetSteering(float steering)

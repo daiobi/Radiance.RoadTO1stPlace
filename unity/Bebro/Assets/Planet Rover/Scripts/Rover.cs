@@ -49,7 +49,7 @@ namespace Rover
                 _isBroken = true;
                 cause = BreakDownCause.BatteryLow;
             }
-            else if (_roverHealth.HitCount > _maxHealth)
+            else if (GetHealth() <= 0)
             {
                 _isBroken = true;
                 cause = BreakDownCause.Health;
