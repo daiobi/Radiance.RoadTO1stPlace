@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Photomake : MonoBehaviour
+public class PhotoMake : MonoBehaviour
 {
     public RawImage _CameraImage;
-    public Texture2D _TextureImage;
     public void Photo()
     {
         Camera Cam = GetComponent<Camera>();
@@ -16,10 +15,11 @@ public class Photomake : MonoBehaviour
 
         Cam.Render();
 
+        Texture2D texture = new Texture2D(currentRT.width, currentRT.height);
 
-        _TextureImage.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
-        _TextureImage.Apply();
-        _CameraImage.texture = _TextureImage;
+        texture.ReadPixels(new Rect(0, 0, Cam.targetTexture.width, Cam.targetTexture.height), 0, 0);
+        texture.Apply();
+        _CameraImage.texture = texture;
     }
 }
 

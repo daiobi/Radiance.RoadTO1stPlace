@@ -138,17 +138,17 @@ public class Torch : MonoBehaviour
 
     public void Repair(int n)
     {
-        if (_rover.RepairWheel(n) && _wheely[n - 1] == false)
+        if (_rover.RepairWheel(n)/* && _wheely[n - 1] == false*/)
         {
             _spec.HandleWheelFix(n);
-            ValRepair(n);
+            //ValRepair(n);
         }
 
     }
 
-    public void ValRepair(int n )
-    {
-        _wheely[n -1] = true;
-    }
+    //public void ValRepair(int n )
+    //{
+    //    _wheely[n -1] = true;
+    //}
 
 }
