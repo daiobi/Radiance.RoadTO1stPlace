@@ -8,6 +8,7 @@ namespace Rover
     public class Rover : MonoBehaviour
     {
         [SerializeField] private SignalController _worldCenter;
+        [SerializeField] private float _maxSpeed = 15f;
         [SerializeField] private int _maxHealth;
 
         private RoverMovement _roverMovement;
@@ -22,7 +23,6 @@ namespace Rover
             BatteryLow,
             Flip,
             Health,
-            BoxInvalid,
             Distance,
         }
         [System.Serializable]
@@ -43,6 +43,8 @@ namespace Rover
         {
             if (!IsActivated || _isBroken || Tasks.Instance.GamePhase == GamePhase.RoverTurnedOff) return;
 
+            _roverMovement.MaxSpeed = _maxSpeed - 2 * _roverHealth.HitCount;
+
             BreakDownCause cause = BreakDownCause.BatteryLow;
             if (_roverBattery.Value == 0)
             {
@@ -53,13 +55,6 @@ namespace Rover
             {
                 _isBroken = true;
                 cause = BreakDownCause.Health;
-            }
-            else if (_roverBoxes.GreenState == BoxState.FilledInvalid ||
-                _roverBoxes.YellowState == BoxState.FilledInvalid ||
-                _roverBoxes.RedState == BoxState.FilledInvalid)
-            {
-                _isBroken = true;
-                cause = BreakDownCause.BoxInvalid;
             }
             else if (GetSignalLevel() < 0.05f)
             {
@@ -97,16 +92,6 @@ namespace Rover
             return false;
         }
 
-        public bool CanRepairWheel(int n)
-        {
-            if (IsActivated)
-            {
-                return _roverHealth.CanRepairWheel(n);
-            }
-
-            return false;
-        }
-
         public bool TurnOn()
         {
             if (_isBroken) return false;
@@ -124,7 +109,9 @@ namespace Rover
         }
         public void TurnOff()
         {
-            _roverMovement.Move(0, 0);
+            _roverMovement.Torque = 0;
+            _roverMovement.Steering = 0;
+
             _roverArm.Move(0, 0, 0);
             _roverMovement.enabled = false;
             _roverHealth.enabled = false;
@@ -139,7 +126,8 @@ namespace Rover
         {
             if (IsActivated)
             {
-                _roverMovement.Move(acceleration, steering);
+                _roverMovement.Torque = acceleration;
+                _roverMovement.Steering = steering;
             }
         }
         public void MoveArm(float x, float y, float z)
