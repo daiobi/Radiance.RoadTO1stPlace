@@ -28,31 +28,31 @@ namespace Rover
 
             if (Input.GetKey(KeyCode.F))
             {
-                _rover.MoveArm(-1, 0, 0);
+                _rover.MoveGrabArm(-1, 0, 0);
             }
             else if (Input.GetKey(KeyCode.H))
             {
-                _rover.MoveArm(1, 0, 0);
+                _rover.MoveGrabArm(1, 0, 0);
             }
             else if (Input.GetKey(KeyCode.T))
             {
-                _rover.MoveArm(0, 0, 1);
+                _rover.MoveGrabArm(0, 0, 1);
             }
             else if (Input.GetKey(KeyCode.G))
             {
-                _rover.MoveArm(0, 0, -1);
+                _rover.MoveGrabArm(0, 0, -1);
             }
             else if (Input.GetKey(KeyCode.U))
             {
-                _rover.MoveArm(0, 1, 0);
+                _rover.MoveGrabArm(0, 1, 0);
             }
             else if (Input.GetKey(KeyCode.J))
             {
-                _rover.MoveArm(0, -1, 0);
+                _rover.MoveGrabArm(0, -1, 0);
             }
             else
             {
-                _rover.MoveArm(0, 0, 0);
+                _rover.MoveGrabArm(0, 0, 0);
             }
 
             if (Input.GetKeyDown(KeyCode.I))
@@ -65,7 +65,7 @@ namespace Rover
             }
             if (Input.GetKeyDown(KeyCode.P))
             {
-                _rover.OpenBlueBox();
+                _rover.OpenRedBox();
             }
 
             if (Input.GetKey(KeyCode.V))

@@ -5,6 +5,7 @@ using System;
 using Rover;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(ChangeTools))]
 public class Torch : MonoBehaviour
 {
     public bool[] _wheely;
@@ -20,20 +21,19 @@ public class Torch : MonoBehaviour
     [SerializeField] private Btn _Btn;
     [SerializeField] private Spec _spec;
     private ActionBasedController _currentController;
-    private bool _isSelected;
-
-    private bool _isControllingMinigame;
 
     private float _joystickX;
     private float _joystickY;
     private float _joystickButtonAxis;
     private float _joystickActivate;
-    private RoverHealth _roverHealth;
+
+    private ChangeTools _changeTools;
 
     private InputAction _buttonAxis;
 
     public void Start()
     {
+        _changeTools = GetComponent<ChangeTools>();
 
         Tasks.Instance.OnGameFail.AddListener(HandleGameFail);
 
@@ -61,15 +61,20 @@ public class Torch : MonoBehaviour
         }
         if (_rover.IsActivated == true)
         {
-            _rover.SetArmActive(_isControllingArm);
-            if (_isControllingArm)
+            _rover.SetGrabArmActive(_isControllingArm);
+            switch (_changeTools.Selected)
             {
-                _rover.MoveArm(_joystickX, _joystickButtonAxis, _joystickY);
-                _rover.SetArmGrab(_joystickActivate);
-            }
-            else
-            {
-                _rover.Move(_joystickY, _joystickX);
+                case ChangeTools.Tool.Wheels:
+                    _rover.Move(_joystickY, _joystickX);
+                    break;
+                case ChangeTools.Tool.Grab:
+                    _rover.MoveGrabArm(_joystickX, _joystickButtonAxis, _joystickY);
+                    _rover.SetArmGrab(_joystickActivate);
+                    break;
+                case ChangeTools.Tool.Drill:
+                    _rover.MoveDrillArm(_joystickX, _joystickButtonAxis, _joystickY);
+                    _rover.SetDrillSpeed(_joystickActivate);
+                    break;
             }
         }
 
@@ -102,11 +107,6 @@ public class Torch : MonoBehaviour
         _currentController = null;
     }
 
-    public void WwqWwwEeeEewQwe()
-    {
-        _isControllingArm = !_isControllingArm; //False --> True
-    }
-
     public void RoverState_()
     {
         if (_rover.IsActivated)
@@ -132,23 +132,16 @@ public class Torch : MonoBehaviour
     }
     public void OpenBlue()
     {
-        _rover.OpenBlueBox();
+        _rover.OpenRedBox();
     }
 
 
     public void Repair(int n)
     {
-        if (_rover.RepairWheel(n)/* && _wheely[n - 1] == false*/)
+        if (_rover.RepairWheel(n))
         {
             _spec.HandleWheelFix(n);
-            //ValRepair(n);
         }
-
     }
-
-    //public void ValRepair(int n )
-    //{
-    //    _wheely[n -1] = true;
-    //}
 
 }

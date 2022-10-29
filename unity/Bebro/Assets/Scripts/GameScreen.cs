@@ -49,9 +49,6 @@ public class GameScreen : MonoBehaviour
                 case Rover.Rover.BreakDownCause.BatteryLow:
                     _text.text = "заряд аккумулятора достиг критического значения";
                     break;
-                case Rover.Rover.BreakDownCause.BoxInvalid:
-                    _text.text = "ящик для образцов был заполнен неверно";
-                    break;
                 case Rover.Rover.BreakDownCause.Distance:
                     _text.text = "связь с ровером потеряна";
                     break;

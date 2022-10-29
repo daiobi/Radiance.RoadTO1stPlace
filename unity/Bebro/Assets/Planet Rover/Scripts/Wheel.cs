@@ -5,26 +5,21 @@ namespace Rover
     [RequireComponent(typeof(WheelCollider))]
     public class Wheel : MonoBehaviour
     {
-        private const float _speedToTorque = 3f;
-
         [SerializeField] private AnimationCurve _torqueCurve;
         [SerializeField] private DamageTrigger _damageTrigger;
         [SerializeField] private float _brakeForce;
         [SerializeField] private float _steeringAngle;
         [SerializeField] private int _n;
         [SerializeField] private bool _isBroken;
-        [SerializeField] private float _maxSpeed;
 
-        public int SpeedReduction { get; set; } = 0;
-
+       
         public delegate void WheelEvent(int n);
         public event WheelEvent OnBroken;
 
         private WheelCollider _wheelCollider;
-        private float _torque;
 
         public bool IsBroken => _isBroken;
-        public bool WasRepaired { get; private set; } = false;
+        public float Torque { get; set; }
 
         private void Awake()
         {
@@ -43,38 +38,20 @@ namespace Rover
 
         private void Update()
         {
-            _wheelCollider.motorTorque = _torqueCurve.Evaluate(_wheelCollider.rpm) * Mathf.Max(0, _maxSpeed - SpeedReduction) * _speedToTorque * _torque;
+            _wheelCollider.motorTorque = _torqueCurve.Evaluate(_wheelCollider.rpm) * Torque;
+            _wheelCollider.brakeTorque = (IsBroken || Torque == 0) ? _brakeForce : 0f;
         }
 
 
         public bool Repair()
         {
-            if (CanRepair())
+            if (IsBroken)
             {
                 _isBroken = false;
-                WasRepaired = true;
                 return true;
             }
 
             return false;
-        }
-
-        public bool CanRepair()
-        {
-            return IsBroken && !WasRepaired;
-        }
-
-        public void SetTorque(float torque)
-        {
-            if (torque == 0 && !IsBroken)
-            {
-                _wheelCollider.brakeTorque = _brakeForce;
-            } else
-            {
-                _wheelCollider.brakeTorque = 0;
-            }
-
-            _torque = torque;
         }
 
         public void SetSteering(float steering)
