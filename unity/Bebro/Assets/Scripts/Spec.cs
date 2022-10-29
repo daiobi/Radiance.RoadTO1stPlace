@@ -55,15 +55,16 @@ public class Spec : MonoBehaviour
 
         if (!_rover.IsActivated) return;
 
-        var _Dist = (int)Vector3.Distance(_gmobj.transform.position, _rover.transform.position);
-        _noiseMaterial.SetFloat("_NoiseFactor", _noiseCurve.Evaluate(_Dist));
-        if (_Dist >= 80)
+        var signal = tel.Signal;
+        Debug.Log(signal);
+        _noiseMaterial.SetFloat("_NoiseFactor", Mathf.Lerp(0, 0.9f, Mathf.Clamp01(1f - signal + (6 - tel.Health)/60f)));
+        if (signal < 0.2f)
             _ImageSignal.sprite = _SpritesSignal[3];
-        else if (_Dist >= 60)
+        else if (signal < 0.4f)
             _ImageSignal.sprite = _SpritesSignal[2];
-        else if (_Dist >= 40)
+        else if (signal > 0.6f)
             _ImageSignal.sprite = _SpritesSignal[1];
-        else if (_Dist <= 20)
+        else
             _ImageSignal.sprite = _SpritesSignal[0];
         
         _speedText.text = $"{(int)tel.Speed} км/ч";
