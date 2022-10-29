@@ -5,7 +5,6 @@ namespace Rover
 {
     public class RoverHealth : MonoBehaviour
     {
-        [SerializeField] private RoverBodyHealth _bodyHealth;
         [SerializeField] private Wheel _LFWheel;
         [SerializeField] private Wheel _RFWheel;
         [SerializeField] private Wheel _LCWheel;
@@ -20,7 +19,6 @@ namespace Rover
 
         public int HitCount { get; private set; } = 0;
 
-        public bool IsBodyBroken { get => _bodyHealth.IsBroken; }
         public bool IsLFWheelBroken { get => _LFWheel.IsBroken; }
         public bool IsRFWheelBroken { get => _RFWheel.IsBroken; }
         public bool IsLCWheelBroken { get => _LCWheel.IsBroken; }

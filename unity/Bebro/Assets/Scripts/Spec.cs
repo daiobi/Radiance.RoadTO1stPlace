@@ -70,7 +70,6 @@ public class Spec : MonoBehaviour
         _BatteryCharge.text = $"{Mathf.CeilToInt(tel.BatteryPercents * 100f)}%";
         _health.fillAmount = Mathf.Lerp(_health.fillAmount, tel.Health / 6f, Time.deltaTime);
 
-        _Image[0].sprite = tel.BodyBroken ? _BrokenSprite[0] : _defaultSprites[0];
 
         _Image[1].sprite = tel.LFBroken ? _BrokenSprite[1] : _defaultSprites[1];
         _Image[2].sprite = tel.LCBroken ? _BrokenSprite[2] : _defaultSprites[2];
@@ -87,12 +86,6 @@ public class Spec : MonoBehaviour
 
     private void HandleStatuses(Rover.Telemetry tel)
     {
-        if (_lastStatuses[0] != tel.BodyBroken)
-        {
-            _lastStatuses[0] = tel.BodyBroken;
-            _log.Add($"> Сломан корпус");
-            _source.PlayOneShot(_breakClip);
-        }
         if (_lastStatuses[1] != tel.LFBroken)
         {
             _lastStatuses[1] = tel.LFBroken;

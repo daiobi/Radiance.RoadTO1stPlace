@@ -4,9 +4,12 @@ using UnityEngine.Events;
 namespace Rover
 {
     [RequireComponent(typeof(RoverMovement), typeof(RoverHealth), typeof(RoverBattery))]
-    [RequireComponent(typeof(RoverBoxes), typeof(RoverArm))]
+    [RequireComponent(typeof(RoverBoxes))]
     public class Rover : MonoBehaviour
     {
+        [SerializeField] private RoverArm _grabArm;
+        [SerializeField] private RoverArm _drillArm;
+
         [SerializeField] private SignalController _worldCenter;
         [SerializeField] private float _maxSpeed = 15f;
         [SerializeField] private int _maxHealth;
@@ -15,7 +18,6 @@ namespace Rover
         private RoverHealth _roverHealth;
         private RoverBattery _roverBattery;
         private RoverBoxes _roverBoxes;
-        private RoverArm _roverArm;
         public bool IsActivated { get; private set; } = false;
 
         public enum BreakDownCause
@@ -36,7 +38,8 @@ namespace Rover
             _roverHealth = GetComponent<RoverHealth>();
             _roverBattery = GetComponent<RoverBattery>();
             _roverBoxes = GetComponent<RoverBoxes>();
-            _roverArm = GetComponent<RoverArm>();
+
+            Debug.Log(GetInstanceID());
         }
 
         private void Update()
@@ -100,7 +103,8 @@ namespace Rover
             _roverHealth.enabled = true;
             _roverBattery.enabled = true;
             _roverBoxes.enabled = true;
-            _roverArm.enabled = true;
+            _grabArm.enabled = true;
+            _drillArm.enabled = true;
             IsActivated = true;
 
             Tasks.HandleRoverTurnedOn();
@@ -109,15 +113,20 @@ namespace Rover
         }
         public void TurnOff()
         {
+            Debug.Log(GetInstanceID());
+            Debug.Log(_roverMovement);
+
             _roverMovement.Torque = 0;
             _roverMovement.Steering = 0;
 
-            _roverArm.Move(0, 0, 0);
+            _grabArm.Move(0, 0, 0);
+            _drillArm.Move(0, 0, 0);
             _roverMovement.enabled = false;
             _roverHealth.enabled = false;
             _roverBattery.enabled = false;
             _roverBoxes.enabled = false;
-            _roverArm.enabled = false;
+            _grabArm.enabled = false;
+            _drillArm.enabled = false;
             IsActivated = false;
 
             Tasks.HandleRoverTurnedOff();
@@ -130,24 +139,46 @@ namespace Rover
                 _roverMovement.Steering = steering;
             }
         }
-        public void MoveArm(float x, float y, float z)
+        public void MoveGrabArm(float x, float y, float z)
         {
             if (IsActivated)
             {
-                _roverArm.Move(x, y, z);
+                _grabArm.Move(x, y, z);
             }
         }
+
+        public void MoveDrillArm(float x, float y, float z)
+        {
+            if (IsActivated)
+            {
+                _drillArm.Move(x, y, z);
+            }
+        }
+
         public void SetArmGrab(float a)
         {
             if (IsActivated)
             {
-                _roverArm.SetGrab(a);
+                //_roverArm.SetGrab(a);
             }
         }
 
-        public void SetArmActive(bool state)
+        public void SetDrillSpeed(float a)
         {
-            _roverArm.SetActive(state);
+            if (IsActivated)
+            {
+                //регулировать скорость вращения бура
+            }
+        }
+
+        public void SetGrabArmActive(bool state)
+        {
+            _grabArm.SetActive(state);
+        }
+
+        public void SetDrillArmActive(bool state)
+        {
+            _drillArm.SetActive(state);
         }
 
         public void OpenGreenBox()
@@ -164,7 +195,7 @@ namespace Rover
                 _roverBoxes.OpenYellow();
             }
         }
-        public void OpenBlueBox()
+        public void OpenRedBox()
         {
             if (IsActivated)
             {
@@ -178,27 +209,33 @@ namespace Rover
 
         public Telemetry GetTelemetry()
         {
+            Debug.Log(_roverBattery);
+
+            float batteryPercents = _roverBattery.ValuePercents;
+            float speed = _roverMovement.SpeedKmPH;
+            bool lfBroken = _roverHealth.IsLFWheelBroken;
+            bool lcBroken = _roverHealth.IsLCWheelBroken;
+            bool lbBroken = _roverHealth.IsLBWheelBroken;
+            bool rfBroken = _roverHealth.IsRFWheelBroken;
+            bool rcBroken = _roverHealth.IsRCWheelBroken;
+            bool rbBroken = _roverHealth.IsRBWheelBroken;
+
             return new Telemetry()
             {
                 Position = transform.position,
                 Direction = transform.rotation.eulerAngles.y,
                 HorizontalAngle = Vector3.Angle(transform.up, Vector3.up),
-                BatteryPercents = _roverBattery.ValuePercents,
-                Speed = _roverMovement.SpeedKmPH,
+                BatteryPercents = batteryPercents,
+                Speed = speed,
                 Signal = GetSignalLevel(),
 
                 Health = GetHealth(),
-                BodyBroken = _roverHealth.IsBodyBroken,
-                LFBroken = _roverHealth.IsLFWheelBroken,
-                RFBroken = _roverHealth.IsRFWheelBroken,
-                LCBroken = _roverHealth.IsLCWheelBroken,
-                RCBroken = _roverHealth.IsRCWheelBroken,
-                LBBroken = _roverHealth.IsLBWheelBroken,
-                RBBroken = _roverHealth.IsRBWheelBroken,
-
-                greenBoxState = _roverBoxes.GreenState,
-                yellowBoxState = _roverBoxes.YellowState,
-                blueBoxState = _roverBoxes.RedState,
+                LFBroken = lfBroken,
+                RFBroken = rfBroken,
+                LCBroken = lcBroken,
+                RCBroken = rcBroken,
+                LBBroken = lbBroken,
+                RBBroken = rbBroken,
             };
         }
 
