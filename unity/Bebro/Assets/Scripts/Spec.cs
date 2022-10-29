@@ -56,7 +56,7 @@ public class Spec : MonoBehaviour
         if (!_rover.IsActivated) return;
 
         var signal = tel.Signal;
-        _noiseMaterial.SetFloat("_NoiseFactor", Mathf.Lerp(0, 0.9f, Mathf.Clamp01(1f - signal + (6 - tel.Health)/60f)));
+        _noiseMaterial.SetFloat("_NoiseFactor", Mathf.Lerp(0, 0.9f, Mathf.Clamp01(1f - signal + tel.Health < 3 ? 0.25f : 0f)));
         if (signal < 0.2f)
             _ImageSignal.sprite = _SpritesSignal[3];
         else if (signal < 0.4f)
