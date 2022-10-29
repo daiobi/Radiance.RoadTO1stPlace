@@ -3,7 +3,37 @@ guid: 05fb0e83dd53b45459f8975246645824
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: base
+    second: {fileID: 2100000, guid: d27c9347f7912d64fb3a9b9ccd01af16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: foot
+    second: {fileID: 2100000, guid: f60c81203ddf76645a2e05b0752ea310, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lamp
+    second: {fileID: 2100000, guid: 0bee3b566bc1d3b478693b97852c33d1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lamp osn
+    second: {fileID: 2100000, guid: de84160354fb59c48a9d9a30d6567a34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mayak
+    second: {fileID: 2100000, guid: 123df2267ec65cf4e9e4c0c20a00bae3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: top
+    second: {fileID: 2100000, guid: 811330edb618c864397f62b6f5b22bc6, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
