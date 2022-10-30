@@ -12,7 +12,6 @@ public class Torch : MonoBehaviour
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _turnOnSound;
     [SerializeField] private GameObject[] _screens;
-    [SerializeField] private GameObject[] _errorImages;
     [SerializeField] private float _deathzone = 10;
     [SerializeField] private float _maxAngle = 30;
     [SerializeField] private Rover.Rover _rover;
@@ -35,18 +34,10 @@ public class Torch : MonoBehaviour
     {
         _changeTools = GetComponent<ChangeTools>();
 
-        Tasks.Instance.OnGameFail.AddListener(HandleGameFail);
-
         _rover.TurnOff();
-        foreach (var i in _errorImages) i.SetActive(false);
         var controls = new XRIDefaultInputActions();
         _buttonAxis = controls.XRIButtons.ButtonAxis;
         controls.Enable();
-    }
-
-    private void HandleGameFail(GameFailReason _)
-    {
-        foreach (var i in _errorImages) i.SetActive(true);
     }
 
     private void Update()
