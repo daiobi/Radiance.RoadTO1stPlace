@@ -23,23 +23,12 @@ namespace Rover
         public bool YellowCollected { get; private set; }
         public bool RedCollected { get; private set; }
 
-        private float _missionStartTime = 0f;
-        public float MissionStartTime { get => _missionStartTime == 0f ? Time.time : _missionStartTime; }
-
-        private float _missionEndTime = 0f;
-        public float MissionEndTime { get => _missionEndTime == 0f ? Time.time : _missionEndTime; }
-
-        private float _radarFixStartTime = 0f;
-        public float RadarFixStartTime { get => _radarFixStartTime == 0f ? Time.time : _radarFixStartTime; }
-
-        private float _radarFixEndTime = 0f;
-        public float RadarFixEndTime { get => _radarFixEndTime == 0f ? Time.time : _radarFixEndTime; }
-
-        private float _samplesCollectStartTime = 0f;
-        public float SamplesCollectStartTime { get => _samplesCollectStartTime == 0f ? Time.time : _samplesCollectStartTime; }
-
-        private float _samplesCollectEndTime = 0f;
-        public float SamplesCollectEndTime { get => _samplesCollectEndTime == 0f ? Time.time : _samplesCollectEndTime; }
+        public float? MissionStartTime { get; private set; }
+        public float? MissionEndTime { get; private set; }
+        public float? RadarFixStartTime { get; private set; }
+        public float? RadarFixEndTime { get; private set; }
+        public float? SamplesCollectStartTime { get; private set; }
+        public float? SamplesCollectEndTime { get; private set; }
 
         [System.Serializable]
         public class FailGameEvent : UnityEvent<GameFailReason> {}
@@ -71,10 +60,6 @@ namespace Rover
             _yellowSampleCollectedCheck.SetActive(false);
             _redSampleCollectedCheck.SetActive(false);
             _roverDeactivatedCheck.SetActive(false);
-
-#if UNITY_EDITOR
-            //GamePhase = GamePhase.RadarFixed;
-#endif
         }
 
         private void Update()
@@ -102,7 +87,7 @@ namespace Rover
             if (!Instance.RadarFixStarted)
             {
                 Instance.RadarFixStarted = true;
-                Instance._radarFixStartTime = Time.time;
+                Instance.RadarFixStartTime = Time.time;
             }
         }
 
@@ -114,7 +99,7 @@ namespace Rover
                 Instance.RadarFixed = true;
                 Instance.GamePhase = GamePhase.RadarFixed;
 
-                Instance._radarFixEndTime = Time.time;
+                Instance.RadarFixEndTime = Time.time;
             }
             else
             {
@@ -127,7 +112,7 @@ namespace Rover
             if (!Instance.SamplesCollectingStarted)
             {
                 Instance.SamplesCollectingStarted = true;
-                Instance._samplesCollectStartTime = Time.time;
+                Instance.SamplesCollectStartTime = Time.time;
             }
         }
 
@@ -142,7 +127,7 @@ namespace Rover
                 if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
-                    Instance._samplesCollectEndTime = Time.time;
+                    Instance.SamplesCollectEndTime = Time.time;
                 }
             }
             else
@@ -162,7 +147,7 @@ namespace Rover
                 if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
-                    Instance._samplesCollectEndTime = Time.time;
+                    Instance.SamplesCollectEndTime = Time.time;
                 }
             }
             else
@@ -182,7 +167,7 @@ namespace Rover
                 if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
-                    Instance._samplesCollectEndTime = Time.time;
+                    Instance.SamplesCollectEndTime = Time.time;
                 }
             }
             else
@@ -198,7 +183,7 @@ namespace Rover
                 Instance._roverActivatedCheck.SetActive(true);
                 Instance.GamePhase = GamePhase.RoverTurnedOn;
 
-                Instance._missionStartTime = Time.time;
+                Instance.MissionStartTime = Time.time;
             }
         }
 
@@ -210,7 +195,7 @@ namespace Rover
                 Instance.GamePhase = GamePhase.RoverTurnedOff;
                 Instance.OnGameSuccess?.Invoke();
 
-                Instance._missionEndTime = Time.time;
+                Instance.MissionEndTime = Time.time;
             }
         }
     }

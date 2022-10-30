@@ -21,10 +21,20 @@ namespace Rover
             _rigidbody = GetComponent<Rigidbody>();
         }
 
+        public void SetColliderEnabled(bool state)
+        {
+            GetComponent<Collider>().enabled = state;
+        }
+
         public void BreakDown()
         {
-            GameStatistics.Instance.BrokenSamples++;
+            
             Destroy(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            GameStatistics.Instance.BrokenSamples++;
         }
     }
 }

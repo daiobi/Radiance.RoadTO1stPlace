@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 4285442539036958881}
   - component: {fileID: 3222720160985512998}
   - component: {fileID: 3222720160985512993}
-  - component: {fileID: -3611882256175233490}
-  m_Layer: 0
+  - component: {fileID: 2061810492}
+  - component: {fileID: 820675448230097275}
+  m_Layer: 9
   m_Name: sample1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 2339636741793300852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.429, y: 0.19, z: -2.199}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.4256032}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -113,7 +114,21 @@ MonoBehaviour:
   _minForce: 0.1
   _maxForce: 0.97
   _sampleKind: 2
---- !u!65 &-3611882256175233490
+--- !u!114 &2061810492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2339636741793300852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1ae2c9308e879b49a926339b273e6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 1
+  _destroyParticles: {fileID: 0}
+--- !u!65 &820675448230097275
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,5 +139,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.079871446, y: 0.079871446, z: 0.113873065}
-  m_Center: {x: -0.0000000018626451, y: 0.0000000018626451, z: 0.0031162947}
+  m_Size: {x: 0.07, y: 0.07, z: 0.07}
+  m_Center: {x: 0, y: 0, z: 0.006405651}

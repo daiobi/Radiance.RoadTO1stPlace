@@ -20,6 +20,7 @@ namespace Rover
             {
                 var joint = Grabable.gameObject.AddComponent<FixedJoint>();
                 joint.connectedBody = _rigidbody;
+                Grabable.SetColliderEnabled(false);
             }
         }
 
@@ -28,6 +29,7 @@ namespace Rover
             if (Grabable)
             {
                 Destroy(Grabable.GetComponent<FixedJoint>());
+                Grabable.SetColliderEnabled(true);
             }
         }
 

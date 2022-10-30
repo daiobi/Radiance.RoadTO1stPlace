@@ -71,15 +71,12 @@ namespace Rover
 
         private void Triggered()
         {
-            Debug.Log("triggered");
-
             _target.localPosition = _lastPosition2;
             _axisAngle = _lastAxisAngle2;
             _axis.SetTargetAngle(_axisAngle);
 
             _solver.Solve();
         }
-
         
 
         public void SetActive(bool state)

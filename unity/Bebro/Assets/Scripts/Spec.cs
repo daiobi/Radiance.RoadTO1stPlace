@@ -12,6 +12,9 @@ public class Spec : MonoBehaviour
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _fixClip;
     [SerializeField] private AudioClip _breakClip;
+    [SerializeField] private GameObject[] _statsDisplays;
+    [SerializeField] private TMPro.TextMeshProUGUI _statsLeft;
+    [SerializeField] private TMPro.TextMeshProUGUI _statsRight;
     public Image[] _Image;
     public Sprite[] _BrokenSprite;
     public Image _ImageSignal;

@@ -57,7 +57,7 @@ namespace Rover
 
         private IEnumerator DisableGrabable(Grabable grabable)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0f);
             grabable.gameObject.SetActive(false);
         }
 

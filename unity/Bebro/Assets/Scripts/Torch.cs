@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(ChangeTools))]
 public class Torch : MonoBehaviour
 {
-    public bool[] _wheely;
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _turnOnSound;
     [SerializeField] private GameObject[] _screens;

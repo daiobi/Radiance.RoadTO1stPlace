@@ -24,11 +24,9 @@ namespace Rover
             if (Damage > 0 && _destroyables.Count > 0)
             {
                 _dustParticles.enableEmission = true;
-                Debug.Log("pl");
             }
             else if (Damage == 0 || _destroyables.Count == 0)
             {
-                Debug.Log("st");
                 _dustParticles.enableEmission = false;
             }
         }

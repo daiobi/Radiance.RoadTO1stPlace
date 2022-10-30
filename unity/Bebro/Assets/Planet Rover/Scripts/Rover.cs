@@ -35,6 +35,8 @@ namespace Rover
         public RoverEvent OnBroken;
         private bool _isBroken;
 
+
+        private bool _lastNoise;
         private void Awake()
         {
             _roverMovement = GetComponent<RoverMovement>();
@@ -63,6 +65,7 @@ namespace Rover
             else if (GetSignalLevel() < 0.05f)
             {
                 _isBroken = true;
+                GameStatistics.Instance.SignalLost = true;
                 cause = BreakDownCause.Distance;
             }
 
@@ -85,6 +88,19 @@ namespace Rover
                 GameStatistics.Instance.RegisterEvent(new MaxSpeedBrokenRecord());
                 _roverHealth.TakeDamage(1);
             } 
+
+            if (GetSignalLevel() < 0.3f)
+            {
+                if (!_lastNoise)
+                {
+                    GameStatistics.Instance.NoiseCollected++;
+                    _lastNoise = true;
+                }
+            }
+            else
+            {
+                _lastNoise = false;
+            }
         }
 
         public bool RepairWheel(int n)

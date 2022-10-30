@@ -7,13 +7,6 @@ namespace Rover
     public class GameStatistics : MonoBehaviour
     {
         public static GameStatistics Instance { get; private set; }
-
-        public float MissionTime => Tasks.Instance.MissionEndTime - Tasks.Instance.MissionStartTime;
-        public float StartToRadarTime => Tasks.Instance.RadarFixStartTime - Tasks.Instance.MissionStartTime;
-        public float RadarFixTime => Tasks.Instance.RadarFixEndTime - Tasks.Instance.RadarFixStartTime;
-        public float RadarToSamplesTime => Tasks.Instance.RadarFixEndTime - Tasks.Instance.SamplesCollectStartTime;
-        public float SamplesCollectingTime => Tasks.Instance.SamplesCollectEndTime - Tasks.Instance.SamplesCollectStartTime;
-        public float SamplesToEndTime => Tasks.Instance.SamplesCollectStartTime - Tasks.Instance.SamplesCollectEndTime;
         public float MaxSpeedTime { get; set; }
         public float FullMaxSpeedTime { get; set; }
         
@@ -38,26 +31,101 @@ namespace Rover
 
             Instance = this;
         }
+        private string GetTime(int time)
+        {
+            return $"{time / 60}:{time % 60}";
+        }
+
+        public string MissionTime
+        {
+            get
+            {
+                if (Tasks.Instance.MissionEndTime == null || Tasks.Instance.MissionStartTime == null)
+                {
+                    return "-";
+                }
+
+                return GetTime((int)(Tasks.Instance.MissionEndTime.Value - Tasks.Instance.MissionStartTime.Value));
+            }
+        }
+
+        public string StartToRadarTime
+        {
+            get
+            {
+                if (Tasks.Instance.MissionStartTime == null || Tasks.Instance.RadarFixStartTime == null)
+                {
+                    return "-";
+                }
+
+                return GetTime((int)(Tasks.Instance.RadarFixStartTime.Value - Tasks.Instance.MissionStartTime.Value));
+            }
+        }
+
+        public string RadarFixTime
+        {
+            get
+            {
+                if (Tasks.Instance.RadarFixStartTime == null || Tasks.Instance.RadarFixEndTime == null)
+                {
+                    return "-";
+                }
+
+                return GetTime((int)(Tasks.Instance.RadarFixEndTime.Value - Tasks.Instance.RadarFixStartTime.Value));
+            }
+        }
+
+        public string RadarToSamplesTime
+        {
+            get
+            {
+                if (Tasks.Instance.RadarFixEndTime == null || Tasks.Instance.SamplesCollectStartTime == null)
+                {
+                    return "-";
+                }
+
+                return GetTime((int)(Tasks.Instance.SamplesCollectStartTime.Value - Tasks.Instance.RadarFixEndTime.Value));
+            }
+        }
+
+        public string SamplesTime
+        {
+            get
+            {
+                if (Tasks.Instance.SamplesCollectStartTime == null || Tasks.Instance.SamplesCollectEndTime == null)
+                {
+                    return "-";
+                }
+
+                return GetTime((int)(Tasks.Instance.SamplesCollectEndTime.Value - Tasks.Instance.SamplesCollectStartTime.Value));
+            }
+        }
+
+        public string SamplesToFinishTime
+        {
+            get
+            {
+                if (Tasks.Instance.MissionEndTime == null || Tasks.Instance.SamplesCollectEndTime == null)
+                {
+                    return "-";
+                }
+
+                return GetTime((int)(Tasks.Instance.MissionEndTime.Value - Tasks.Instance.SamplesCollectEndTime.Value));
+            }
+        }
 
         public void RegisterEvent(RoverBrokenRecord record)
         {
             _records.Add(record);
         }
 
-        private string GetTime(int time)
-        {
-            if (time == 0) {
-                return "-";
-            }
-            return $"{time / 60}:{time % 60}";
-        }
 
         public string GetTimeStats()
         {
-            return $"Затрачено времени: {GetTime((int)MissionTime)}\n" + 
-                $"Время от старта до радара: {GetTime((int)StartToRadarTime)}\n" +
-                $"Время от радара до места сбора образцов: {GetTime((int)RadarToSamplesTime)}\n" +
-                $"Время от сбора образцов до финиша: {GetTime((int)SamplesToEndTime)}";
+            return $"Затрачено времени: {MissionTime}\n" + 
+                $"Время от старта до радара: {StartToRadarTime}\n" +
+                $"Время от радара до места сбора образцов: {RadarToSamplesTime}\n" +
+                $"Время от сбора образцов до финиша: {SamplesToFinishTime}";
         }
 
         public string GetBreakStats()
@@ -68,7 +136,7 @@ namespace Rover
                 if (r is WheelBrokenRecord)
                     s += $"[{GetTime((r as WheelBrokenRecord).Time)}] Сломано колесо {(r as WheelBrokenRecord).WheelNumber} (-1 ед.тех.сост.)\n";
                 else if (r is MaxSpeedBrokenRecord)
-                    s += $"[{GetTime((r as WheelBrokenRecord).Time)}] Движение на макс. скорости более 30с (-1 ед.тех.сост.)\n";
+                    s += $"[{GetTime((r as MaxSpeedBrokenRecord).Time)}] Движение на макс. скорости более 30с (-1 ед.тех.сост.)\n";
             }
 
             return s;
@@ -81,14 +149,14 @@ namespace Rover
 
         public string GetRadarStats()
         {
-            return $"Время выполнения: {GetTime((int)RadarFixTime)}\n" +
+            return $"Время выполнения: {RadarFixTime}\n" +
                 $"Количество попыток: {RadarFixAttemts}\n" +
                 $"Задание выполнено: {GetStatus(Tasks.Instance.RadarFixed)}\n";
         }
 
         public string GetSamplesCollectStats()
         {
-            return $"Время выполнения: {GetTime((int)SamplesCollectingTime)}\n" +
+            return $"Время выполнения: {SamplesTime}\n" +
                 $"Собрано образцов: {CollectedSamples}\n" +
                 $"Разрушено образцов: {BrokenSamples}\n";
         }

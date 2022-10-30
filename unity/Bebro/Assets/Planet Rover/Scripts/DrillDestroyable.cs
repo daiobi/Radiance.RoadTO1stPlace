@@ -21,10 +21,15 @@ namespace Rover
         {
             if (Destroyed) return;
 
+            Tasks.HandleSamplesCollectingStarted();
+
             _currentHealth -= amount;
             if (_currentHealth <= 0)
             {
-                StartCoroutine(DestroyRoutine());
+                if (_destroyParticles)
+                    StartCoroutine(DestroyRoutine());
+                else
+                    Destroy(gameObject);
             }
         }
 

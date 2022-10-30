@@ -8,6 +8,12 @@ public class GameScreen : MonoBehaviour
 {
     [SerializeField] private GameObject _winScreen;
     [SerializeField] private GameObject _loseScreen;
+    [SerializeField] private GameObject[] _statsScreens;
+    [SerializeField] private TMPro.TextMeshProUGUI _timeStats;
+    [SerializeField] private TMPro.TextMeshProUGUI _roverStats;
+    [SerializeField] private TMPro.TextMeshProUGUI _signalStats;
+    [SerializeField] private TMPro.TextMeshProUGUI _radarStats;
+    [SerializeField] private TMPro.TextMeshProUGUI _samplesStats;
 
     [SerializeField] private TextMeshProUGUI _text;
 
@@ -21,16 +27,30 @@ public class GameScreen : MonoBehaviour
         _winScreen.SetActive(false);
         _loseScreen.SetActive(false);
         _text.text = "";
+
+        foreach (var s in _statsScreens) s.SetActive(false);
     }
 
     private void HandleGameSuccess()
     {
         _winScreen.SetActive(true);
+        SetupStats();
+    }
+
+    private void SetupStats()
+    {
+        foreach (var s in _statsScreens) s.SetActive(true);
+        _timeStats.text = GameStatistics.Instance.GetTimeStats();
+        _roverStats.text = GameStatistics.Instance.GetBreakStats();
+        _signalStats.text = GameStatistics.Instance.GetSignalStats();
+        _radarStats.text = GameStatistics.Instance.GetRadarStats();
+        _samplesStats.text = GameStatistics.Instance.GetSamplesCollectStats();
     }
 
     private void HandleGameFail(GameFailReason arg0)
     {
         _loseScreen.SetActive(true);
+        SetupStats();
         Debug.Log(arg0.GetType().Name);
 
         if (arg0 is InvalidAction)
