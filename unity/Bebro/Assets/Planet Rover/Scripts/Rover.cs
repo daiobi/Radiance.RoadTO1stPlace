@@ -41,8 +41,6 @@ namespace Rover
             _roverHealth = GetComponent<RoverHealth>();
             _roverBattery = GetComponent<RoverBattery>();
             _roverBoxes = GetComponent<RoverBoxes>();
-
-            Debug.Log(GetInstanceID());
         }
 
         private void Update()
@@ -116,8 +114,6 @@ namespace Rover
         }
         public void TurnOff()
         {
-            Debug.Log(GetInstanceID());
-            Debug.Log(_roverMovement);
 
             _roverMovement.Torque = 0;
             _roverMovement.Steering = 0;
@@ -170,7 +166,7 @@ namespace Rover
         {
             if (IsActivated)
             {
-                _drillTool.SetDrillSpeed(a);
+                _drillTool.SetActivated(a > 0.2f);
             }
         }
 
@@ -212,8 +208,6 @@ namespace Rover
 
         public Telemetry GetTelemetry()
         {
-            Debug.Log(_roverBattery);
-
             float batteryPercents = _roverBattery.ValuePercents;
             float speed = _roverMovement.SpeedKmPH;
             bool lfBroken = _roverHealth.IsLFWheelBroken;

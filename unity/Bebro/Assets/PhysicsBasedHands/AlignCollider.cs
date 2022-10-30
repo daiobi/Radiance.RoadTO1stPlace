@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(BoxCollider))]
 public class AlignCollider : MonoBehaviour
 {
     [SerializeField] private Transform _alignTransform;
 
-    private SphereCollider _collider;
+    private BoxCollider _collider;
 
     private void Awake()
     {
-        _collider = GetComponent<SphereCollider>();
+        _collider = GetComponent<BoxCollider>();
     }
 
     private void Update()
