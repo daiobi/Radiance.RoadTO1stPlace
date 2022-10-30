@@ -82,6 +82,7 @@ namespace Rover
             if (GameStatistics.Instance.MaxSpeedTime > 30f)
             {
                 GameStatistics.Instance.MaxSpeedTime = 0f;
+                GameStatistics.Instance.RegisterEvent(new MaxSpeedBrokenRecord());
                 _roverHealth.TakeDamage(1);
             } 
         }

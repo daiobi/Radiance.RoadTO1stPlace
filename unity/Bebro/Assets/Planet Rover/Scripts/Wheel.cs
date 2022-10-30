@@ -63,6 +63,7 @@ namespace Rover
             if (!IsBroken) {
                 _isBroken = true;
                 OnBroken?.Invoke(_n);
+                GameStatistics.Instance.RegisterEvent(new WheelBrokenRecord(_n));
                 Debug.Log($"{name} broken");
             }
         }

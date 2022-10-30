@@ -29,11 +29,13 @@ public class RadarMinigame : MonoBehaviour
     {
         IsWon = true;
         Tasks.SetRadarFixed();
+        GameStatistics.Instance.RadarFixAttemts++;
         CloseMinigame();
     }
 
     private void HandleFail()
     {
+        GameStatistics.Instance.RadarFixAttemts++;
         CloseMinigame();
     }
 
