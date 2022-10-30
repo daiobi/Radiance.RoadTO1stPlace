@@ -63,7 +63,7 @@ namespace Rover
 
         private void Start()
         {
-            _plate.localPosition = new Vector3(_plate.localPosition.y, _plate.localPosition.y, _closedPos);
+            _plate.localPosition = new Vector3(_plate.localPosition.x, _plate.localPosition.y, _closedPos);
             BoxState = BoxState.Closed;
         }
 
