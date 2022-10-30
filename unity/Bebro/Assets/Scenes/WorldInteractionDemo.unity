@@ -63941,46 +63941,6 @@ PrefabInstance:
       propertyPath: _worldCenter
       value: 
       objectReference: {fileID: 1051900478}
-    - target: {fileID: 9021564389590902757, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.152
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021564389590902758, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021564389590902758, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: lengthInSec
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021564389590902758, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021564389590902758, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: ShapeModule.angle
-      value: 39.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021564389590902758, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: moveWithTransform
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021564389590902758, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9021564389590902758, guid: d2f47f4b404b53d4cbd71589501914c8,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 0.3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2f47f4b404b53d4cbd71589501914c8, type: 3}
 --- !u!1001 &1818423496
