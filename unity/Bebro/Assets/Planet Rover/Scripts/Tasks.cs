@@ -198,5 +198,21 @@ namespace Rover
                 Instance.MissionEndTime = Time.time;
             }
         }
+
+        public static void SetRadarPhoto(Texture2D photo)
+        {
+            if (Instance.RadarFixed)
+            {
+                GameStatistics.Instance.RadarPhoto = photo;
+            }
+        }
+
+        public static void SetSamplesPhoto(Texture2D photo)
+        {
+            if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
+            {
+                GameStatistics.Instance.SamplesPhoto = photo;
+            }
+        }
     }
 }

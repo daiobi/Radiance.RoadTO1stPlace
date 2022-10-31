@@ -8,6 +8,10 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(ChangeTools))]
 public class Torch : MonoBehaviour
 {
+    [SerializeField] private Camera _screenshotCamera;
+    [SerializeField] private Photoable _radarPhotoable;
+    [SerializeField] private Photoable _samplesPhotoable;
+
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _turnOnSound;
     [SerializeField] private GameObject[] _screens;
@@ -134,4 +138,85 @@ public class Torch : MonoBehaviour
         }
     }
 
+    public void TakeScreenShot()
+    {
+        Texture2D radarPhoto = TryPhotoRadar();
+        if (radarPhoto)
+        {
+            Tasks.SetRadarPhoto(radarPhoto);
+            return;
+        }
+
+        Texture2D samplesPhoto = TryPhotoSamples();
+        if (samplesPhoto)
+        {
+            Tasks.SetSamplesPhoto(samplesPhoto);
+        }
+    }
+
+    private Texture2D TryPhotoRadar()
+    {
+        float toRadarDistance = Vector3.Distance(_rover.transform.position, _radarPhotoable.transform.position);
+
+        if (toRadarDistance <= _radarPhotoable.maxDistance)
+        {
+            Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_radarPhotoable.transform.position);
+
+            if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
+            {
+                // The Render Texture in RenderTexture.active is the one
+                // that will be read by ReadPixels.
+                var currentRT = RenderTexture.active;
+                RenderTexture.active = _screenshotCamera.targetTexture;
+
+                // Render the camera's view.
+                _screenshotCamera.Render();
+
+                // Make a new texture and read the active Render Texture into it.
+                Texture2D image = new Texture2D(_screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height);
+                image.ReadPixels(new Rect(0, 0, _screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height), 0, 0);
+                image.Apply();
+
+                // Replace the original active Render Texture.
+                RenderTexture.active = currentRT;
+
+                return image;
+            }
+        }
+
+        return null;
+    }
+
+    private Texture2D TryPhotoSamples()
+    {
+        float toRadarDistance = Vector3.Distance(_rover.transform.position, _samplesPhotoable.transform.position);
+
+        if (toRadarDistance <= _samplesPhotoable.maxDistance)
+        {
+            Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_samplesPhotoable.transform.position);
+
+            if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
+            {
+                // The Render Texture in RenderTexture.active is the one
+                // that will be read by ReadPixels.
+                var currentRT = RenderTexture.active;
+                RenderTexture.active = _screenshotCamera.targetTexture;
+
+                // Render the camera's view.
+                _screenshotCamera.Render();
+
+                // Make a new texture and read the active Render Texture into it.
+                Texture2D image = new Texture2D(_screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height);
+                image.ReadPixels(new Rect(0, 0, _screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height), 0, 0);
+                image.Apply();
+
+                // Replace the original active Render Texture.
+                RenderTexture.active = currentRT;
+
+                return image;
+            }
+        }
+
+        return null;
+    }
 }

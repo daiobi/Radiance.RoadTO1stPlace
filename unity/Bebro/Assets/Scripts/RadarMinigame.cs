@@ -41,7 +41,6 @@ public class RadarMinigame : MonoBehaviour
     public void CloseMinigame()
     {
         _minigamePanel.SetActive(false);
-        GameStatistics.Instance.RadarFixAttemts++;
     }
 
     public void HandleButton()
@@ -56,6 +55,7 @@ public class RadarMinigame : MonoBehaviour
     {
         if (!IsWon)
         {
+            Tasks.HandleRadarFixStarted();
             _minigame.Restart();
             _minigamePanel.SetActive(true);
         }

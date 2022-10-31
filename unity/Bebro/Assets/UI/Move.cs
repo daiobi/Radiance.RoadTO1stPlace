@@ -1,3 +1,4 @@
+using Rover;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,6 +56,7 @@ public class Move : MonoBehaviour
 
     internal void Restart()
     {
+        GameStatistics.Instance.RadarFixAttemts++;
         _CalibVal = 0;
     }
 
