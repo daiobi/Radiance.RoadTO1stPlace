@@ -79,9 +79,17 @@ public class Torch : MonoBehaviour
 
     private void HandleCameraIcon()
     {
-        float toRadarDistance = Vector3.Distance(_rover.transform.position, _radarPhotoable.transform.position);
-        float toSamplesDistance = Vector3.Distance(_rover.transform.position, _samplesPhotoable.transform.position);
+        if (CanTakeRadarPhoto())
+            _cameraIcon.SetActive(true);
+        else if (CanTakeSamplesPhoto())
+            _cameraIcon.SetActive(true);
+        else
+            _cameraIcon.SetActive(false);
+    }
 
+    private bool CanTakeRadarPhoto()
+    {
+        float toRadarDistance = Vector3.Distance(_rover.transform.position, _radarPhotoable.transform.position);
 
         if ((Tasks.Instance.RadarFixed && !GameStatistics.Instance.RadarPhoto) && toRadarDistance <= _radarPhotoable.maxDistance)
         {
@@ -89,22 +97,28 @@ public class Torch : MonoBehaviour
 
             if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
             {
-                _cameraIcon.SetActive(true);
+                return true;
             }
         }
-        else if ((Tasks.Instance.SamplesCollectEndTime != null && GameStatistics.Instance.SamplesPhoto) && toSamplesDistance <= _samplesPhotoable.maxDistance)
+
+        return false;
+    }
+
+    private bool CanTakeSamplesPhoto()
+    {
+        float toSamplesDistance = Vector3.Distance(_rover.transform.position, _samplesPhotoable.transform.position);
+
+        if ((Tasks.Instance.GamePhase == GamePhase.SamplesCollected && !GameStatistics.Instance.SamplesPhoto) && toSamplesDistance <= _samplesPhotoable.maxDistance)
         {
             Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_samplesPhotoable.transform.position);
 
             if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
             {
-                _cameraIcon.SetActive(true);
+                return true;
             }
         }
-        else
-        {
-            _cameraIcon.SetActive(false);
-        }
+
+        return false;
     }
 
     private void GetJoystickValues()
@@ -173,83 +187,34 @@ public class Torch : MonoBehaviour
 
     public void TakeScreenShot()
     {
-        Texture2D radarPhoto = TryPhotoRadar();
-        if (radarPhoto)
+        if (CanTakeRadarPhoto())
         {
-            Tasks.SetRadarPhoto(radarPhoto);
-            return;
+            GameStatistics.Instance.RadarPhoto = TakePhoto();
         }
-
-        Texture2D samplesPhoto = TryPhotoSamples();
-        if (samplesPhoto)
+        else if (CanTakeSamplesPhoto())
         {
-            Tasks.SetSamplesPhoto(samplesPhoto);
+            GameStatistics.Instance.SamplesPhoto = TakePhoto();
         }
     }
 
-    private Texture2D TryPhotoRadar()
+    private Texture2D TakePhoto()
     {
-        float toRadarDistance = Vector3.Distance(_rover.transform.position, _radarPhotoable.transform.position);
+        // The Render Texture in RenderTexture.active is the one
+        // that will be read by ReadPixels.
+        var currentRT = RenderTexture.active;
+        RenderTexture.active = _screenshotCamera.targetTexture;
 
-        if (toRadarDistance <= _radarPhotoable.maxDistance)
-        {
-            Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_radarPhotoable.transform.position);
+        // Render the camera's view.
+        _screenshotCamera.Render();
 
-            if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
-            {
-                // The Render Texture in RenderTexture.active is the one
-                // that will be read by ReadPixels.
-                var currentRT = RenderTexture.active;
-                RenderTexture.active = _screenshotCamera.targetTexture;
+        // Make a new texture and read the active Render Texture into it.
+        Texture2D image = new Texture2D(_screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height);
+        image.ReadPixels(new Rect(0, 0, _screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height), 0, 0);
+        image.Apply();
 
-                // Render the camera's view.
-                _screenshotCamera.Render();
+        // Replace the original active Render Texture.
+        RenderTexture.active = currentRT;
 
-                // Make a new texture and read the active Render Texture into it.
-                Texture2D image = new Texture2D(_screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height);
-                image.ReadPixels(new Rect(0, 0, _screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height), 0, 0);
-                image.Apply();
-
-                // Replace the original active Render Texture.
-                RenderTexture.active = currentRT;
-
-                return image;
-            }
-        }
-
-        return null;
-    }
-
-    private Texture2D TryPhotoSamples()
-    {
-        float toSamplesDistance = Vector3.Distance(_rover.transform.position, _samplesPhotoable.transform.position);
-
-        if (toSamplesDistance <= _samplesPhotoable.maxDistance)
-        {
-            Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_samplesPhotoable.transform.position);
-
-            if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
-            {
-                // The Render Texture in RenderTexture.active is the one
-                // that will be read by ReadPixels.
-                var currentRT = RenderTexture.active;
-                RenderTexture.active = _screenshotCamera.targetTexture;
-
-                // Render the camera's view.
-                _screenshotCamera.Render();
-
-                // Make a new texture and read the active Render Texture into it.
-                Texture2D image = new Texture2D(_screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height);
-                image.ReadPixels(new Rect(0, 0, _screenshotCamera.targetTexture.width, _screenshotCamera.targetTexture.height), 0, 0);
-                image.Apply();
-
-                // Replace the original active Render Texture.
-                RenderTexture.active = currentRT;
-
-                return image;
-            }
-        }
-
-        return null;
+        return image;
     }
 }

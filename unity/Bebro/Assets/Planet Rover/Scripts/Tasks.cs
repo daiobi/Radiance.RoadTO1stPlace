@@ -28,7 +28,7 @@ namespace Rover
         public class FailGameEvent : UnityEvent<GameFailReason> {}
         public FailGameEvent OnGameFail;
         public UnityEvent OnGameSuccess;
-        private bool _gameFailed;
+        public bool GameFailed { get; set; }
         private XRIDefaultInputActions _controls;
 
         public bool AllTasksCompleted => RadarFixed &&
@@ -55,17 +55,24 @@ namespace Rover
             {
                 HandleActivateClick();
             }
+
+            if (GamePhase == GamePhase.RadarFixed)
+                if (GameStatistics.Instance.CollectedSamples + GameStatistics.Instance.BrokenSamples == 3)
+                {
+                    Instance.GamePhase = GamePhase.SamplesCollected;
+                    Instance.SamplesCollectEndTime = Time.time;
+                }
         }
 
         public void HandleActivateClick()
         {
-            if (_gameFailed) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (GameFailed) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         public static void FailGame(GameFailReason reason)
         {
             Debug.Log(reason);
-            Instance._gameFailed = true;
+            Instance.GameFailed = true;
             Instance.OnGameFail?.Invoke(reason);
         }
 
@@ -109,7 +116,7 @@ namespace Rover
                 Instance.GreenCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
-                if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
+                if (GameStatistics.Instance.CollectedSamples + GameStatistics.Instance.BrokenSamples == 3)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
                     Instance.SamplesCollectEndTime = Time.time;
@@ -128,7 +135,7 @@ namespace Rover
                 Instance.YellowCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
-                if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
+                if (GameStatistics.Instance.CollectedSamples + GameStatistics.Instance.BrokenSamples == 3)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
                     Instance.SamplesCollectEndTime = Time.time;
@@ -147,11 +154,7 @@ namespace Rover
                 Instance.RedCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
-                if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
-                {
-                    Instance.GamePhase = GamePhase.SamplesCollected;
-                    Instance.SamplesCollectEndTime = Time.time;
-                }
+                
             }
             else
             {
@@ -182,18 +185,12 @@ namespace Rover
 
         public static void SetRadarPhoto(Texture2D photo)
         {
-            if (Instance.RadarFixed)
-            {
-                GameStatistics.Instance.RadarPhoto = photo;
-            }
+            GameStatistics.Instance.RadarPhoto = photo;
         }
 
         public static void SetSamplesPhoto(Texture2D photo)
         {
-            if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
-            {
-                GameStatistics.Instance.SamplesPhoto = photo;
-            }
+            GameStatistics.Instance.SamplesPhoto = photo;
         }
     }
 }

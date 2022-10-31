@@ -23,11 +23,11 @@ namespace Rover
 
             if (Damage > 0 && _destroyables.Count > 0)
             {
-                _dustParticles.enableEmission = true;
+                _dustParticles.Play();
             }
             else if (Damage == 0 || _destroyables.Count == 0)
             {
-                _dustParticles.enableEmission = false;
+                _dustParticles.Stop();
             }
         }
 

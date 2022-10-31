@@ -45,13 +45,8 @@ namespace Rover
                             Tasks.SetRedCollected();
                             break;
                     }
+                    StartCoroutine(DisableGrabable(grabable));
                 }
-                else
-                {
-                    BoxState = BoxState.FilledInvalid;
-                    Debug.Log("Invalid fill");
-                }
-                StartCoroutine(DisableGrabable(grabable));
             } 
         }
 

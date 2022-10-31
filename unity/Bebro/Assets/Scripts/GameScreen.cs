@@ -41,11 +41,11 @@ public class GameScreen : MonoBehaviour
     {
         string fail = "";
 
-        if (GameStatistics.Instance.RadarPhoto)
+        if (!GameStatistics.Instance.RadarPhoto)
         {
             fail = "не проведена фотофиксация радара";
         }
-        else if (GameStatistics.Instance.SamplesPhoto)
+        else if (!GameStatistics.Instance.SamplesPhoto)
         {
             fail = "не проведена фотофиксация места раскопок";
         }
@@ -60,6 +60,7 @@ public class GameScreen : MonoBehaviour
         }
         else
         {
+            Tasks.Instance.GameFailed = true;
             _loseScreen.SetActive(true);
             _text.text = fail;
         }
