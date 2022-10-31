@@ -21,6 +21,8 @@ TagManager:
   - RightHandPhysics
   - Camera invisible
   - IKFloor
+  - DestroyStone
+  - Terrain
   - 
   - 
   - 
@@ -35,9 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - NoTeleport
   - Teleport
   m_SortingLayers:
   - name: UI

@@ -9,7 +9,7 @@ namespace Rover
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.GetComponent<ArmTrigger>() && !other.GetComponent<GrabTrigger>())
+            if (!other.GetComponent<ArmTrigger>() && !other.GetComponent<GrabTrigger>() && !other.GetComponent<Grabable>())
                 OnTriggerEntered?.Invoke();
         }
     }

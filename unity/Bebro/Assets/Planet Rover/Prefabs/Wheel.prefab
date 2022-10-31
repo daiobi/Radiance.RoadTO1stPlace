@@ -4843,16 +4843,16 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
+      value: 100
+      inSlope: 0.028571429
+      outSlope: 0.028571429
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 350
-      value: 1
+      value: 110
       inSlope: -0.0027697873
       outSlope: -0.0027697873
       tangentMode: 0
@@ -4876,7 +4876,6 @@ MonoBehaviour:
   _steeringAngle: 25
   _n: 0
   _isBroken: 0
-  _maxSpeed: 15
 --- !u!114 &3544286814578560562
 MonoBehaviour:
   m_ObjectHideFlags: 0

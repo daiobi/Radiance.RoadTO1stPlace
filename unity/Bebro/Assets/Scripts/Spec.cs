@@ -12,6 +12,9 @@ public class Spec : MonoBehaviour
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _fixClip;
     [SerializeField] private AudioClip _breakClip;
+    [SerializeField] private GameObject[] _statsDisplays;
+    [SerializeField] private TMPro.TextMeshProUGUI _statsLeft;
+    [SerializeField] private TMPro.TextMeshProUGUI _statsRight;
     public Image[] _Image;
     public Sprite[] _BrokenSprite;
     public Image _ImageSignal;
@@ -56,12 +59,12 @@ public class Spec : MonoBehaviour
         if (!_rover.IsActivated) return;
 
         var signal = tel.Signal;
-        _noiseMaterial.SetFloat("_NoiseFactor", Mathf.Lerp(0, 0.9f, Mathf.Clamp01(1f - signal + tel.Health < 3 ? 0.25f : 0f)));
+        _noiseMaterial.SetFloat("_NoiseFactor", Mathf.Lerp(0, 0.9f, Mathf.Clamp01(1f - signal + (tel.Health < 3 ? 0.25f : 0f))));
         if (signal < 0.2f)
             _ImageSignal.sprite = _SpritesSignal[3];
         else if (signal < 0.4f)
             _ImageSignal.sprite = _SpritesSignal[2];
-        else if (signal > 0.6f)
+        else if (signal < 0.6f)
             _ImageSignal.sprite = _SpritesSignal[1];
         else
             _ImageSignal.sprite = _SpritesSignal[0];
@@ -70,7 +73,6 @@ public class Spec : MonoBehaviour
         _BatteryCharge.text = $"{Mathf.CeilToInt(tel.BatteryPercents * 100f)}%";
         _health.fillAmount = Mathf.Lerp(_health.fillAmount, tel.Health / 6f, Time.deltaTime);
 
-        _Image[0].sprite = tel.BodyBroken ? _BrokenSprite[0] : _defaultSprites[0];
 
         _Image[1].sprite = tel.LFBroken ? _BrokenSprite[1] : _defaultSprites[1];
         _Image[2].sprite = tel.LCBroken ? _BrokenSprite[2] : _defaultSprites[2];
@@ -87,12 +89,6 @@ public class Spec : MonoBehaviour
 
     private void HandleStatuses(Rover.Telemetry tel)
     {
-        if (_lastStatuses[0] != tel.BodyBroken)
-        {
-            _lastStatuses[0] = tel.BodyBroken;
-            _log.Add($"> Сломан корпус");
-            _source.PlayOneShot(_breakClip);
-        }
         if (_lastStatuses[1] != tel.LFBroken)
         {
             _lastStatuses[1] = tel.LFBroken;

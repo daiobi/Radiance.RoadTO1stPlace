@@ -7,12 +7,6 @@ namespace Rover
     public class Tasks : MonoBehaviour
     {
         [SerializeField] private RoverTrigger _baseTrigger;
-        [SerializeField] private GameObject _roverActivatedCheck;
-        [SerializeField] private GameObject _radarFixedCheck;
-        [SerializeField] private GameObject _greenSampleCollectedCheck;
-        [SerializeField] private GameObject _yellowSampleCollectedCheck;
-        [SerializeField] private GameObject _redSampleCollectedCheck;
-        [SerializeField] private GameObject _roverDeactivatedCheck;
 
         public bool RadarFixStarted { get; private set; }
         public bool RadarFixed { get; private set; }
@@ -23,23 +17,12 @@ namespace Rover
         public bool YellowCollected { get; private set; }
         public bool RedCollected { get; private set; }
 
-        private float _missionStartTime = 0f;
-        public float MissionStartTime { get => _missionStartTime == 0f ? Time.time : _missionStartTime; }
-
-        private float _missionEndTime = 0f;
-        public float MissionEndTime { get => _missionEndTime == 0f ? Time.time : _missionEndTime; }
-
-        private float _radarFixStartTime = 0f;
-        public float RadarFixStartTime { get => _radarFixStartTime == 0f ? Time.time : _radarFixStartTime; }
-
-        private float _radarFixEndTime = 0f;
-        public float RadarFixEndTime { get => _radarFixEndTime == 0f ? Time.time : _radarFixEndTime; }
-
-        private float _samplesCollectStartTime = 0f;
-        public float SamplesCollectStartTime { get => _samplesCollectStartTime == 0f ? Time.time : _samplesCollectStartTime; }
-
-        private float _samplesCollectEndTime = 0f;
-        public float SamplesCollectEndTime { get => _samplesCollectEndTime == 0f ? Time.time : _samplesCollectEndTime; }
+        public float? MissionStartTime { get; private set; }
+        public float? MissionEndTime { get; private set; }
+        public float? RadarFixStartTime { get; private set; }
+        public float? RadarFixEndTime { get; private set; }
+        public float? SamplesCollectStartTime { get; private set; }
+        public float? SamplesCollectEndTime { get; private set; }
 
         [System.Serializable]
         public class FailGameEvent : UnityEvent<GameFailReason> {}
@@ -64,17 +47,6 @@ namespace Rover
             _controls.Enable();
 
             Instance = this;
-
-            _roverActivatedCheck.SetActive(false);
-            _radarFixedCheck.SetActive(false);
-            _greenSampleCollectedCheck.SetActive(false);
-            _yellowSampleCollectedCheck.SetActive(false);
-            _redSampleCollectedCheck.SetActive(false);
-            _roverDeactivatedCheck.SetActive(false);
-
-#if UNITY_EDITOR
-            //GamePhase = GamePhase.RadarFixed;
-#endif
         }
 
         private void Update()
@@ -93,8 +65,8 @@ namespace Rover
         public static void FailGame(GameFailReason reason)
         {
             Debug.Log(reason);
-            Instance.OnGameFail?.Invoke(reason);
             Instance._gameFailed = true;
+            Instance.OnGameFail?.Invoke(reason);
         }
 
         public static void HandleRadarFixStarted()
@@ -102,7 +74,7 @@ namespace Rover
             if (!Instance.RadarFixStarted)
             {
                 Instance.RadarFixStarted = true;
-                Instance._radarFixStartTime = Time.time;
+                Instance.RadarFixStartTime = Time.time;
             }
         }
 
@@ -110,11 +82,10 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RoverTurnedOn)
             {
-                Instance._radarFixedCheck.SetActive(true);
                 Instance.RadarFixed = true;
                 Instance.GamePhase = GamePhase.RadarFixed;
 
-                Instance._radarFixEndTime = Time.time;
+                Instance.RadarFixEndTime = Time.time;
             }
             else
             {
@@ -127,7 +98,7 @@ namespace Rover
             if (!Instance.SamplesCollectingStarted)
             {
                 Instance.SamplesCollectingStarted = true;
-                Instance._samplesCollectStartTime = Time.time;
+                Instance.SamplesCollectStartTime = Time.time;
             }
         }
 
@@ -135,14 +106,13 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RadarFixed)
             {
-                Instance._greenSampleCollectedCheck.SetActive(true);
                 Instance.GreenCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
                 if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
-                    Instance._samplesCollectEndTime = Time.time;
+                    Instance.SamplesCollectEndTime = Time.time;
                 }
             }
             else
@@ -155,14 +125,13 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RadarFixed)
             {
-                Instance._yellowSampleCollectedCheck.SetActive(true);
                 Instance.YellowCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
                 if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
-                    Instance._samplesCollectEndTime = Time.time;
+                    Instance.SamplesCollectEndTime = Time.time;
                 }
             }
             else
@@ -175,14 +144,13 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RadarFixed)
             {
-                Instance._redSampleCollectedCheck.SetActive(true);
                 Instance.RedCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
                 if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
                 {
                     Instance.GamePhase = GamePhase.SamplesCollected;
-                    Instance._samplesCollectEndTime = Time.time;
+                    Instance.SamplesCollectEndTime = Time.time;
                 }
             }
             else
@@ -195,10 +163,9 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.BeforeStart)
             {
-                Instance._roverActivatedCheck.SetActive(true);
                 Instance.GamePhase = GamePhase.RoverTurnedOn;
 
-                Instance._missionStartTime = Time.time;
+                Instance.MissionStartTime = Time.time;
             }
         }
 
@@ -206,11 +173,26 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.SamplesCollected && Instance._baseTrigger.IsRoverTriggered)
             {
-                Instance._roverDeactivatedCheck.SetActive(true);
                 Instance.GamePhase = GamePhase.RoverTurnedOff;
+                Instance.MissionEndTime = Time.time;
                 Instance.OnGameSuccess?.Invoke();
 
-                Instance._missionEndTime = Time.time;
+            }
+        }
+
+        public static void SetRadarPhoto(Texture2D photo)
+        {
+            if (Instance.RadarFixed)
+            {
+                GameStatistics.Instance.RadarPhoto = photo;
+            }
+        }
+
+        public static void SetSamplesPhoto(Texture2D photo)
+        {
+            if (Instance.GreenCollected && Instance.YellowCollected && Instance.RedCollected)
+            {
+                GameStatistics.Instance.SamplesPhoto = photo;
             }
         }
     }

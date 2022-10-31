@@ -12,16 +12,11 @@ namespace Rover
         public float Signal;
 
         public int Health;
-        public bool BodyBroken;
         public bool LFBroken;
         public bool RFBroken;
         public bool LCBroken;
         public bool RCBroken;
         public bool LBBroken;
         public bool RBBroken;
-
-        public BoxState greenBoxState;
-        public BoxState yellowBoxState;
-        public BoxState blueBoxState;
     }
 }

@@ -29,6 +29,7 @@ public class RadarMinigame : MonoBehaviour
     {
         IsWon = true;
         Tasks.SetRadarFixed();
+
         CloseMinigame();
     }
 
@@ -54,6 +55,7 @@ public class RadarMinigame : MonoBehaviour
     {
         if (!IsWon)
         {
+            Tasks.HandleRadarFixStarted();
             _minigame.Restart();
             _minigamePanel.SetActive(true);
         }

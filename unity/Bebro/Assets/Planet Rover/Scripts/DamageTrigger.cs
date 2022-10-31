@@ -11,25 +11,23 @@ namespace Rover
 
         public UnityEvent OnDamage;
 
-        private Vector3 _lastPosition;
-        private float _currentSpeed;
+        private WheelDamageValidator _damageValidator;
 
         private void Start()
         {
-            _lastPosition = transform.position;
-        }
-
-        private void FixedUpdate()
-        {
-            _currentSpeed = (transform.position - _lastPosition).magnitude / Time.fixedDeltaTime;
-            _lastPosition = transform.position;
+            _damageValidator = GetComponentInParent<WheelDamageValidator>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_currentSpeed > _damageSpeed)
+            RoverObstacle obstacle = other.GetComponent<RoverObstacle>();
+
+            if (obstacle)
             {
-                OnDamage?.Invoke();
+                if (_damageValidator.TryBeDamagedBy(obstacle))
+                {
+                    OnDamage?.Invoke();
+                }
             }
         }
     }
