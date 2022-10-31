@@ -7,12 +7,6 @@ namespace Rover
     public class Tasks : MonoBehaviour
     {
         [SerializeField] private RoverTrigger _baseTrigger;
-        [SerializeField] private GameObject _roverActivatedCheck;
-        [SerializeField] private GameObject _radarFixedCheck;
-        [SerializeField] private GameObject _greenSampleCollectedCheck;
-        [SerializeField] private GameObject _yellowSampleCollectedCheck;
-        [SerializeField] private GameObject _redSampleCollectedCheck;
-        [SerializeField] private GameObject _roverDeactivatedCheck;
 
         public bool RadarFixStarted { get; private set; }
         public bool RadarFixed { get; private set; }
@@ -53,13 +47,6 @@ namespace Rover
             _controls.Enable();
 
             Instance = this;
-
-            _roverActivatedCheck.SetActive(false);
-            _radarFixedCheck.SetActive(false);
-            _greenSampleCollectedCheck.SetActive(false);
-            _yellowSampleCollectedCheck.SetActive(false);
-            _redSampleCollectedCheck.SetActive(false);
-            _roverDeactivatedCheck.SetActive(false);
         }
 
         private void Update()
@@ -78,8 +65,8 @@ namespace Rover
         public static void FailGame(GameFailReason reason)
         {
             Debug.Log(reason);
-            Instance.OnGameFail?.Invoke(reason);
             Instance._gameFailed = true;
+            Instance.OnGameFail?.Invoke(reason);
         }
 
         public static void HandleRadarFixStarted()
@@ -95,7 +82,6 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RoverTurnedOn)
             {
-                Instance._radarFixedCheck.SetActive(true);
                 Instance.RadarFixed = true;
                 Instance.GamePhase = GamePhase.RadarFixed;
 
@@ -120,7 +106,6 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RadarFixed)
             {
-                Instance._greenSampleCollectedCheck.SetActive(true);
                 Instance.GreenCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
@@ -140,7 +125,6 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RadarFixed)
             {
-                Instance._yellowSampleCollectedCheck.SetActive(true);
                 Instance.YellowCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
@@ -160,7 +144,6 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.RadarFixed)
             {
-                Instance._redSampleCollectedCheck.SetActive(true);
                 Instance.RedCollected = true;
                 GameStatistics.Instance.CollectedSamples++;
 
@@ -180,7 +163,6 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.BeforeStart)
             {
-                Instance._roverActivatedCheck.SetActive(true);
                 Instance.GamePhase = GamePhase.RoverTurnedOn;
 
                 Instance.MissionStartTime = Time.time;
@@ -191,11 +173,10 @@ namespace Rover
         {
             if (Instance.GamePhase == GamePhase.SamplesCollected && Instance._baseTrigger.IsRoverTriggered)
             {
-                Instance._roverDeactivatedCheck.SetActive(true);
                 Instance.GamePhase = GamePhase.RoverTurnedOff;
+                Instance.MissionEndTime = Time.time;
                 Instance.OnGameSuccess?.Invoke();
 
-                Instance.MissionEndTime = Time.time;
             }
         }
 

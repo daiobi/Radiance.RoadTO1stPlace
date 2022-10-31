@@ -11,6 +11,7 @@ public class Torch : MonoBehaviour
     [SerializeField] private Camera _screenshotCamera;
     [SerializeField] private Photoable _radarPhotoable;
     [SerializeField] private Photoable _samplesPhotoable;
+    [SerializeField] private GameObject _cameraIcon;
 
     [SerializeField] private AudioSource _source;
     [SerializeField] private AudioClip _turnOnSound;
@@ -72,6 +73,38 @@ public class Torch : MonoBehaviour
             }
         }
 
+        HandleCameraIcon();
+
+    }
+
+    private void HandleCameraIcon()
+    {
+        float toRadarDistance = Vector3.Distance(_rover.transform.position, _radarPhotoable.transform.position);
+        float toSamplesDistance = Vector3.Distance(_rover.transform.position, _samplesPhotoable.transform.position);
+
+
+        if ((Tasks.Instance.RadarFixed && !GameStatistics.Instance.RadarPhoto) && toRadarDistance <= _radarPhotoable.maxDistance)
+        {
+            Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_radarPhotoable.transform.position);
+
+            if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
+            {
+                _cameraIcon.SetActive(true);
+            }
+        }
+        else if ((Tasks.Instance.SamplesCollectEndTime != null && GameStatistics.Instance.SamplesPhoto) && toSamplesDistance <= _samplesPhotoable.maxDistance)
+        {
+            Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_samplesPhotoable.transform.position);
+
+            if (viewportPoint.x > 0.3f && viewportPoint.x < 0.7f && viewportPoint.y > 0.3f && viewportPoint.y < 0.7f && viewportPoint.z > 0f)
+            {
+                _cameraIcon.SetActive(true);
+            }
+        }
+        else
+        {
+            _cameraIcon.SetActive(false);
+        }
     }
 
     private void GetJoystickValues()
@@ -189,9 +222,9 @@ public class Torch : MonoBehaviour
 
     private Texture2D TryPhotoSamples()
     {
-        float toRadarDistance = Vector3.Distance(_rover.transform.position, _samplesPhotoable.transform.position);
+        float toSamplesDistance = Vector3.Distance(_rover.transform.position, _samplesPhotoable.transform.position);
 
-        if (toRadarDistance <= _samplesPhotoable.maxDistance)
+        if (toSamplesDistance <= _samplesPhotoable.maxDistance)
         {
             Vector3 viewportPoint = _screenshotCamera.WorldToViewportPoint(_samplesPhotoable.transform.position);
 

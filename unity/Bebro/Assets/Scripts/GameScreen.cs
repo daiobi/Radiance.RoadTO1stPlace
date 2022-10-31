@@ -39,7 +39,31 @@ public class GameScreen : MonoBehaviour
 
     private void HandleGameSuccess()
     {
-        _winScreen.SetActive(true);
+        string fail = "";
+
+        if (GameStatistics.Instance.RadarPhoto)
+        {
+            fail = "не проведена фотофиксация радара";
+        }
+        else if (GameStatistics.Instance.SamplesPhoto)
+        {
+            fail = "не проведена фотофиксация места раскопок";
+        }
+        else if (GameStatistics.Instance.CollectedSamples != 3)
+        {
+            fail = "собраны не все образцы";
+        }
+
+        if (string.IsNullOrEmpty(fail))
+        {
+            _winScreen.SetActive(true);
+        }
+        else
+        {
+            _loseScreen.SetActive(true);
+            _text.text = fail;
+        }
+
         SetupStats();
     }
 
@@ -77,23 +101,16 @@ public class GameScreen : MonoBehaviour
         {
             _text.text = "неверная последовательность действий";
         }
-        else if (arg0 is SampleBroken)
-        {
-            _text.text = "образец уничтожен";
-        }
         else
         {
             var roverBreakReason = (RoverBrokenDown)arg0;
             switch (roverBreakReason.BreakDownCase)
             {
                 case Rover.Rover.BreakDownCause.BatteryLow:
-                    _text.text = "заряд аккумулятора достиг критического значения";
+                    _text.text = "батарея ровера разрядилась";
                     break;
                 case Rover.Rover.BreakDownCause.Distance:
                     _text.text = "связь с ровером потеряна";
-                    break;
-                case Rover.Rover.BreakDownCause.Flip:
-                    _text.text = "ровер перевернулся";
                     break;
                 case Rover.Rover.BreakDownCause.Health:
                     _text.text = "ровер уничтожен";
