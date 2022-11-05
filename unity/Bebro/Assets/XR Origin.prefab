@@ -668,8 +668,8 @@ GameObject:
   - component: {fileID: 1368539195053488497}
   - component: {fileID: 1368539195053488501}
   - component: {fileID: 1368539195053488493}
-  - component: {fileID: 1368539195053488492}
   - component: {fileID: 569672857184191559}
+  - component: {fileID: 1354719901}
   m_Layer: 0
   m_Name: LeftBaseController
   m_TagString: Untagged
@@ -953,19 +953,6 @@ MonoBehaviour:
   m_PlayHapticsOnHoverCanceled: 0
   m_HapticHoverCancelIntensity: 0
   m_HapticHoverCancelDuration: 0
---- !u!135 &1368539195053488492
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368539195053488494}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.041066885
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &569672857184191559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -979,6 +966,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _alignTransform: {fileID: 0}
+--- !u!65 &1354719901
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368539195053488494}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.08, z: 0.08}
+  m_Center: {x: 0.031128485, y: -0.057932027, z: -0.041303292}
 --- !u!1 &1368539195343260915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,8 +1844,8 @@ GameObject:
   - component: {fileID: 1368539195649128848}
   - component: {fileID: 1368539195649128853}
   - component: {fileID: 1368539195649128850}
-  - component: {fileID: 1368539195649128851}
   - component: {fileID: 8533280530800446673}
+  - component: {fileID: 1547382063}
   m_Layer: 0
   m_Name: RightBaseController
   m_TagString: Untagged
@@ -2129,19 +2129,6 @@ MonoBehaviour:
   m_PlayHapticsOnHoverCanceled: 0
   m_HapticHoverCancelIntensity: 0
   m_HapticHoverCancelDuration: 0
---- !u!135 &1368539195649128851
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368539195649128849}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.041066885
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8533280530800446673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2155,6 +2142,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _alignTransform: {fileID: 0}
+--- !u!65 &1547382063
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368539195649128849}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.08, z: 0.08}
+  m_Center: {x: 0.031128485, y: -0.057932027, z: -0.041303292}
 --- !u!1 &1368539195726431539
 GameObject:
   m_ObjectHideFlags: 0
